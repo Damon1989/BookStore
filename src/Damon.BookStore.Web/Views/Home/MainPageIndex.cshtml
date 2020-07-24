@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title></title>
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <environment include="Development">
@@ -250,7 +250,10 @@
                 <!-- END SIDEBAR -->
                 <!-- BEGIN CONTENT -->
                 <div class="page-content-wrapper">
-                        <iframe id="iframe" src='/Home/Index' class="page-content" style="width:87%;" border=”0″ frameborder="0"></iframe>
+                    <div class="page-content">
+                        <iframe id="iframe" src='/Home/Index' frameborder="0" style="left:0;top:0;right:0;bottom:0;width:100%; border: none; min-height: 854px;margin-left:10px"  scrolling="no"></iframe>
+                    </div>
+                    
                 </div>
 
 
@@ -435,6 +438,12 @@
 
 
 <script>
+
+    $(function () {
+        console.log($("#iframe").parent());
+        var height = $("#iframe").parent().attr("min-height");
+        console.log(height);
+    })
 
     function menuSelect(url) {
         console.log(url);
