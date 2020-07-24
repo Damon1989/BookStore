@@ -28,7 +28,7 @@ namespace Damon.BookStore.Web.Menus
 
             var l = context.GetLocalizer<BookStoreResource>();
 
-            context.Menu.Items.Insert(0, new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "~/Home/Index"));
+            context.Menu.Items.Insert(0, new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "~/Home/MainPageIndex"));
             context.Menu.AddItem(new ApplicationMenuItem("BookStore", l["Menu:BookStore"], icon: "fa fa-book")).AddItem(
                 new ApplicationMenuItem("BookStore.Books", l["Menu:Books"], url: "/Books"));
         }

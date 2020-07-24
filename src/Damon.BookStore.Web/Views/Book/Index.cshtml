@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-//Layout = null;
+    //Layout = null;
 }
 
 @inject Microsoft.Extensions.Localization.IStringLocalizer<Damon.BookStore.Localization.BookStoreResource> L
@@ -23,12 +23,11 @@
     </abp-card-header>
 
     @*<abp-card-body>
-        <abp-table  id="BooksTable">
+            <abp-table  id="BooksTable">
 
-        </abp-table>
-    </abp-card-body>*@
+            </abp-table>
+        </abp-card-body>*@
     <table class="table" id="BooksTable">
-        
     </table>
 </abp-card>
 
@@ -37,21 +36,41 @@
         .table {
             width: 100% !important;
         }
+
         .row {
             display: flex !important;
             margin-left: 0px !important;
             margin-right: 0px !important;
         }
+
         div.dataTables_wrapper div.dataTables_paginate {
             margin: 0;
             white-space: nowrap;
             text-align: right !important;
         }
+
+        div.dataTables_wrapper div.dataTables_length label {
+            font-weight: normal;
+            text-align: left;
+            white-space: nowrap;
+            margin-top: 4px;
+        }
+        div.dataTables_wrapper div.dataTables_info {
+            padding-top: 0.85em;
+            white-space: nowrap;
+            padding-left: 20px;
+        }
+        .col {
+            flex-basis: 0;
+            flex-grow: 1;
+            min-width: 0;
+            max-width: 100%;
+        }
     </style>
 }
 
 @section scripts{
-    
+
     <script>
         $(function () {
             var l = abp.localization.getResource("BookStore");
@@ -70,7 +89,7 @@
                     scrollX: true,
                     ajax: abp.libs.datatables.createAjax(damon.bookStore.books.book.getList),
                     columnDefs: [
-                        
+
                         {
                             title: l("Name"),
                             data: "name"
@@ -114,28 +133,28 @@
                             title: l("Actions"),
                             rowAction: {
                                 items:
-                                [
-                                    {
-                                        text: l("Edit"),
-                                        action: function (data) {
-                                            editModal.open({ id: data.record.id });
-                                        }
-                                    },
-                                    {
-                                        text: l("Delete"),
-                                        confirmMessage: function (data) {
-                                            return l("BookDeletionConfirmationMessage", data.record.name);
+                                    [
+                                        {
+                                            text: l("Edit"),
+                                            action: function (data) {
+                                                editModal.open({ id: data.record.id });
+                                            }
                                         },
-                                        action: function (data) {
-                                            damon.bookStore.books.book
-                                                .delete(data.record.id)
-                                                .then(function () {
-                                                    abp.notify.info(l("SuccessfullyDeleted"));
-                                                    dataTable.ajax.reload();
-                                                });
+                                        {
+                                            text: l("Delete"),
+                                            confirmMessage: function (data) {
+                                                return l("BookDeletionConfirmationMessage", data.record.name);
+                                            },
+                                            action: function (data) {
+                                                damon.bookStore.books.book
+                                                    .delete(data.record.id)
+                                                    .then(function () {
+                                                        abp.notify.info(l("SuccessfullyDeleted"));
+                                                        dataTable.ajax.reload();
+                                                    });
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
                             }
                         }
                     ]
