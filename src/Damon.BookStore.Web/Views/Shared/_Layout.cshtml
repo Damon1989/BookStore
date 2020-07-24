@@ -1,5 +1,7 @@
-﻿<!DOCTYPE html>
-
+﻿@using Damon.BookStore.Localization
+@using Microsoft.Extensions.Localization
+<!DOCTYPE html>
+@inject IStringLocalizer<BookStoreResource> L
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -31,6 +33,9 @@
         <link href="~/assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" />
         <link href="~/assets/layouts/layout/css/custom.css" rel="stylesheet" />
         @*end theme layout styles*@
+
+
+        <link href="~/libs/abp/core/abp.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         @*begin global mandatory styles*@
@@ -58,6 +63,10 @@
         <link href="~/assets/layouts/layout/css/custom.min.css" rel="stylesheet" />
         @*end theme layout styles*@
     </environment>
+
+
+    <link href="~/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+
     @RenderSection("css", false)
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
@@ -427,8 +436,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="page_user_login_1.html">
-                                            <i class="icon-key"></i> Log Out
+                                        <a asp-controller="Account" asp-action="Logout">
+                                            <i class="icon-key"></i> @L["MenuItem_Account.Logout"]
                                         </a>
                                     </li>
                                 </ul>
@@ -454,8 +463,317 @@
             <!-- END HEADER & CONTENT DIVIDER -->
             <!-- BEGIN CONTAINER -->
             <div class="page-container">
-                @RenderBody()
- 
+                <div class="page-sidebar-wrapper">
+                    <div class="page-sidebar navbar-collapse collapse">
+                        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                            <li class="sidebar-toggler-wrapper hide">
+                                <div class="sidebar-toggler">
+                                    <span></span>
+                                </div>
+                            </li>
+                            <li class="heading">
+                                <h3 class="uppercase">Features</h3>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-diamond"></i>
+                                    <span class="title">UI Features</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a asp-controller="Identity" asp-action="Roles" class="nav-link ">
+                                            <span class="title">角色管理</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_metronic_grid.html" class="nav-link ">
+                                            <span class="title">Metronic Grid System</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_colors.html" class="nav-link ">
+                                            <span class="title">Color Library</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_general.html" class="nav-link ">
+                                            <span class="title">General Components</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_buttons.html" class="nav-link ">
+                                            <span class="title">Buttons</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_buttons_spinner.html" class="nav-link ">
+                                            <span class="title">Spinner Buttons</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_confirmations.html" class="nav-link ">
+                                            <span class="title">Popover Confirmations</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_sweetalert.html" class="nav-link ">
+                                            <span class="title">Bootstrap Sweet Alerts</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_icons.html" class="nav-link ">
+                                            <span class="title">Font Icons</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_socicons.html" class="nav-link ">
+                                            <span class="title">Social Icons</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_typography.html" class="nav-link ">
+                                            <span class="title">Typography</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_tabs_accordions_navs.html" class="nav-link ">
+                                            <span class="title">Tabs, Accordions & Navs</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_timeline.html" class="nav-link ">
+                                            <span class="title">Timeline 1</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_timeline_2.html" class="nav-link ">
+                                            <span class="title">Timeline 2</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_timeline_horizontal.html" class="nav-link ">
+                                            <span class="title">Horizontal Timeline</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_tree.html" class="nav-link ">
+                                            <span class="title">Tree View</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">Page Progress Bar</span>
+                                            <span class="arrow"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li class="nav-item ">
+                                                <a href="ui_page_progress_style_1.html" class="nav-link "> Flash </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a href="ui_page_progress_style_2.html" class="nav-link "> Big Counter </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_blockui.html" class="nav-link ">
+                                            <span class="title">Block UI</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_bootstrap_growl.html" class="nav-link ">
+                                            <span class="title">Bootstrap Growl Notifications</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_notific8.html" class="nav-link ">
+                                            <span class="title">Notific8 Notifications</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_toastr.html" class="nav-link ">
+                                            <span class="title">Toastr Notifications</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_bootbox.html" class="nav-link ">
+                                            <span class="title">Bootbox Dialogs</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_alerts_api.html" class="nav-link ">
+                                            <span class="title">Metronic Alerts API</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_session_timeout.html" class="nav-link ">
+                                            <span class="title">Session Timeout</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_idle_timeout.html" class="nav-link ">
+                                            <span class="title">User Idle Timeout</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_modals.html" class="nav-link ">
+                                            <span class="title">Modals</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_extended_modals.html" class="nav-link ">
+                                            <span class="title">Extended Modals</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_tiles.html" class="nav-link ">
+                                            <span class="title">Tiles</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_datepaginator.html" class="nav-link ">
+                                            <span class="title">Date Paginator</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_nestable.html" class="nav-link ">
+                                            <span class="title">Nestable List</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-puzzle"></i>
+                                    <span class="title">Components</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a href="components_date_time_pickers.html" class="nav-link ">
+                                            <span class="title">Date & Time Pickers</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_color_pickers.html" class="nav-link ">
+                                            <span class="title">Color Pickers</span>
+                                            <span class="badge badge-danger">2</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_select2.html" class="nav-link ">
+                                            <span class="title">Select2 Dropdowns</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_select.html" class="nav-link ">
+                                            <span class="title">Bootstrap Select</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_multi_select.html" class="nav-link ">
+                                            <span class="title">Bootstrap Multiple Select</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_multiselect_dropdown.html" class="nav-link ">
+                                            <span class="title">Bootstrap Multiselect Dropdowns</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_select_splitter.html" class="nav-link ">
+                                            <span class="title">Select Splitter</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_clipboard.html" class="nav-link ">
+                                            <span class="title">Clipboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_typeahead.html" class="nav-link ">
+                                            <span class="title">Typeahead Autocomplete</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_tagsinput.html" class="nav-link ">
+                                            <span class="title">Bootstrap Tagsinput</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_switch.html" class="nav-link ">
+                                            <span class="title">Bootstrap Switch</span>
+                                            <span class="badge badge-success">6</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_maxlength.html" class="nav-link ">
+                                            <span class="title">Bootstrap Maxlength</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_fileinput.html" class="nav-link ">
+                                            <span class="title">Bootstrap File Input</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_bootstrap_touchspin.html" class="nav-link ">
+                                            <span class="title">Bootstrap Touchspin</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_form_tools.html" class="nav-link ">
+                                            <span class="title">Form Widgets & Tools</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_context_menu.html" class="nav-link ">
+                                            <span class="title">Context Menu</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_editors.html" class="nav-link ">
+                                            <span class="title">Markdown & WYSIWYG Editors</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_code_editors.html" class="nav-link ">
+                                            <span class="title">Code Editors</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_ion_sliders.html" class="nav-link ">
+                                            <span class="title">Ion Range Sliders</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_noui_sliders.html" class="nav-link ">
+                                            <span class="title">NoUI Range Sliders</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="components_knob_dials.html" class="nav-link ">
+                                            <span class="title">Knob Circle Dials</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                        <!-- END SIDEBAR MENU -->
+                        <!-- END SIDEBAR MENU -->
+                    </div>
+                    <!-- END SIDEBAR -->
+                </div>
+                <!-- END SIDEBAR -->
+                <!-- BEGIN CONTENT -->
+                <div class="page-content-wrapper">
+                    <div class="page-content">
+                        @RenderBody()
+                    </div>
+                </div>
+
+
 
             </div>
             <!-- END CONTAINER -->
@@ -474,125 +792,165 @@
         </div>
 
     </div>
-<div>
-    
-</div>
-    <environment include="Development">
-        @*begin core plugins*@
-        <script src="~/assets/global/plugins/jquery.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap/js/bootstrap.js"></script>
-        <script src="~/assets/global/plugins/js.cookie.min.js"></script>
-        <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
-        <script src="~/assets/global/plugins/jquery.blockui.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.js"></script>
-        @*end core plugins*@
-
-        @*begin page level plugins*@
-        <script src="~/assets/global/plugins/moment.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-        <script src="~/assets/global/plugins/morris/morris.js"></script>
-        <script src="~/assets/global/plugins/counterup/jquery.waypoints.min.js"></script>
-        <script src="~/assets/global/plugins/counterup/jquery.counterup.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/amcharts.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/serial.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/pie.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/radar.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/light.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/patterns.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/chalk.js"></script>
-        <script src="~/assets/global/plugins/amcharts/ammap/ammap.js"></script>
-        <script src="~/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amstockcharts/amstock.js"></script>
-        <script src="~/assets/global/plugins/fullcalendar/fullcalendar.js"></script>
-        <script src="~/assets/global/plugins/horizontal-timeline/horizontal-timeline.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.resize.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.categories.js"></script>
-        <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.js"></script>
-        <script src="~/assets/global/plugins/jquery.sparkline.min.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"></script>
-        @*end page level plugins*@
-
-        @*begin theme global scripts*@
-        <script src="~/assets/global/scripts/app.js"></script>
-        @*end theme global scripts*@
-
-        @*begin page level scripts*@
-        <script src="~/assets/pages/scripts/dashboard.js"></script>
-        @*end page level scripts*@
-
-        @*begin theme layout scripts*@
-        <script src="~/assets/layouts/layout/scripts/layout.js"></script>
-        <script src="~/assets/layouts/layout/scripts/demo.js"></script>
-        <script src="~/assets/layouts/global/scripts/quick-sidebar.js"></script>
-        <script src="~/assets/layouts/global/scripts/quick-nav.js"></script>
-        @*end theme layout scripts*@
-    </environment>
-
-    <environment exclude="Development">
-        @*begin core plugins*@
-        <script src="~/assets/global/plugins/jquery.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <script src="~/assets/global/plugins/js.cookie.min.js"></script>
-        <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="~/assets/global/plugins/jquery.blockui.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-        @*end core plugins*@
-
-        @*begin page level plugins*@
-        <script src="~/assets/global/plugins/moment.min.js"></script>
-        <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js"></script>
-        <script src="~/assets/global/plugins/morris/morris.min.js"></script>
-        <script src="~/assets/global/plugins/counterup/jquery.waypoints.min.js"></script>
-        <script src="~/assets/global/plugins/counterup/jquery.counterup.min.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/amcharts.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/serial.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/pie.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/radar.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/light.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/patterns.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amcharts/themes/chalk.js"></script>
-        <script src="~/assets/global/plugins/amcharts/ammap/ammap.js"></script>
-        <script src="~/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js"></script>
-        <script src="~/assets/global/plugins/amcharts/amstockcharts/amstock.js"></script>
-        <script src="~/assets/global/plugins/fullcalendar/fullcalendar.min.js"></script>
-        <script src="~/assets/global/plugins/horizontal-timeline/horizontal-timeline.min.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.min.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.resize.min.js"></script>
-        <script src="~/assets/global/plugins/flot/jquery.flot.categories.min.js"></script>
-        <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js"></script>
-        <script src="~/assets/global/plugins/jquery.sparkline.min.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.min.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js"></script>
-        <script src="~/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"></script>
-        @*end page level plugins*@
 
 
-        @*begin theme global scripts*@
-        <script src="~/assets/global/scripts/app.min.js"></script>
-        @*end theme global scripts*@
-
-        @*begin page level scripts*@
-        <script src="~/assets/pages/scripts/dashboard.min.js"></script>
-        @*end page level scripts*@
-
-        @*begin theme layout scripts*@
-        <script src="~/assets/layouts/layout/scripts/layout.min.js"></script>
-        <script src="~/assets/layouts/layout/scripts/demo.min.js"></script>
-        <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js"></script>
-        <script src="~/assets/layouts/global/scripts/quick-nav.min.js"></script>
-        @*end theme layout scripts*@
-    </environment>
 </body>
+<environment include="Development">
+    @*begin core plugins*@
+    <script src="~/assets/global/plugins/jquery.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.js"></script>
+    @*end core plugins*@
 
+    @*begin page level plugins*@
+    <script src="~/assets/global/plugins/moment.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/global/plugins/morris/morris.js"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.counterup.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/amcharts.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/serial.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/pie.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/radar.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/light.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/patterns.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/chalk.js"></script>
+    <script src="~/assets/global/plugins/amcharts/ammap/ammap.js"></script>
+    <script src="~/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amstockcharts/amstock.js"></script>
+    <script src="~/assets/global/plugins/fullcalendar/fullcalendar.js"></script>
+    <script src="~/assets/global/plugins/horizontal-timeline/horizontal-timeline.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.categories.js"></script>
+    <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.js"></script>
+    <script src="~/assets/global/plugins/jquery.sparkline.min.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"></script>
+    @*end page level plugins*@
+
+    @*begin theme global scripts*@
+    <script src="~/assets/global/scripts/app.js"></script>
+    @*end theme global scripts*@
+
+    @*begin page level scripts*@
+    <script src="~/assets/pages/scripts/dashboard.js"></script>
+    @*end page level scripts*@
+
+    @*begin theme layout scripts*@
+    <script src="~/assets/layouts/layout/scripts/layout.js"></script>
+    <script src="~/assets/layouts/layout/scripts/demo.js"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.js"></script>
+    <script src="~/assets/layouts/global/scripts/quick-nav.js"></script>
+    @*end theme layout scripts*@
+
+</environment>
+
+
+<script src="~/libs/abp/utils/abp-utils.umd.min.js"></script>
+<script src="~/libs/abp/core/abp.js"></script>
+@*<script src="~/libs/jquery/jquery.js"></script>*@
+<script src="~/libs/abp/jquery/abp.jquery.js"></script>
+<script src="~/libs/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="~/libs/lodash/lodash.min.js"></script>
+<script src="~/libs/jquery-validation/jquery.validate.js"></script>
+<script src="~/libs/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/libs/jquery-form/jquery.form.min.js"></script>
+<script src="~/libs/select2/js/select2.min.js"></script>
+<script src="~/libs/select2/js/select2-bootstrap-modal-patch.js"></script>
+<script src="~/libs/datatables.net/js/jquery.dataTables.js"></script>
+<script src="~/libs/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr/toastr.min.js"></script>
+<script src="~/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="~/libs/luxon/luxon.min.js"></script>
+<script src="~/libs/timeago/jquery.timeago.js"></script>
+<script src="~/libs/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/ui-extensions.js?_v=637303124380000000"></script>
+
+
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/jquery/jquery-extensions.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/jquery-form/jquery-form-extensions.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/jquery/widget-manager.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/bootstrap/dom-event-handlers.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/bootstrap/modal-manager.js?_v=637303124380000000"></script>
+
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/datatables/datatables-extensions.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/sweetalert/abp-sweetalert.js?_v=637303124380000000"></script>
+<script src="~/libs/abp/aspnetcore-mvc-ui-theme-shared/toastr/abp-toastr.js?_v=637303124380000000"></script>
+<script src="~/libs/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js?_v=637308990120000000"></script>
+
+
+<script src="~/Abp/ApplicationConfigurationScript"></script>
+<script src="~/Abp/ServiceProxyScript"></script>
+
+
+
+<environment exclude="Development">
+    @*begin core plugins*@
+    <script src="~/assets/global/plugins/jquery.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    @*end core plugins*@
+
+    @*begin page level plugins*@
+    <script src="~/assets/global/plugins/moment.min.js"></script>
+    <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+    <script src="~/assets/global/plugins/morris/morris.min.js"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.counterup.min.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/amcharts.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/serial.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/pie.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/radar.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/light.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/patterns.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amcharts/themes/chalk.js"></script>
+    <script src="~/assets/global/plugins/amcharts/ammap/ammap.js"></script>
+    <script src="~/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js"></script>
+    <script src="~/assets/global/plugins/amcharts/amstockcharts/amstock.js"></script>
+    <script src="~/assets/global/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="~/assets/global/plugins/horizontal-timeline/horizontal-timeline.min.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.min.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.resize.min.js"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.categories.min.js"></script>
+    <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js"></script>
+    <script src="~/assets/global/plugins/jquery.sparkline.min.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js"></script>
+    @*end page level plugins*@
+
+
+    @*begin theme global scripts*@
+    <script src="~/assets/global/scripts/app.min.js"></script>
+    @*end theme global scripts*@
+
+    @*begin page level scripts*@
+    <script src="~/assets/pages/scripts/dashboard.min.js"></script>
+    @*end page level scripts*@
+
+    @*begin theme layout scripts*@
+    <script src="~/assets/layouts/layout/scripts/layout.min.js"></script>
+    <script src="~/assets/layouts/layout/scripts/demo.min.js"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js"></script>
+    <script src="~/assets/layouts/global/scripts/quick-nav.min.js"></script>
+    @*end theme layout scripts*@
+</environment>
+@RenderSection("scripts", false)
 </html>

@@ -12,7 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Staging" //Development、 Staging 、 Production
+        "ASPNETCORE_ENVIRONMENT": "Development" //Development、 Staging 、 Production
       }
     },
     "Damon.BookStore.Web": {
