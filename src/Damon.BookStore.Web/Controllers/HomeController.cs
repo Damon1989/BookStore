@@ -15,5 +15,10 @@ namespace Damon.BookStore.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult MainPageIndex()
+        {
+            return View();
+        }
     }
 }

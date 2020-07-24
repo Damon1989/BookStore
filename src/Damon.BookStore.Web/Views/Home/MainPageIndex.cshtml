@@ -2,6 +2,9 @@
 @using Microsoft.Extensions.Localization
 <!DOCTYPE html>
 @inject IStringLocalizer<BookStoreResource> L
+@{
+    Layout = null;
+}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -67,22 +70,208 @@
 
     <link href="~/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
 
-    @RenderSection("css", false)
 </head>
-<body >
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+    <div>
+        <div class="page-wrapper">
+            <!-- BEGIN HEADER -->
+            <div class="page-header navbar navbar-fixed-top">
+                <!-- BEGIN HEADER INNER -->
+                <div class="page-header-inner ">
+                    <!-- BEGIN LOGO -->
+                    <div class="page-logo">
+                        <a>
+                            <img src="../assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" />
+                        </a>
+                        <div class="menu-toggler sidebar-toggler">
+                            <span></span>
+                        </div>
+                    </div>
+                    <!-- END LOGO -->
+                    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span></span>
+                    </a>
+                    <!-- END RESPONSIVE MENU TOGGLER -->
+                    <!-- BEGIN TOP NAVIGATION MENU -->
+                    <div class="top-menu">
+                        <ul class="nav navbar-nav pull-left">
+                            <!-- END TODO DROPDOWN -->
+                            <!-- BEGIN USER LOGIN DROPDOWN -->
+                            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                            <li class="dropdown dropdown-user">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <img alt="" class="img-circle" src="../assets/layouts/layout/img/avatar3_small.jpg" />
+                                    <span class="username username-hide-on-mobile"> Nick </span>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a href="page_user_profile_1.html">
+                                            <i class="icon-user"></i> My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_calendar.html">
+                                            <i class="icon-calendar"></i> My Calendar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_inbox.html">
+                                            <i class="icon-envelope-open"></i> My Inbox
+                                            <span class="badge badge-danger"> 3 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_todo.html">
+                                            <i class="icon-rocket"></i> My Tasks
+                                            <span class="badge badge-success"> 7 </span>
+                                        </a>
+                                    </li>
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a href="page_user_lock_1.html">
+                                            <i class="icon-lock"></i> Lock Screen
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Account" asp-action="Logout">
+                                            <i class="icon-key"></i> @L["MenuItem_Account.Logout"]
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END USER LOGIN DROPDOWN -->
+                            <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                            <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                            <li class="dropdown dropdown-quick-sidebar-toggler">
+                                <a href="javascript:;" class="dropdown-toggle">
+                                    <i class="icon-logout"></i>
+                                </a>
+                            </li>
+                            <!-- END QUICK SIDEBAR TOGGLER -->
+                        </ul>
+                    </div>
+                    <!-- END TOP NAVIGATION MENU -->
+                </div>
+                <!-- END HEADER INNER -->
+            </div>
+            <!-- END HEADER -->
+            <!-- BEGIN HEADER & CONTENT DIVIDER -->
+            <div class="clearfix"> </div>
+            <!-- END HEADER & CONTENT DIVIDER -->
+            <!-- BEGIN CONTAINER -->
+            <div class="page-container">
+                <div class="page-sidebar-wrapper">
+                    <div class="page-sidebar navbar-collapse collapse">
+                        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                            <li class="sidebar-toggler-wrapper hide">
+                                <div class="sidebar-toggler">
+                                    <span></span>
+                                </div>
+                            </li>
+                            <li class="heading">
+                                <h3 class="uppercase">Features</h3>
+                            </li>
+                            <li class="nav-item  ">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-diamond"></i>
+                                    <span class="title">UI Features</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item  ">
+                                        <a class="nav-link " onclick="menuSelect()">
+                                            <span class="title">角色管理</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a class="nav-link " onclick="menuSelect('https://www.baidu.com')">
+                                            <span class="title">百度</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a class="nav-link " onclick="menuSelect('@Url.Action("Index","Book")')">
+                                            <span class="title">图书管理</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_metronic_grid.html" class="nav-link ">
+                                            <span class="title">Metronic Grid System</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_colors.html" class="nav-link ">
+                                            <span class="title">Color Library</span>
+                                        </a>
+                                    </li>
+                  
+                                    <li class="nav-item  ">
+                                        <a href="javascript:;" class="nav-link nav-toggle">
+                                            <span class="title">Page Progress Bar</span>
+                                            <span class="arrow"></span>
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li class="nav-item ">
+                                                <a href="ui_page_progress_style_1.html" class="nav-link "> Flash </a>
+                                            </li>
+                                            <li class="nav-item ">
+                                                <a href="ui_page_progress_style_2.html" class="nav-link "> Big Counter </a>
+                                            </li>
+                                        </ul>
+                                    </li>
 
-  
-      
+        
+                                    <li class="nav-item  ">
+                                        <a href="ui_tiles.html" class="nav-link ">
+                                            <span class="title">Tiles</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_datepaginator.html" class="nav-link ">
+                                            <span class="title">Date Paginator</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item  ">
+                                        <a href="ui_nestable.html" class="nav-link ">
+                                            <span class="title">Nestable List</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            
+
+                        </ul>
+                        <!-- END SIDEBAR MENU -->
+                        <!-- END SIDEBAR MENU -->
+                    </div>
+                    <!-- END SIDEBAR -->
+                </div>
                 <!-- END SIDEBAR -->
                 <!-- BEGIN CONTENT -->
-                    <div class="page-content">
-                        @*<iframe src='@Url.Action("Index","Home")'></iframe>*@
-                        @RenderBody()
-                    </div>
+                <div class="page-content-wrapper">
+                        <iframe id="iframe" src='/Home/Index' class="page-content" style="width:87%;" border=”0″ frameborder="0"></iframe>
+                </div>
 
 
 
+            </div>
+            <!-- END CONTAINER -->
+            <!-- BEGIN FOOTER -->
+            <div class="page-footer">
+                <div class="page-footer-inner">
+                    2016 &copy; Metronic Theme By
+                    <a target="_blank" href="https://www.baidu.com/">Keenthemes</a> &nbsp;|&nbsp;
+                    <a href="https://www.baidu.com/" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+                </div>
+                <div class="scroll-to-top">
+                    <i class="icon-arrow-up"></i>
+                </div>
+            </div>
+            <!-- END FOOTER -->
+        </div>
 
+    </div>
 
 
 </body>
@@ -148,6 +337,7 @@
 
 <script src="~/libs/abp/utils/abp-utils.umd.min.js"></script>
 <script src="~/libs/abp/core/abp.js"></script>
+@*<script src="~/libs/jquery/jquery.js"></script>*@
 <script src="~/libs/abp/jquery/abp.jquery.js"></script>
 <script src="~/libs/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="~/libs/lodash/lodash.min.js"></script>
@@ -242,5 +432,13 @@
     <script src="~/assets/layouts/global/scripts/quick-nav.min.js"></script>
     @*end theme layout scripts*@
 </environment>
-@RenderSection("scripts", false)
+
+
+<script>
+
+    function menuSelect(url) {
+        console.log(url);
+        $("#iframe").attr("src", url);
+    }
+</script>
 </html>
