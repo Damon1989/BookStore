@@ -19,6 +19,7 @@
                             icon="plus"
                             button-type="Primary" />
             </abp-column>
+            <a class="btn dark btn-outline sbold" data-toggle="modal" href="#full"> View Demo </a>
         </abp-row>
     </abp-card-header>
 
@@ -30,7 +31,23 @@
     <table class="table" id="BooksTable">
     </table>
 </abp-card>
-
+<div class="modal fade" id="full" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal Title</h4>
+            </div>
+            <div class="modal-body"> Modal body goes here </div>
+            <div class="modal-footer">
+                <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                <button type="button" class="btn green">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @section css{
     <style>
         .table {
@@ -76,7 +93,8 @@
             var l = abp.localization.getResource("BookStore");
             console.log(abp);
             console.log(abp.appPath);
-            var createModal = new abp.ModalManager(abp.appPath + "Book/CreateModal");
+            var createModal = new abp.ModalManager(abp.appPath + "book/createmodal");
+            console.log(createModal);
 
             var editModal = new abp.ModalManager(abp.appPath + "Books/EditModal");
 
@@ -171,6 +189,7 @@
             });
 
             $("#NewBookButton").click(function (e) {
+                debugger;
                 e.preventDefault();
                 createModal.open();
             });

@@ -94,7 +94,8 @@
         dataTable.ajax.reload();
     });
 
-    $("#NewBookButton").click(function(e) {
+    $("#NewBookButton").click(function (e) {
+        debugger;
         e.preventDefault();
         createModal.open();
     });
