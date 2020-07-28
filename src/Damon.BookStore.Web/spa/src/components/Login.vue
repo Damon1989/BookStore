@@ -41,11 +41,7 @@
         },
         methods: {
             submit() {
-              // this.$axios.get("/api/app/book").then(res=>{
-              //   console.log(res);
-              // })
-              // return;
-                this.$axios.post('https://localhost:44397/api/account/login', this.form)
+                this.$axios.post('/api/account/login', this.form)
                     .then(res => {
                             if (res.data.result == 1) {
                                 //登录成功提示
@@ -54,7 +50,7 @@
                                     type: 'success'
                                 });
                                 //登录成功后跳转页面
-                                router.push('About')
+                                router.push('about')
                             } else if (res.data.result == 2) {
                                 //登录失败提示
                                 this.$message({
