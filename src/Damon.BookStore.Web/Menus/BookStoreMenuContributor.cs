@@ -1,20 +1,20 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
-using Damon.BookStore.Localization;
-using Damon.BookStore.MultiTenancy;
-using Volo.Abp.TenantManagement.Web.Navigation;
-using Volo.Abp.UI.Navigation;
-
-namespace Damon.BookStore.Web.Menus
+﻿namespace Damon.BookStore.Web.Menus
 {
+    using System.Threading.Tasks;
+
+    using Damon.BookStore.Localization;
+    using Damon.BookStore.MultiTenancy;
+
+    using Volo.Abp.TenantManagement.Web.Navigation;
+    using Volo.Abp.UI.Navigation;
+
     public class BookStoreMenuContributor : IMenuContributor
     {
         public async Task ConfigureMenuAsync(MenuConfigurationContext context)
         {
             if (context.Menu.Name == StandardMenus.Main)
             {
-                await ConfigureMainMenuAsync(context);
+                await this.ConfigureMainMenuAsync(context);
             }
         }
 
@@ -28,9 +28,11 @@ namespace Damon.BookStore.Web.Menus
 
             var l = context.GetLocalizer<BookStoreResource>();
 
-            context.Menu.Items.Insert(0, new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "~/Home/MainPageIndex"));
+            context.Menu.Items.Insert(
+                0,
+                new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "~/Home/MainPageIndex"));
             context.Menu.AddItem(new ApplicationMenuItem("BookStore", l["Menu:BookStore"], icon: "fa fa-book")).AddItem(
-                new ApplicationMenuItem("BookStore.Books", l["Menu:Books"], url: "/Books"));
+                new ApplicationMenuItem("BookStore.Books", l["Menu:Books"], "/Books"));
         }
     }
 }

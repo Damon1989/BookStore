@@ -258,3 +258,4 @@ src/Damon.BookStore.IdentityServer/Logs/*
 src/Damon.BookStore.HttpApi.Host/Logs/*
 src/Damon.BookStore.HttpApi.HostWithIds/Logs/*
 src/Damon.BookStore.DbMigrator/Logs/*
+/src/Damon.BookStore.Web/wwwroot/static
