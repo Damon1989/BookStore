@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import About from '@/components/About'
 import BookList  from '@/components/BookList';
+import Role from '@/components/Role'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/booklist',
       name: 'BookList',
       component: BookList
+    },
+    {
+      path: '/role',
+      name: 'Role',
+      component: Role
     }
   ]
 })
