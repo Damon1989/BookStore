@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- element ui表单
-        详细信息请查看 https://element.faas.ele.me/#/zh-CN/component/form
-    -->
     <el-row>
       <el-col :span="5">
         <el-form :model="form" label-width="100px">
@@ -41,7 +38,7 @@ export default {
   },
   methods: {
     submit() {
-      var that=this;
+      var that = this;
       const formData = new FormData();
       formData.append("username", this.form.userNameOrEmailAddress);
       formData.append("password", this.form.password);
@@ -56,14 +53,19 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res.data.access_token != undefined) {
-            that.$cookies.set("access_token",res.data.access_token);
-            that.$cookies.set("token_type",res.data.token_type);
+            that.$cookies.set("access_token", res.data.access_token);
+            that.$cookies.set("token_type", res.data.token_type);
             //登录成功提示
             this.$message({
               message: "登录成功",
               type: "success",
             });
-            that.$router.push('/about');
+            debugger
+            if (that.$route.query.redirect) {
+              that.$router.push(that.$route.query.redirect);
+            } else {
+              that.$router.push("/");
+            }
           } else {
             this.$message({
               message: "登录失败! " + res.data.error_description,
