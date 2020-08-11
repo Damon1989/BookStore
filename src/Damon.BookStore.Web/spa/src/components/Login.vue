@@ -54,7 +54,6 @@ export default {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          debugger
           console.log(res.data);
           if (res.data.access_token != undefined) {
             that.$cookies.set("access_token",res.data.access_token);
