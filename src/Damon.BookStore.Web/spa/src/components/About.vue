@@ -16,10 +16,22 @@ export default {
   },
   methods: {
     btnGetUser: function () {
+      // this.$axios
+      //   .get("/api/identity/users")
+      //   .then((response) => {
+      //     this.userInfo = response.data.items;
+      //   })
+      //   .catch(() => {
+      //     this.$message({
+      //       message: "登录失败或权限不足",
+      //       type: "error",
+      //     });
+      //   });
       this.$axios
-        .get("/api/identity/users")
+        .get("/api/app/book/user")
         .then((response) => {
-          this.userInfo = response.data.items;
+          console.log(response);
+          this.userInfo = response.data;
         })
         .catch(() => {
           this.$message({

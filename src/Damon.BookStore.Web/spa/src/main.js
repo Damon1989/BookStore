@@ -40,31 +40,13 @@ Vue.use(VueCookies);
 
 Axios.interceptors.request.use(
   config => {
-    // debugger
-    //     var token= Vue.$cookies.get("access_token");
-    //     if(token){
 
-    //     }else{
-    //       Vue.$router.push("/login");
-    //     }
+    if(checkUserIsLogin()){
+      var token= Vue.$cookies.get("access_token");
+      var token_type=Vue.$cookies.get("token_type");
+      config.headers={"Authorization":token_type+" "+token}
+    }
 
-    //  config.baseURL = '/api/'
-    //  config.withCredentials = true // 允许携带token ,这个是解决跨域产生的相关问题
-    //  config.timeout = 6000
-    //  let token = sessionStorage.getItem('access_token')
-    //  let csrf = store.getters.csrf
-    //  if (token) {
-    //   config.headers = {
-    //    'access-token': token,
-    //    'Content-Type': 'application/x-www-form-urlencoded'
-    //   }
-    //  }
-    //  if (config.url === 'refresh') {
-    //   config.headers = {
-    //    'refresh-token': sessionStorage.getItem('refresh_token'),
-    //    'Content-Type': 'application/x-www-form-urlencoded'
-    //   }
-    //  }
     return config
   },
   error => {
@@ -75,7 +57,6 @@ Axios.interceptors.request.use(
 
 Axios.interceptors.response.use(
   response => {
-    debugger
     console.log(response);
     console.log(document.cookie);
     // 定时刷新access-token
@@ -96,10 +77,7 @@ Axios.interceptors.response.use(
 
 
 router.beforeEach((to, from, next) => {
-  var token = Vue.$cookies.get("access_token");
-  debugger;
-  console.log(token);
-  if (token) {
+  if (checkUserIsLogin()) {
     next()
   } else {
     if(to.path=="/login"){
@@ -112,6 +90,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
+
+function checkUserIsLogin() {
+  var data = Vue.$cookies.get("access_token");
+  return data
+}
 
 /* eslint-disable no-new */
 new Vue({
