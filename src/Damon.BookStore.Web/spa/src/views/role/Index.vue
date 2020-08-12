@@ -37,6 +37,7 @@
       </div>
     </el-dialog>
 
+    <el-button type="primary" @click="saveRolePermission">保存</el-button>
     <el-tabs :tab-position="tabPosition" style="height: 200px;">
       <el-tab-pane :label="item.displayName" v-for="(item,index) in tabGroups" :key="index">
         <el-tree
@@ -45,7 +46,7 @@
           node-key="name"
           show-checkbox
           :default-checked-keys="permissionCheckedKeys"
-          @node-click="treeNodeClick"
+          @check-change="treeNodeCheckChange"
         ></el-tree>
       </el-tab-pane>
     </el-tabs>
@@ -103,12 +104,12 @@ export default {
       if (!role) {
         role = "admin";
       }
-
       var that = this;
       var url =
         "/api/permission-management/permissions?providerName=R&providerKey=" +
         role;
       this.$axios.get(url).then((res) => {
+        console.log(res.data);
         var groups = res.data.groups;
         console.log(groups);
 
@@ -162,19 +163,53 @@ export default {
         that.getList();
       });
     },
-    treeNodeClick(data) {
-      console.log(data);
-      console.log(data.isGranted);
-      console.log(JSON.stringify(data));
-      var select = JSON.parse(JSON.stringify(data));
-      console.log(select);
-
-      if(data.isGranted){
-        this.permissionCheckedKeys.pop(data.name)
-      }else{
-        this.permissionCheckedKeys.push(data.name)
+    treeNodeCheckChange(data, checked, indeterminate) {
+      var that = this;
+      if (checked) {
+        that.permissionCheckedKeys.push(data.name);
+      } else {
+        that.permissionCheckedKeys.pop(data.name);
       }
-      console.log(this.permissionCheckedKeys.length);
+      console.log(that.tabGroups);
+      that.tabGroups.forEach((group) => {
+        group.permissions.forEach((p) => {
+          if (that.permissionCheckedKeys.includes(p.name)) {
+            p.isGranted = true;
+          } else {
+            p.isGranted = false;
+          }
+        });
+      });
+      console.log(that.tabGroups);
+    },
+    saveRolePermission() {
+      var role = "admin";
+      var that = this;
+      var url =
+        "/api/permission-management/permissions?providerName=R&providerKey=" +
+        role;
+      var permission = {
+        name: "",
+        isGranted: false,
+      };
+      var permissions = new Array();
+      that.tabGroups.forEach((e) => {
+        e.permissions.forEach((p) => {
+          permissions.push({
+            name: p.name,
+            isGranted: p.isGranted,
+          });
+        });
+      });
+      var submitData = {
+        Permissions: permissions,
+      };
+      this.$axios.put(url, submitData).then((res) => {
+        this.$message({
+          message: "保存成功",
+          type: "success",
+        });
+      });
     },
   },
   mounted() {
