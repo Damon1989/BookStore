@@ -27,7 +27,6 @@ Vue.use(VueCookies);
 
 Axios.interceptors.request.use(
   config => {
-
     if(checkUserIsLogin()){
       var token= Vue.$cookies.get("access_token");
       var token_type=Vue.$cookies.get("token_type");

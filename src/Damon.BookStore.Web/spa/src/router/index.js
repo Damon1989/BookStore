@@ -38,7 +38,6 @@ export default new Router({
     {
       path: '/booklist',
       name: 'BookList',
-      // redirect: '/booklist',
       component: Layout,
       children:[
         {
@@ -56,6 +55,18 @@ export default new Router({
         {
           path:'/',
           component:()=>import('@/views/role/index'),
+          name:'Role'
+        }
+      ]
+    },
+    {
+      path: '/user',
+      name: 'User',
+      component: Layout,
+      children:[
+        {
+          path:'/',
+          component:()=>import('@/views/user/index'),
           name:'Role'
         }
       ]
