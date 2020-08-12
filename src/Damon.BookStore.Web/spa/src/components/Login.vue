@@ -51,7 +51,6 @@ export default {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          debugger
           console.log(res.data);
           if (res.data.access_token != undefined) {
             setAccessToken(res.data.access_token);
@@ -63,7 +62,6 @@ export default {
               message: "登录成功",
               type: "success",
             });
-            debugger
             if (that.$route.query.redirect) {
               that.$router.push(that.$route.query.redirect);
             } else {

@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+// import Home from '@/components/Home'
 import Login from '@/components/Login'
 import About from '@/components/About'
-import BookList  from '@/components/BookList';
+// import BookList  from '@/components/BookList';
 import Role from '@/components/Role'
+
+/* Layout */
+import Layout from '@/layout'
 
 Vue.use(Router)
 
@@ -13,7 +16,15 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      redirect: '/home',
+      component: Layout,
+      children:[
+        {
+          path:'home',
+          component:()=>import('@/views/home/index'),
+          name:'Home'
+        }
+      ]
     },
     {
       path: '/login',
@@ -28,7 +39,15 @@ export default new Router({
     {
       path: '/booklist',
       name: 'BookList',
-      component: BookList
+      // redirect: '/booklist',
+      component: Layout,
+      children:[
+        {
+          path:'/',
+          component:()=>import('@/views/book/index'),
+          name:'Booklist'
+        }
+      ]
     },
     {
       path: '/role',
