@@ -36,7 +36,19 @@
         <el-button type="primary" @click="newBook">确 定</el-button>
       </div>
     </el-dialog>
-    <el-tree :data="treeData" :props="defaultProps" @node-click="treeNodeClick"></el-tree>
+
+    <el-tabs :tab-position="tabPosition" style="height: 200px;">
+      <el-tab-pane :label="item.displayName" v-for="(item,index) in tabGroups" :key="index">
+        <el-tree
+          :data="item.permissions"
+          :props="defaultProps"
+          node-key="name"
+          show-checkbox
+          :default-checked-keys="permissionCheckedKeys"
+          @node-click="treeNodeClick"
+        ></el-tree>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -62,16 +74,19 @@ export default {
         name: "",
         id: "",
       },
-      treeData: [],
+      tabPosition: "left",
+      tabGroups: [],
       defaultProps: {
         children: "permissions",
         label: "displayName",
       },
+      permissionCheckedKeys: [],
     };
   },
   methods: {
     getList() {
-      var skipCount = (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
+      var skipCount =
+        (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
       this.$axios
         .get(
           "/api/identity/roles?SkipCount=" +
@@ -83,6 +98,31 @@ export default {
           this.tableData = response.data.items;
           this.total = response.data.totalCount;
         });
+    },
+    getRolePermission(role) {
+      if (!role) {
+        role = "admin";
+      }
+
+      var that = this;
+      var url =
+        "/api/permission-management/permissions?providerName=R&providerKey=" +
+        role;
+      this.$axios.get(url).then((res) => {
+        var groups = res.data.groups;
+        console.log(groups);
+
+        that.tabGroups = groups;
+        var checkedKeys = new Array();
+        groups.forEach((element) => {
+          element.permissions.forEach((p) => {
+            if (p.isGranted) {
+              checkedKeys.push(p.name);
+            }
+          });
+        });
+        that.permissionCheckedKeys = checkedKeys;
+      });
     },
     showNewBook() {
       this.dialogFormVisible = true;
@@ -104,10 +144,6 @@ export default {
           });
       }
     },
-    // viewSingle(row) {
-    //   console.log(row);
-    //   console.log(row.id);
-    // },
     editSingle(id) {
       this.new = false;
       var that = this;
@@ -126,281 +162,24 @@ export default {
         that.getList();
       });
     },
-    setTreeData() {
-      var result = {
-        entityDisplayName: "admin",
-        groups: [
-          {
-            name: "AbpIdentity",
-            displayName: "身份标识管理",
-            permissions: [
-              {
-                name: "AbpIdentity.Roles",
-                displayName: "角色管理",
-                parentName: null,
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Roles.Create",
-                displayName: "创建",
-                parentName: "AbpIdentity.Roles",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Roles.Update",
-                displayName: "编辑",
-                parentName: "AbpIdentity.Roles",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Roles.Delete",
-                displayName: "删除",
-                parentName: "AbpIdentity.Roles",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Roles.ManagePermissions",
-                displayName: "更改权限",
-                parentName: "AbpIdentity.Roles",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Users",
-                displayName: "用户管理",
-                parentName: null,
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Users.Create",
-                displayName: "创建",
-                parentName: "AbpIdentity.Users",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Users.Update",
-                displayName: "编辑",
-                parentName: "AbpIdentity.Users",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Users.Delete",
-                displayName: "删除",
-                parentName: "AbpIdentity.Users",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpIdentity.Users.ManagePermissions",
-                displayName: "更改权限",
-                parentName: "AbpIdentity.Users",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            name: "AbpTenantManagement",
-            displayName: "租户管理",
-            permissions: [
-              {
-                name: "AbpTenantManagement.Tenants",
-                displayName: "租户管理",
-                parentName: null,
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpTenantManagement.Tenants.Create",
-                displayName: "创建",
-                parentName: "AbpTenantManagement.Tenants",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpTenantManagement.Tenants.Update",
-                displayName: "编辑",
-                parentName: "AbpTenantManagement.Tenants",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpTenantManagement.Tenants.Delete",
-                displayName: "删除",
-                parentName: "AbpTenantManagement.Tenants",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpTenantManagement.Tenants.ManageFeatures",
-                displayName: "管理功能",
-                parentName: "AbpTenantManagement.Tenants",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-              {
-                name: "AbpTenantManagement.Tenants.ManageConnectionStrings",
-                displayName: "管理连接字符串",
-                parentName: "AbpTenantManagement.Tenants",
-                isGranted: true,
-                allowedProviders: [],
-                grantedProviders: [
-                  {
-                    providerName: "R",
-                    providerKey: "admin",
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            name: "BookStore",
-            displayName: "Book Store",
-            permissions: [
-              {
-                name: "BookStore.Books",
-                displayName: "Book Management",
-                parentName: null,
-                isGranted: false,
-                allowedProviders: [],
-                grantedProviders: [],
-              },
-              {
-                name: "BookStore.Books.Create",
-                displayName: "Creating new books",
-                parentName: "BookStore.Books",
-                isGranted: false,
-                allowedProviders: [],
-                grantedProviders: [],
-              },
-              {
-                name: "BookStore.Books.Edit",
-                displayName: "Editing the books",
-                parentName: "BookStore.Books",
-                isGranted: false,
-                allowedProviders: [],
-                grantedProviders: [],
-              },
-              {
-                name: "BookStore.Books.Delete",
-                displayName: "Deleting the books",
-                parentName: "BookStore.Books",
-                isGranted: false,
-                allowedProviders: [],
-                grantedProviders: [],
-              },
-            ],
-          },
-        ],
-      };
-      console.log(result.groups[0]);
-      console.log(result.groups[0].permissions);
-      this.treeData = result.groups;
-    },
     treeNodeClick(data) {
+      console.log(data);
+      console.log(data.isGranted);
       console.log(JSON.stringify(data));
+      var select = JSON.parse(JSON.stringify(data));
+      console.log(select);
+
+      if(data.isGranted){
+        this.permissionCheckedKeys.pop(data.name)
+      }else{
+        this.permissionCheckedKeys.push(data.name)
+      }
+      console.log(this.permissionCheckedKeys.length);
     },
   },
   mounted() {
     this.getList();
-    this.setTreeData();
+    this.getRolePermission();
   },
 };
 </script>
