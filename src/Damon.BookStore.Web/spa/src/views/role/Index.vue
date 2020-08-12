@@ -223,7 +223,6 @@ export default {
   },
   mounted() {
     this.getList();
-    // this.getRolePermission();
   },
 };
 </script>

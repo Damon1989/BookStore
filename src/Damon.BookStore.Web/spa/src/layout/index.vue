@@ -10,7 +10,7 @@
             <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>王小虎</span>
+        <span>{{userName}}</span>
         <el-button type="warning" @click="loginExit">退出</el-button>
       </el-header>
 
@@ -22,7 +22,6 @@
                 <i class="el-icon-message"></i>导航一
               </template>
               <el-menu-item-group>
-                <template slot="title">分组一</template>
                 <el-menu-item index="1-2">
                   <router-link to="/">首页</router-link>
                 </el-menu-item>
@@ -89,6 +88,11 @@
 import { removeAccessToken } from '@/utils/auth'
 export default {
   name: "App",
+  data(){
+    return {
+      userName:""
+    }
+  },
   methods: {
     loginExit() {
       var that = this;
@@ -101,7 +105,25 @@ export default {
         that.$router.push("/login");
       });
     },
+    getUser: function () {
+      var that=this;
+      this.$axios
+        .get("/api/app/book/user")
+        .then((response) => {
+          console.log(response.data);
+          that.userName=response.data.userName;
+        })
+        .catch(() => {
+          this.$message({
+            message: "登录失败或权限不足",
+            type: "error",
+          });
+        });
+    },
   },
+  created:function(){
+    this.getUser();
+  }
 };
 </script>
 
