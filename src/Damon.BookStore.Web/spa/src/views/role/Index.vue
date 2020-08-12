@@ -5,7 +5,7 @@
         <el-button @click="getList">查询</el-button>
       </el-col>
       <el-col :span="1" :offset="1">
-        <el-button @click="showNewBook">新增</el-button>
+        <el-button @click="showNewRole">新增</el-button>
       </el-col>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">
@@ -13,6 +13,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editSingle(scope.row.id)">编辑</el-button>
+          <el-button type="text" size="small" @click="showRolePermissionDialog(scope.row.name)">权限</el-button>
           <el-button @click.native.prevent="deleteSingle(scope.row.id)" type="text" size="small">移除</el-button>
         </template>
       </el-table-column>
@@ -27,29 +28,37 @@
 
     <el-dialog title="角色管理" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
+        <el-form-item label="角色名称" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="默认" :label-width="formLabelWidth">
+          <el-checkbox v-model="form.isDefault" style="float:left"></el-checkbox>
+        </el-form-item>
+        <el-form-item label="公开" :label-width="formLabelWidth">
+          <el-checkbox v-model="form.isPublic" style="float:left"></el-checkbox>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="newBook">确 定</el-button>
+        <el-button type="primary" @click="newRole">确 定</el-button>
       </div>
     </el-dialog>
 
-    <el-button type="primary" @click="saveRolePermission">保存</el-button>
-    <el-tabs :tab-position="tabPosition" style="height: 200px;">
-      <el-tab-pane :label="item.displayName" v-for="(item,index) in tabGroups" :key="index">
-        <el-tree
-          :data="item.permissions"
-          :props="defaultProps"
-          node-key="name"
-          show-checkbox
-          :default-checked-keys="permissionCheckedKeys"
-          @check-change="treeNodeCheckChange"
-        ></el-tree>
-      </el-tab-pane>
-    </el-tabs>
+    <el-dialog title="权限管理" :visible.sync="dialogRolePermissionVisible">
+      <el-button type="primary" style="float:right" @click="saveRolePermission">保存</el-button>
+      <el-tabs :tab-position="tabPosition" style="height: 200px;">
+        <el-tab-pane :label="item.displayName" v-for="(item,index) in tabGroups" :key="index">
+          <el-tree
+            :data="item.permissions"
+            :props="defaultProps"
+            node-key="name"
+            show-checkbox
+            :default-checked-keys="permissionCheckedKeys"
+            @check-change="treeNodeCheckChange"
+          ></el-tree>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
@@ -61,7 +70,6 @@ export default {
     return {
       tableData: [],
       total: 0,
-      hideonsiglepage: true,
 
       listQuery: {
         currentPage: 1,
@@ -69,12 +77,16 @@ export default {
       },
       dialogFormVisible: false,
       formLabelWidth: "120px",
+
       new: true,
-      showOperate: false,
       form: {
         name: "",
         id: "",
+        isDefault: false,
+        isPublic: false,
       },
+
+      dialogRolePermissionVisible: false,
       tabPosition: "left",
       tabGroups: [],
       defaultProps: {
@@ -82,6 +94,7 @@ export default {
         label: "displayName",
       },
       permissionCheckedKeys: [],
+      editRole:"",
     };
   },
   methods: {
@@ -125,11 +138,11 @@ export default {
         that.permissionCheckedKeys = checkedKeys;
       });
     },
-    showNewBook() {
+    showNewRole() {
       this.dialogFormVisible = true;
       this.new = true;
     },
-    newBook() {
+    newRole() {
       var that = this;
       if (this.new) {
         this.$axios.post("/api/identity/roles", this.form).then((response) => {
@@ -149,16 +162,13 @@ export default {
       this.new = false;
       var that = this;
       this.$axios.get("/api/identity/roles/" + id).then(function (result) {
-        console.log(result);
         that.form = result.data;
         that.dialogFormVisible = true;
       });
     },
     deleteSingle(id) {
-      console.log(id);
       var that = this;
       this.$axios.delete("/api/identity/roles/" + id).then(function (result) {
-        console.log(result);
         that.listQuery.currentPage = 1;
         that.getList();
       });
@@ -170,7 +180,6 @@ export default {
       } else {
         that.permissionCheckedKeys.pop(data.name);
       }
-      console.log(that.tabGroups);
       that.tabGroups.forEach((group) => {
         group.permissions.forEach((p) => {
           if (that.permissionCheckedKeys.includes(p.name)) {
@@ -180,18 +189,12 @@ export default {
           }
         });
       });
-      console.log(that.tabGroups);
     },
     saveRolePermission() {
-      var role = "admin";
       var that = this;
       var url =
         "/api/permission-management/permissions?providerName=R&providerKey=" +
-        role;
-      var permission = {
-        name: "",
-        isGranted: false,
-      };
+        that.editRole;
       var permissions = new Array();
       that.tabGroups.forEach((e) => {
         e.permissions.forEach((p) => {
@@ -209,12 +212,18 @@ export default {
           message: "保存成功",
           type: "success",
         });
+        that.dialogRolePermissionVisible=false;
       });
     },
+    showRolePermissionDialog(role){
+      this.editRole=role;
+      this.dialogRolePermissionVisible=true;
+      this.getRolePermission(role);
+    }
   },
   mounted() {
     this.getList();
-    this.getRolePermission();
+    // this.getRolePermission();
   },
 };
 </script>

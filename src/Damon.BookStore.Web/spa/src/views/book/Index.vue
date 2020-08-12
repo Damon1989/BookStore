@@ -57,7 +57,6 @@ export default {
     return {
       tableData: [],
       total: 0,
-      hideonsiglepage: true,
       listQuery: {
         currentPage: 1,
         pageSize: 10,
@@ -66,7 +65,6 @@ export default {
       dialogFormVisible: false,
       formLabelWidth: "120px",
       new: true,
-      showOperate: false,
       form: {
         name: "",
         price: 0,
