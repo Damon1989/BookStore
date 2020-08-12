@@ -4,7 +4,7 @@ import Vue from 'vue'
 // import VueResource from 'vue-resource'
 import App from './App'
 import router from './router'
-// import store from './store'
+import store from './store'
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
 
@@ -75,7 +75,7 @@ function checkUserIsLogin() {
 new Vue({
   el: '#app',
   router,
-  // store,
+  store,
   components: { App },
   template: '<App/>'
 })

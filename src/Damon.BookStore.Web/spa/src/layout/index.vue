@@ -15,6 +15,7 @@
       </el-header>
 
       <el-container>
+        <sidebar class="sidebar-container" />
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
           <el-menu>
             <el-submenu index="1">
@@ -46,8 +47,10 @@
 
 <script>
 import { removeAccessToken } from "@/utils/auth";
+import {  Sidebar } from "./components"
 export default {
   name: "App",
+  components: { Sidebar },
   data() {
     return {
       userName: "",
