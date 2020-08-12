@@ -29,7 +29,9 @@
                 <el-menu-item index="1-1">
                   <router-link to="/booklist">图书管理</router-link>
                 </el-menu-item>
-
+                <el-menu-item index="1-3">
+                  <router-link to="/role">角色</router-link>
+                </el-menu-item>
               </el-menu-item-group>
               <el-menu-item-group title="分组2">
                 <el-menu-item index="1-3">选项3</el-menu-item>

@@ -12,6 +12,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import VueCookies from 'vue-cookies';
+import { getAccessToken } from "@/utils/auth";
 
 Vue.config.productionTip = false
 
@@ -20,23 +21,9 @@ Vue.prototype.$axios = Axios;
 
 //提交header中包含cookies,Abp vNext必须
 Axios.defaults.withCredentials = true;
-// Axios.defaults.baseURL="https://localhost:44397/";
-// Vue.use(VueResource);
 Vue.use(ElementUI);
 Vue.use(VueAxios, Axios)
 Vue.use(VueCookies);
-
-// Vue.http.interceptors.push(function (request, next) {
-//   //跨域携带cookie
-//   request.credentials=true;
-
-//   next(function(response){
-//     if(response.body.code==401){
-//       console.log("-----------11111111111");
-//     }
-//     return response;
-//   })
-// })
 
 Axios.interceptors.request.use(
   config => {
@@ -57,17 +44,6 @@ Axios.interceptors.request.use(
 
 Axios.interceptors.response.use(
   response => {
-    console.log(response);
-    console.log(document.cookie);
-    // 定时刷新access-token
-    //  if (!response.data.value && response.data.data.message === 'token invalid') {
-    //   // 刷新token
-    //   // store.dispatch('refresh').then(response => {
-    //   //  sessionStorage.setItem('access_token', response.data)
-    //   // }).catch(error => {
-    //   //  throw new Error('token刷新' + error)
-    //   // })
-    //  }
     return response
   },
   error => {
@@ -92,7 +68,7 @@ router.beforeEach((to, from, next) => {
 })
 
 function checkUserIsLogin() {
-  var data = Vue.$cookies.get("access_token");
+  var data = getAccessToken();
   return data
 }
 

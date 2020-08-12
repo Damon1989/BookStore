@@ -1,28 +1,31 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="5">
-        <el-form :model="form" label-width="100px">
-          <el-form-item label="用户名">
-            <el-input v-model="form.userNameOrEmailAddress"></el-input>
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-checkbox v-model="form.rememberMe">记住我</el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submit" style="width: 100%">提交</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+    <el-container>
+      <el-main>
+        <el-row style="margin:200px">
+          <el-col :span="6" :offset="8">
+            <el-form :model="form" label-width="100px">
+              <el-form-item label="用户名">
+                <el-input v-model="form.userNameOrEmailAddress"></el-input>
+              </el-form-item>
+              <el-form-item label="密码">
+                <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-checkbox v-model="form.rememberMe">记住我</el-checkbox>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submit" style="width: 100%">提交</el-button>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
   </div>
 </template>
 <script>
-
-import { setAccessToken,setTokenType } from '@/utils/auth'
+import { setAccessToken, setTokenType } from "@/utils/auth";
 
 export default {
   name: "Login",

@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import About from '@/components/About'
 // import BookList  from '@/components/BookList';
-import Role from '@/components/Role'
 
 /* Layout */
 import Layout from '@/layout'
@@ -52,7 +51,14 @@ export default new Router({
     {
       path: '/role',
       name: 'Role',
-      component: Role
+      component: Layout,
+      children:[
+        {
+          path:'/',
+          component:()=>import('@/views/role/index'),
+          name:'Role'
+        }
+      ]
     }
   ]
 })

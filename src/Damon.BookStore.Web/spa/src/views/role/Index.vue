@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="1" :offset="18">
-        <el-button @click="search">查询</el-button>
+        <el-button @click="getList">查询</el-button>
       </el-col>
       <el-col :span="1" :offset="1">
         <el-button @click="showNewBook">新增</el-button>
@@ -17,23 +17,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-row :gutter="20">
-      <el-col :span="5" :offset="15">
-        <div class="block">
-          <el-pagination
-            layout="prev, pager, next,sizes,total"
-            :total="total"
-            :page-size="pageSize"
-            :page-sizes="[5, 10, 20, 50]"
-            :current-page="currentPage"
-            @prev-click="prevClick"
-            @next-click="nextClick"
-            @current-change="currentChange"
-            @size-change="sizeChange"
-          ></el-pagination>
-        </div>
-      </el-col>
-    </el-row>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.currentPage"
+      :limit.sync="listQuery.pageSize"
+      @pagination="getList"
+    />
 
     <el-dialog title="角色管理" :visible.sync="dialogFormVisible">
       <el-form :model="form">
@@ -51,14 +41,19 @@
 </template>
 
   <script>
+import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 export default {
+  components: { Pagination },
   data() {
     return {
       tableData: [],
       total: 0,
       hideonsiglepage: true,
-      currentPage: 1,
-      pageSize: 10,
+
+      listQuery: {
+        currentPage: 1,
+        pageSize: 10,
+      },
       dialogFormVisible: false,
       formLabelWidth: "120px",
       new: true,
@@ -75,39 +70,19 @@ export default {
     };
   },
   methods: {
-    search() {
-      var skipCount = (this.currentPage - 1) * this.pageSize;
+    getList() {
+      var skipCount = (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
       this.$axios
         .get(
           "/api/identity/roles?SkipCount=" +
             skipCount +
             "&MaxResultCount=" +
-            this.pageSize
+            this.listQuery.pageSize
         )
         .then((response) => {
           this.tableData = response.data.items;
           this.total = response.data.totalCount;
         });
-    },
-    prevClick() {
-      if (this.currentPage > 1) {
-        this.currentPage = this.currentPage - 1;
-      }
-      this.search();
-    },
-    nextClick() {
-      console.log("next");
-      this.currentPage = this.currentPage + 1;
-      this.search();
-    },
-    currentChange(val) {
-      this.currentPage = val;
-      this.search();
-    },
-    sizeChange(val) {
-      this.pageSize = val;
-      this.currentPage = 1;
-      this.search();
     },
     showNewBook() {
       this.dialogFormVisible = true;
@@ -118,14 +93,14 @@ export default {
       if (this.new) {
         this.$axios.post("/api/identity/roles", this.form).then((response) => {
           that.dialogFormVisible = false;
-          that.search();
+          that.getList();
         });
       } else {
         this.$axios
           .put("/api/identity/roles/" + this.form.id, this.form)
           .then((response) => {
             that.dialogFormVisible = false;
-            that.search();
+            that.getList();
           });
       }
     },
@@ -147,8 +122,8 @@ export default {
       var that = this;
       this.$axios.delete("/api/identity/roles/" + id).then(function (result) {
         console.log(result);
-        that.currentPage = 1;
-        that.search();
+        that.listQuery.currentPage = 1;
+        that.getList();
       });
     },
     setTreeData() {
@@ -424,7 +399,7 @@ export default {
     },
   },
   mounted() {
-    // this.search();
+    this.getList();
     this.setTreeData();
   },
 };
