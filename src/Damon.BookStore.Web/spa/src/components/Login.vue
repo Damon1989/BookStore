@@ -21,8 +21,8 @@
   </div>
 </template>
 <script>
-//引入路由
-import router from "../router";
+
+import { setAccessToken,setTokenType } from '@/utils/auth'
 
 export default {
   name: "Login",
@@ -51,10 +51,13 @@ export default {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
+          debugger
           console.log(res.data);
           if (res.data.access_token != undefined) {
-            that.$cookies.set("access_token", res.data.access_token);
-            that.$cookies.set("token_type", res.data.token_type);
+            setAccessToken(res.data.access_token);
+            setTokenType(res.data.token_type);
+            // that.$cookies.set("access_token", res.data.access_token);
+            // that.$cookies.set("token_type", res.data.token_type);
             //登录成功提示
             this.$message({
               message: "登录成功",

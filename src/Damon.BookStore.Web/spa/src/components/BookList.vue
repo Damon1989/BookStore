@@ -78,7 +78,7 @@ export default {
       dialogFormVisible: false,
       formLabelWidth: "120px",
       new: true,
-      showOperate:false,
+      showOperate: false,
       form: {
         name: "",
         price: 0,
