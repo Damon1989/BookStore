@@ -54,7 +54,6 @@ Vue.use(VueCookies);
 
 
 router.beforeEach(async (to, from, next) => {
-  debugger
   if (checkUserIsLogin()) {
     next()
     store.dispatch("user/getInfo");
@@ -63,8 +62,6 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
     const {roles}= await store.dispatch("user/getInfo");
-    debugger
-console.log("cccc");
     console.log(roles);
     // roles.then(res=>{
     //   console.log("角色");

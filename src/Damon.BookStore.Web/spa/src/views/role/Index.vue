@@ -14,7 +14,9 @@
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editSingle(scope.row.id)">编辑</el-button>
           <el-button type="text" size="small" @click="showRolePermissionDialog(scope.row.name)">权限</el-button>
-          <el-button @click.native.prevent="deleteSingle(scope.row.id)" type="text" size="small">移除</el-button>
+          <el-popconfirm title="确定删除吗？" @onConfirm="deleteSingle(scope.row)">
+            <el-button slot="reference" type="text" size="small">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -64,6 +66,15 @@
 
   <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import {
+  getList,
+  get,
+  add,
+  edit,
+  deleteRole,
+  getRolePermission,
+  addRolePermission,
+} from "@/api/role";
 export default {
   components: { Pagination },
   data() {
@@ -94,38 +105,24 @@ export default {
         label: "displayName",
       },
       permissionCheckedKeys: [],
-      editRole:"",
+      editRole: "",
     };
   },
   methods: {
     getList() {
       var skipCount =
         (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
-      this.$axios
-        .get(
-          "/api/identity/roles?SkipCount=" +
-            skipCount +
-            "&MaxResultCount=" +
-            this.listQuery.pageSize
-        )
-        .then((response) => {
-          this.tableData = response.data.items;
-          this.total = response.data.totalCount;
-        });
+      getList({ skipCount: skipCount, pageSize: this.listQuery.pageSize }).then(
+        (response) => {
+          this.tableData = response.items;
+          this.total = response.totalCount;
+        }
+      );
     },
     getRolePermission(role) {
-      if (!role) {
-        role = "admin";
-      }
       var that = this;
-      var url =
-        "/api/permission-management/permissions?providerName=R&providerKey=" +
-        role;
-      this.$axios.get(url).then((res) => {
-        console.log(res.data);
-        var groups = res.data.groups;
-        console.log(groups);
-
+      getRolePermission(role).then((res) => {
+        var groups = res.groups;
         that.tabGroups = groups;
         var checkedKeys = new Array();
         groups.forEach((element) => {
@@ -141,39 +138,50 @@ export default {
     showNewRole() {
       this.dialogFormVisible = true;
       this.new = true;
+      this.form = {
+        name: "",
+        id: "",
+        isDefault: false,
+        isPublic: false,
+      };
     },
     newRole() {
       var that = this;
       if (this.new) {
-        this.$axios.post("/api/identity/roles", this.form).then((response) => {
+        add(this.form).then(() => {
           that.dialogFormVisible = false;
           that.getList();
         });
       } else {
-        this.$axios
-          .put("/api/identity/roles/" + this.form.id, this.form)
-          .then((response) => {
-            that.dialogFormVisible = false;
-            that.getList();
-          });
+        edit(this.form).then(() => {
+          that.dialogFormVisible = false;
+          that.getList();
+        });
       }
     },
     editSingle(id) {
       this.new = false;
       var that = this;
-      this.$axios.get("/api/identity/roles/" + id).then(function (result) {
-        that.form = result.data;
+      get(id).then(function (res) {
+        that.form = res;
         that.dialogFormVisible = true;
       });
     },
-    deleteSingle(id) {
+    deleteSingle(data) {
       var that = this;
-      this.$axios.delete("/api/identity/roles/" + id).then(function (result) {
-        that.listQuery.currentPage = 1;
-        that.getList();
-      });
+      if (data.name == "admin") {
+        this.$message({
+          message: '管理员不能删除',
+          type: 'warning'
+        });
+      } else {
+        deleteRole(data.id).then(function () {
+          that.listQuery.currentPage = 1;
+          that.getList();
+        });
+      }
     },
-    treeNodeCheckChange(data, checked, indeterminate) {
+    treeNodeCheckChange(data, checked) {
       var that = this;
       if (checked) {
         that.permissionCheckedKeys.push(data.name);
@@ -192,9 +200,6 @@ export default {
     },
     saveRolePermission() {
       var that = this;
-      var url =
-        "/api/permission-management/permissions?providerName=R&providerKey=" +
-        that.editRole;
       var permissions = new Array();
       that.tabGroups.forEach((e) => {
         e.permissions.forEach((p) => {
@@ -207,19 +212,19 @@ export default {
       var submitData = {
         Permissions: permissions,
       };
-      this.$axios.put(url, submitData).then((res) => {
+      addRolePermission(that.editRole, submitData).then(() => {
         this.$message({
           message: "保存成功",
           type: "success",
         });
-        that.dialogRolePermissionVisible=false;
+        that.dialogRolePermissionVisible = false;
       });
     },
-    showRolePermissionDialog(role){
-      this.editRole=role;
-      this.dialogRolePermissionVisible=true;
+    showRolePermissionDialog(role) {
+      this.editRole = role;
+      this.dialogRolePermissionVisible = true;
       this.getRolePermission(role);
-    }
+    },
   },
   mounted() {
     this.getList();
