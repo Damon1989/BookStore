@@ -1,7 +1,7 @@
 // import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setAccessToken, setTokenType } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+import axios from 'axios'
 const state = {
   token: getToken(),
   name: '',
@@ -29,49 +29,72 @@ const mutations = {
 }
 
 const actions = {
-  // user login
   login({ commit }, userInfo) {
-    debugger
-    const { username, password } = userInfo
-    // return new Promise((resolve, reject) => {
-    //   login({ username: username.trim(), password: password }).then(response => {
-    //     const { data } = response
-    //     commit('SET_TOKEN', data.token)
-    //     setToken(data.token)
-    //     resolve()
-    //   }).catch(error => {
-    //     reject(error)
-    //   })
-    // })
+    const { userNameOrEmailAddress, password } = userInfo
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("username", userNameOrEmailAddress);
+      formData.append("password", password);
+      formData.append("grant_type", "password");
+      formData.append("scope", "BookStore");
+      formData.append("client_id", "BookStore_App");
+      formData.append("client_secret", "1q2w3e*");
+      axios
+        .post("/oauth/connect/token", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.access_token != undefined) {
+            setAccessToken(res.data.access_token);
+            setTokenType(res.data.token_type);
+            commit('SET_TOKEN', res.data.token)
+            resolve(res)
+          }
+        })
+        .catch(() => {
+          reject()
+        });
+
+
+      // login({ username: username.trim(), password: password }).then(response => {
+      //   const { data } = response
+      //   commit('SET_TOKEN', data.token)
+      //   setToken(data.token)
+      //   resolve()
+      // }).catch(error => {
+      //   reject(error)
+      // })
+    })
   },
 
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       // getInfo(state.token).then(response => {
-        // const { data } = response
+      // const { data } = response
 
-        // if (!data) {
-        //   reject('Verification failed, please Login again.')
-        // }
+      // if (!data) {
+      //   reject('Verification failed, please Login again.')
+      // }
 
-        // const { roles, name, avatar, introduction } = data
+      // const { roles, name, avatar, introduction } = data
 
-        const roles=['admin','deptAdmin'];
+      const roles = ['admin', 'deptAdmin'];
 
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
+      // roles must be a non-empty array
+      if (!roles || roles.length <= 0) {
+        reject('getInfo: roles must be a non-null array!')
+      }
 
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        // commit('SET_AVATAR', avatar)
-        // commit('SET_INTRODUCTION', introduction)
-        resolve(roles)
-      }).catch(error => {
-        reject(error)
-      })
+      commit('SET_ROLES', roles)
+      commit('SET_NAME', name)
+      // commit('SET_AVATAR', avatar)
+      // commit('SET_INTRODUCTION', introduction)
+      resolve(roles)
+    }).catch(error => {
+      reject(error)
+    })
     // })
   },
 

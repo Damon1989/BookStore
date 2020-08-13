@@ -22,6 +22,11 @@ export default {
       return {
         tableData: Array(20).fill(item)
       }
+    },
+    computed:{
+      token() {
+        return this.$store.getters.token;
+      }
     }
   };
 </script>
