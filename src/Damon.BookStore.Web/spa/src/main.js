@@ -15,7 +15,7 @@ import VueCookies from 'vue-cookies';
 import { getAccessToken } from "@/utils/auth";
 
 /* Layout */
-import Layout from '@/layout';
+// import Layout from '@/layout';
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = Axios;
@@ -27,40 +27,49 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, Axios)
 Vue.use(VueCookies);
 
-Axios.interceptors.request.use(
-  config => {
-    if (checkUserIsLogin()) {
-      var token = Vue.$cookies.get("access_token");
-      var token_type = Vue.$cookies.get("token_type");
-      config.headers = { "Authorization": token_type + " " + token }
-    }
+// Axios.interceptors.request.use(
+//   config => {
+//     if (checkUserIsLogin()) {
+//       var token = Vue.$cookies.get("access_token");
+//       var token_type = Vue.$cookies.get("token_type");
+//       config.headers = { "Authorization": token_type + " " + token }
+//     }
 
-    return config
-  },
-  error => {
-    return Promise.reject(error)
-  }
-)
-//  在 response 拦截器实现
+//     return config
+//   },
+//   error => {
+//     return Promise.reject(error)
+//   }
+// )
+// //  在 response 拦截器实现
 
-Axios.interceptors.response.use(
-  response => {
-    return response
-  },
-  error => {
-    return Promise.reject(error)
-  }
-)
+// Axios.interceptors.response.use(
+//   response => {
+//     return response
+//   },
+//   error => {
+//     return Promise.reject(error)
+//   }
+// )
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  debugger
   if (checkUserIsLogin()) {
     next()
+    store.dispatch("user/getInfo");
     const hasRoles = store.getters.roles && store.getters.roles.length > 0;
     if (hasRoles) {
-      // next()
+      next()
     } else {
-
+    const {roles}= await store.dispatch("user/getInfo");
+    debugger
+console.log("cccc");
+    console.log(roles);
+    // roles.then(res=>{
+    //   console.log("角色");
+    //   console.log(res);
+    // })
 //       // const { roles }=store.dispatch("user/getInfo");
 //       //    console.log(1);
 //       //   //  const { roles } = store.getters.roles;

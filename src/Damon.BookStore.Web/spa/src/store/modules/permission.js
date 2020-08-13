@@ -45,7 +45,6 @@ const state = {
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
-    console.log("111111111111111111111122222222222222222222");
     console.log(constantRoutes);
     state.routes = constantRoutes.concat(routes)
   }
@@ -56,8 +55,6 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      console.log('cccccccccccccc');
-      debugger
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

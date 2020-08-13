@@ -47,9 +47,8 @@ export default {
     }
   },
   created(){
-    console.log(123123213);
+
     console.log(this.permission_routes);
-    console.log(1111111111);
   }
 };
 </script>

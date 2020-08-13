@@ -10,7 +10,7 @@
             <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <span>{{userName}}</span>
+        <span>{{name}}</span>
         <el-button type="warning" @click="loginExit">退出</el-button>
       </el-header>
 
@@ -48,14 +48,12 @@
 <script>
 import { removeAccessToken } from "@/utils/auth";
 import {  Sidebar } from "./components"
+import { mapGetters } from 'vuex'
+
 export default {
   name: "App",
   components: { Sidebar },
-  data() {
-    return {
-      userName: "",
-    };
-  },
+
   methods: {
     loginExit() {
       var that = this;
@@ -69,24 +67,26 @@ export default {
       });
     },
     getUser: function () {
-      var that = this;
-      this.$axios
-        .get("/api/app/book/user")
-        .then((response) => {
-          console.log(response.data);
-          that.userName = response.data.userName;
-        })
-        .catch(() => {
-          this.$message({
-            message: "登录失败或权限不足",
-            type: "error",
-          });
-        });
+      // var that = this;
+      // this.$axios
+      //   .get("/api/app/book/user")
+      //   .then((response) => {
+      //     console.log(response.data);
+      //     that.userName = response.data.userName;
+      //   })
+      //   .catch(() => {
+      //     this.$message({
+      //       message: "登录失败或权限不足",
+      //       type: "error",
+      //     });
+      //   });
     },
   },
-  created: function () {
-    this.getUser();
-  },
+  computed:{
+    ...mapGetters([
+      "name"
+    ])
+  }
 };
 </script>
 
