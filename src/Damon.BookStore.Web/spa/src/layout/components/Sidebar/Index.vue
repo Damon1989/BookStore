@@ -45,6 +45,11 @@ export default {
     isCollapse() {
       return !this.sidebar.opened;
     }
+  },
+  created(){
+    console.log(123123213);
+    console.log(this.permission_routes);
+    console.log(1111111111);
   }
 };
 </script>

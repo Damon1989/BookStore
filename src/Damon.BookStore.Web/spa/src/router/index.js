@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 // import Home from '@/components/Home'
-import Login from '@/components/Login';
-import About from '@/components/About';
+// import Login from '@/components/Login';
+// import About from '@/components/About';
 // import BookList  from '@/components/BookList';
 
 /* Layout */
@@ -52,18 +52,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/icon',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/icons/index'),
-  //       name: 'Icons',
-  //       meta: { title: 'Icons', icon: 'icon', noCache: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/icon',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/home/index'),
+        name: 'Icons',
+        meta: { title: 'Icons', icon: 'icon', noCache: true }
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
@@ -269,50 +269,63 @@ export const asyncRoutes = [
 ]
 
 export const constantRoutes = [
-  // {
-  //   path: '/redirect',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: '/redirect/:path(.*)',
-  //       component: () => import('@/views/redirect/index')
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/login',
-  //   component: () => import('@/views/login/index'),
-  //   hidden: true
-  // },
-  // {
-  //   path: '/auth-redirect',
-  //   component: () => import('@/views/login/auth-redirect'),
-  //   hidden: true
-  // },
-  // {
-  //   path: '/404',
-  //   component: () => import('@/views/error-page/404'),
-  //   hidden: true
-  // },
-  // {
-  //   path: '/401',
-  //   component: () => import('@/views/error-page/401'),
-  //   hidden: true
-  // },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       component: () => import('@/views/dashboard/index'),
-  //       name: 'Dashboard',
-  //       meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/',
+    component: Layout,
+    // hidden: false,
+    redirect: '/home',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/home/index'),
+        // meta: { title: 'Error Log', icon: 'bug',roles:["admin"] }
+      }
+    ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/booklist',
+    component: Layout,
+    redirect: '/booklist',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/book/index'),
+        name: 'Booklist',
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/role',
+    component: Layout,
+    redirect: '/role',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/role/index'),
+        name: 'Role',
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user',
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/user/index'),
+        name: 'User',
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -352,68 +365,23 @@ export const constantRoutes = [
   //     }
   //   ]
   // }
-  {
-    path: '/',
-    name: 'Home',
-    redirect: '/home',
-    component: Layout,
-    children:[
-      {
-        path:'home',
-        component:()=>import('@/views/home/index'),
-        name:'Home'
-      }
-    ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/about',
-    name: 'Login',
-    component: About
-  },
-  {
-    path: '/booklist',
-    name: 'BookList',
-    component: Layout,
-    children:[
-      {
-        path:'/',
-        component:()=>import('@/views/book/index'),
-        name:'Booklist'
-      }
-    ]
-  },
-  {
-    path: '/role',
-    name: 'Role',
-    component: Layout,
-    children:[
-      {
-        path:'/',
-        component:()=>import('@/views/role/index'),
-        name:'Role'
-      }
-    ]
-  },
-  {
-    path: '/user',
-    name: 'User',
-    component: Layout,
-    children:[
-      {
-        path:'/',
-        component:()=>import('@/views/user/index'),
-        name:'Role'
-      }
-    ]
-  }
-];
+]
 
 
-export default new Router({
+
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
-});
+})
+
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router

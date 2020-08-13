@@ -13,10 +13,11 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   // set './app.js' => 'app'
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
   const value = modulesFiles(modulePath)
+  console.log(value.default);
   modules[moduleName] = value.default
   return modules
 }, {})
-
+console.log(getters);
 const store = new Vuex.Store({
   modules,
   getters

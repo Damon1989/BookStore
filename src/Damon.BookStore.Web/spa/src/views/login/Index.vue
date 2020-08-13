@@ -28,7 +28,6 @@
 import { setAccessToken, setTokenType } from "@/utils/auth";
 
 export default {
-  name: "Login",
   data() {
     return {
       //表单名
