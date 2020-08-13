@@ -7,13 +7,6 @@
       <el-col :span="1" :offset="1">
         <el-button @click="showNewRole">新增</el-button>
       </el-col>
-        <el-checkbox-group >
-    <el-checkbox label="复选框A"></el-checkbox>
-    <el-checkbox label="复选框B"></el-checkbox>
-    <el-checkbox label="复选框C"></el-checkbox>
-    <el-checkbox label="禁用" disabled></el-checkbox>
-    <el-checkbox label="选中且禁用" disabled></el-checkbox>
-  </el-checkbox-group>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="name" label="Name"></el-table-column>

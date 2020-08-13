@@ -11,9 +11,8 @@
           </el-dropdown-menu>
         </el-dropdown>
         <span>{{name}}</span>
-        <el-button type="warning" @click="loginExit">退出</el-button>
+        <el-button type="warning" size="small" @click="loginExit">退出</el-button>
       </el-header>
-
       <el-container>
         <sidebar class="sidebar-container" />
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
@@ -46,7 +45,6 @@
 </template>
 
 <script>
-import { removeAccessToken } from "@/utils/auth";
 import {  Sidebar } from "./components"
 import { mapGetters } from 'vuex'
 
@@ -57,12 +55,11 @@ export default {
   methods: {
     loginExit() {
       var that = this;
-      this.$axios.get("/api/account/logout").then(() => {
+      this.$store.dispatch("user/logout").then(() => {
         this.$message({
           message: "退出成功",
           type: "success",
         });
-        removeAccessToken();
         that.$router.push("/login");
       });
     }

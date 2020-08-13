@@ -9,6 +9,11 @@ export function login(data) {
   })
 }
 
+export function logout(){
+  return request({
+    url:"/api/account/logout"
+  })
+}
 
 export function getInfo(){
   return request({
@@ -43,11 +48,17 @@ export function addUser(data){
 export function editUser(data){
   return request({
     url: "/api/identity/users/" +data.id,
-    method: "post",
+    method: "put",
     data
   })
 }
 
+export function deleteUser(id){
+  return request({
+    url: "/api/identity/users/" +id,
+    method: "delete"
+  })
+}
 
 export function getUserList(query) {
   const { skipCount, pageSize } = query;

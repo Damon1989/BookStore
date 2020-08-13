@@ -26,25 +26,6 @@
       :limit.sync="listQuery.pageSize"
       @pagination="getList"
     />
-    <!-- 123
-<el-checkbox-group v-model="roleNames">
-    <el-checkbox label="复选框A"></el-checkbox>
-    <el-checkbox label="复选框B"></el-checkbox>
-    <el-checkbox label="复选框C"></el-checkbox>
-    <el-checkbox label="禁用" disabled></el-checkbox>
-    <el-checkbox label="选中且禁用" disabled></el-checkbox>
-  </el-checkbox-group>
-
- <el-checkbox-group size="small" v-model="roleNames">
-              <el-checkbox :label="item" border v-for="(item,index) in roleNameList" :key="index">{{item}}</el-checkbox>
-            </el-checkbox-group>
-
-<ul id="example-2">
-  <li v-for="(item, index) in roleNameList" :key="index">
-    {{ item }} - {{ index }} - {{ item }}
-  </li>
-</ul> -->
-
     <el-dialog title="用户管理" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-tabs v-model="activeName">
@@ -85,7 +66,7 @@
 
   <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import { getUserList, getUser, getUserRoles,addUser,editUser } from "@/api/user";
+import { getUserList, getUser, getUserRoles,addUser,editUser,deleteUser } from "@/api/user";
 import { getRoleList } from "@/api/role";
 export default {
   components: { Pagination },
@@ -116,7 +97,6 @@ export default {
         concurrencyStamp: "",
       },
       roleNameList: [],
-      roleNames:["admin"],
       activeName: "first",
     };
   },
@@ -135,7 +115,7 @@ export default {
     showNewUser() {
       this.dialogFormVisible = true;
       this.new = true;
-      this.getRoles();
+      this.activeName="first";
     },
     getRoles() {
       var that = this;
@@ -146,19 +126,18 @@ export default {
             roles.push(item.name);
           });
           that.roleNameList = roles;
-          console.log(that.roleNameList);
         });
     },
     newUser() {
       var that = this;
       if (this.new) {
-        addUser(this.form).then((res) => {
+        addUser(this.form).then(() => {
           that.dialogFormVisible = false;
           that.getList();
         });
       } else {
           editUser(this.form)
-          .then((res) => {
+          .then(() => {
             that.dialogFormVisible = false;
             that.getList();
           });
@@ -167,7 +146,6 @@ export default {
     getUser(id) {
       var that = this;
       getUser(id).then((res) => {
-        that.form = res;
         var data=res;
         that.form.id=data.id;
         that.form.userName=data.userName;
@@ -186,31 +164,26 @@ export default {
           roles.push(item.name);
         });
         that.form.roleNames = roles;
-        console.log(that.form.roleNames);
       });
     },
     editSingle(id) {
+      this.activeName="first";
       this.new = false;
-      var that = this;
       this.dialogFormVisible = true;
-      that.form.roleNames=[];
-      that.getRoles()
       this.getUser(id);
-      // setTimeout(function(){
-      //   that.getUserRole(id)
-      // },3000);
       this.getUserRole(id);
     },
     deleteSingle(id) {
       var that = this;
-      this.$axios.delete("/api/identity/users/" + id).then(function (res) {
+      deleteUser(id).then(function () {
         that.listQuery.currentPage = 1;
         that.getList();
       });
     },
   },
-  mounted() {
+  created() {
     this.getList();
+    this.getRoles();
   },
 };
 </script>

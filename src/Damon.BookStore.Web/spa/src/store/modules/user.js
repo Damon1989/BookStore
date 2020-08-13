@@ -1,5 +1,5 @@
-import { login, getInfo } from '@/api/user'
-import { getToken,  setAccessToken, setTokenType } from '@/utils/auth'
+import { login, getInfo,logout } from '@/api/user'
+import { getToken,  setAccessToken, setTokenType,removeAccessToken,removeTokenType } from '@/utils/auth'
 const state = {
   token: getToken(),
   name: '',
@@ -39,6 +39,7 @@ const actions = {
       formData.append("client_secret", "1q2w3e*");
 
       login(formData).then((res) => {
+        debugger
         if (res.access_token != undefined) {
           setAccessToken(res.access_token);
           setTokenType(res.token_type);
@@ -46,7 +47,7 @@ const actions = {
           resolve(res)
         }
       }).catch(error => {
-        reject(error)
+        resolve(error)
       })
     })
   },
@@ -65,7 +66,20 @@ const actions = {
       })
     })
   },
-
+  logout({commit}){
+    return new Promise((resolve,reject)=>{
+      logout().then(()=>{
+        commit('SET_TOKEN', '');
+        commit('SET_ROLES', []);
+        removeAccessToken();
+        removeTokenType();
+        resolve();
+      })
+      .catch(error=>{
+        reject(error)
+      })
+    })
+  }
 }
 
 

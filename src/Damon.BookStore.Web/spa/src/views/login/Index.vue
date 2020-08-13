@@ -51,6 +51,12 @@ export default {
           } else {
             that.$router.push("/");
           }
+        } else {
+          // 登录成功提示
+          this.$message({
+            message: "账号或密码错误",
+            type: "warning",
+          });
         }
       });
     },
