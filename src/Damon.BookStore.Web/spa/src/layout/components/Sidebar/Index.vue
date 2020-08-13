@@ -37,8 +37,6 @@ export default {
       return path;
     },
     showLogo() {
-      console.log(this.$store);
-      console.log(this.$store.state);
       return this.$store.state.settings.sidebarLogo;
     },
 
@@ -48,7 +46,6 @@ export default {
   },
   created(){
 
-    console.log(this.permission_routes);
   }
 };
 </script>

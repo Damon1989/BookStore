@@ -107,21 +107,15 @@ export default {
           });
       }
     },
-    // viewSingle(row) {
-    //   console.log(row);
-    //   console.log(row.id);
-    // },
     editSingle(id) {
       this.new = false;
       var that = this;
       this.$axios.get("/api/app/book/" + id).then(function (result) {
-        console.log(result);
         that.form = result.data;
         that.dialogFormVisible = true;
       });
     },
     deleteSingle(id) {
-      console.log(id);
       var that = this;
       this.$axios.delete("/api/app/book/" + id).then(function (result) {
         that.listQuery.currentPage = 1;

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getList(query) {
+export function getRoleList(query) {
   const { skipCount, pageSize } = query;
   var url = "/api/identity/roles?SkipCount=" + skipCount + "&MaxResultCount=" + pageSize;
   return request({
@@ -9,14 +9,14 @@ export function getList(query) {
   })
 }
 
-export function get(id) {
+export function getRole(id) {
   return request({
     url: "/api/identity/roles/" + id,
     method: "get"
   })
 }
 
-export function add(data) {
+export function addRole(data) {
   return request({
     url: "/api/identity/roles",
     method: "post",
@@ -24,7 +24,7 @@ export function add(data) {
   })
 }
 
-export function edit(data) {
+export function editRole(data) {
   return request({
     url: "/api/identity/roles/" + data.id,
     method: "put",

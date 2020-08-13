@@ -65,22 +65,7 @@ export default {
         removeAccessToken();
         that.$router.push("/login");
       });
-    },
-    getUser: function () {
-      // var that = this;
-      // this.$axios
-      //   .get("/api/app/book/user")
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     that.userName = response.data.userName;
-      //   })
-      //   .catch(() => {
-      //     this.$message({
-      //       message: "登录失败或权限不足",
-      //       type: "error",
-      //     });
-      //   });
-    },
+    }
   },
   computed:{
     ...mapGetters([

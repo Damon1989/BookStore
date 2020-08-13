@@ -43,7 +43,6 @@ const actions = {
           setAccessToken(res.access_token);
           setTokenType(res.token_type);
           commit('SET_TOKEN', res.access_token)
-          console.log(1);
           resolve(res)
         }
       }).catch(error => {
@@ -57,12 +56,9 @@ const actions = {
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then((res) => {
-        console.log(res);
         const { roles ,userName} = res;
-
         commit('SET_ROLES', roles)
         commit("SET_NAME",userName)
-        console.log("name="+userName);
         resolve(res)
       }).catch(error => {
         reject(error)

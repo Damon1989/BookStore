@@ -30,7 +30,6 @@ export default {
       this.$axios
         .get("/api/app/book/user")
         .then((response) => {
-          console.log(response);
           this.userInfo = response.data;
         })
         .catch(() => {

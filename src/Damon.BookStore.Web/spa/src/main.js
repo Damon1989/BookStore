@@ -62,55 +62,14 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
     const {roles}= await store.dispatch("user/getInfo");
-    console.log(roles);
     // roles.then(res=>{
-    //   console.log("角色");
-    //   console.log(res);
-    // })
-//       // const { roles }=store.dispatch("user/getInfo");
-//       //    console.log(1);
-//       //   //  const { roles } = store.getters.roles;
-//       //    console.log(roles);
-//       //    console.log(2);
-//          const roles=['admin','deptAdmin'];
-//          console.log(1);
-//         // const accessRoutes= store.dispatch("permission/generateRoutes",roles);
-//         console.log(2);
-// const accessRoutes = [
-
-//   {
-//     path: '/icon',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/home/index'),
-//         name: 'Icons',
-//         meta: { title: 'Icons', icon: 'icon', noCache: true }
-//       }
-//     ]
-//   },
 
 
 
-//   {
-//     path: 'external-link',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'https://github.com/PanJiaChen/vue-element-admin',
-//         meta: { title: 'External Link', icon: 'link' }
-//       }
-//     ]
-//   },
 
-//   // 404 page must be placed at the end !!!
-//   { path: '*', redirect: '/404', hidden: true }
-// ]
 
-//         router.addRoutes(accessRoutes);
-//         console.log(3);
-//         next({...to,replace:true});
+
+
 
     }
 

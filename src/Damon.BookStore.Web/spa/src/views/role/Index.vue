@@ -7,6 +7,13 @@
       <el-col :span="1" :offset="1">
         <el-button @click="showNewRole">新增</el-button>
       </el-col>
+        <el-checkbox-group >
+    <el-checkbox label="复选框A"></el-checkbox>
+    <el-checkbox label="复选框B"></el-checkbox>
+    <el-checkbox label="复选框C"></el-checkbox>
+    <el-checkbox label="禁用" disabled></el-checkbox>
+    <el-checkbox label="选中且禁用" disabled></el-checkbox>
+  </el-checkbox-group>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="name" label="Name"></el-table-column>
@@ -26,7 +33,7 @@
       :page.sync="listQuery.currentPage"
       :limit.sync="listQuery.pageSize"
       @pagination="getList"
-    />
+    ></pagination>
 
     <el-dialog title="角色管理" :visible.sync="dialogFormVisible">
       <el-form :model="form">
@@ -67,10 +74,10 @@
   <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import {
-  getList,
-  get,
-  add,
-  edit,
+  getRoleList,
+  getRole,
+  addRole,
+  editRole,
   deleteRole,
   getRolePermission,
   addRolePermission,
@@ -112,7 +119,7 @@ export default {
     getList() {
       var skipCount =
         (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
-      getList({ skipCount: skipCount, pageSize: this.listQuery.pageSize }).then(
+      getRoleList({ skipCount: skipCount, pageSize: this.listQuery.pageSize }).then(
         (response) => {
           this.tableData = response.items;
           this.total = response.totalCount;
@@ -148,12 +155,12 @@ export default {
     newRole() {
       var that = this;
       if (this.new) {
-        add(this.form).then(() => {
+        addRole(this.form).then(() => {
           that.dialogFormVisible = false;
           that.getList();
         });
       } else {
-        edit(this.form).then(() => {
+        editRole(this.form).then(() => {
           that.dialogFormVisible = false;
           that.getList();
         });
@@ -162,7 +169,7 @@ export default {
     editSingle(id) {
       this.new = false;
       var that = this;
-      get(id).then(function (res) {
+      getRole(id).then(function (res) {
         that.form = res;
         that.dialogFormVisible = true;
       });
