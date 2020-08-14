@@ -26,6 +26,7 @@
 </template>
 <script>
 export default {
+  name:"login",
   data() {
     return {
       //表单名

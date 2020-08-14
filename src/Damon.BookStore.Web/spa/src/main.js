@@ -29,30 +29,6 @@ Vue.use(ElementUI);
 Vue.use(VueAxios, Axios)
 Vue.use(VueCookies);
 
-// Axios.interceptors.request.use(
-//   config => {
-//     if (checkUserIsLogin()) {
-//       var token = Vue.$cookies.get("access_token");
-//       var token_type = Vue.$cookies.get("token_type");
-//       config.headers = { "Authorization": token_type + " " + token }
-//     }
-
-//     return config
-//   },
-//   error => {
-//     return Promise.reject(error)
-//   }
-// )
-// //  在 response 拦截器实现
-
-// Axios.interceptors.response.use(
-//   response => {
-//     return response
-//   },
-//   error => {
-//     return Promise.reject(error)
-//   }
-// )
 
 
 router.beforeEach(async (to, from, next) => {
@@ -64,10 +40,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       const { roles } = await store.dispatch("user/getInfo");
-      // roles.then(res=>{
       const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-      console.log("accessRoutes");
-      console.log(accessRoutes);
       router.addRoutes(accessRoutes)
     }
 

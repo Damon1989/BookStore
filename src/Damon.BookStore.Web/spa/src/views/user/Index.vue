@@ -69,6 +69,7 @@ import Pagination from "@/components/Pagination"; // secondary package based on 
 import { getUserList, getUser, getUserRoles,addUser,editUser,deleteUser } from "@/api/user";
 import { getRoleList } from "@/api/role";
 export default {
+  name:"user",
   components: { Pagination },
   data() {
     return {

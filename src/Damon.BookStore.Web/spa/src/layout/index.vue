@@ -13,10 +13,10 @@
     <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
     <sidebar class="sidebar-container" />
     <div class="main-container">
-      <!-- <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+      <div :class="{'fixed-header':fixedHeader}">
+        <!-- <navbar /> -->
         <tags-view v-if="needTagsView" />
-      </div>-->
+      </div>
       <app-main />
       <!-- <right-panel v-if="showSettings">
         <settings />
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { Sidebar,AppMain} from "./components";
-import { mapGetters } from "vuex";
+import { Sidebar,AppMain,TagsView} from "./components";
+import { mapState } from "vuex";
 
 export default {
-  name: "App",
-  components: { Sidebar,AppMain },
+  name: "Layout",
+  components: { Sidebar,AppMain,TagsView },
 
   methods: {
     loginExit() {
@@ -49,7 +49,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["name"])
+    ...mapState({
+      needTagsView: state => state.settings.tagsView,
+      fixedHeader: state => state.settings.fixedHeader
+    }),
   },
 };
 </script>

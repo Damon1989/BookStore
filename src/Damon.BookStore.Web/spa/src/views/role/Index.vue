@@ -76,6 +76,7 @@ import {
   addRolePermission,
 } from "@/api/role";
 export default {
+  name:"role",
   components: { Pagination },
   data() {
     return {
