@@ -27,26 +27,31 @@ Vue.use(ElementUI)
 Vue.use(VueAxios, Axios)
 Vue.use(VueCookies)
 
-router.beforeEach(async(to, from, next) => {
+const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+
+router.beforeEach((to, from, next) => {
   if (checkUserIsLogin()) {
-    next()
-    store.dispatch('user/getInfo')
-    const hasRoles = store.getters.roles && store.getters.roles.length > 0
-    if (hasRoles) {
-      next()
+    if (to.path === '/login') {
+      next({ path: '/' })
     } else {
-      const { roles } = await store.dispatch('user/getInfo')
-      const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-      router.addRoutes(accessRoutes)
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      console.log("hasRoles"+hasRoles);
+      if (hasRoles) {
+        next()
+      } else {
+        store.dispatch('user/getInfo').then(({ roles }) => {
+          store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
+            router.addRoutes(accessRoutes)
+            next({ ...to, replace: true })
+          })
+        })
+      }
     }
   } else {
-    if (to.path === '/login') {
+    if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
+      next(`/login?redirect=${to.path}`)
     }
   }
 })

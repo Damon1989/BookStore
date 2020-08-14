@@ -13,7 +13,7 @@
     "ajv": "^6.12.3",
     "js-cookie": "^2.2.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -54,6 +54,7 @@
     "vue-axios": "^2.1.5",
     "vue-cookies": "^1.7.3",
     "vue-loader": "^13.3.0",
+    "vue-router": "^3.4.3",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "vuex": "^3.5.1",

@@ -7,10 +7,10 @@ import Layout from '@/layout'
 Vue.use(Router)
 export const asyncRoutes = [
   {
-    path: '/',
+    path: '/system',
     component: Layout,
-    redirect: '/user',
-    alwaysShow: true, // will always show the root menu
+    redirect: '/system/role',
+    // alwaysShow: true, // will always show the root menu
     name: 'system',
     meta: {
       title: '系统管理',
@@ -21,38 +21,20 @@ export const asyncRoutes = [
       {
         path: 'user',
         component: () => import('@/views/user/Index'),
-        name: 'DirectivePermission',
-        meta: {
-          title: '用户管理'
-        }
+        name: 'UserData',
+        meta: { title: 'UserData', icon: 'dashboard', affix: true }
       },
       {
         path: 'role',
         component: () => import('@/views/role/Index'),
-        name: 'RolePermission',
-        meta: {
-          title: '角色管理',
-          roles: ['admin']
-        }
+        name: 'RoleData',
+        meta: { title: 'RoleData', icon: 'dashboard', affix: true }
       }
     ]
   }
 ]
 
 export const constantRoutes = [
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   // hidden: false,
-  //   redirect: '/home',
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: () => import('@/views/home/index'),
-  //       meta: { title: '静态home', icon: 'bug',roles:["admin"] }
-  //     }
-  //   ]
-  // },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -79,9 +61,28 @@ export const constantRoutes = [
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
         meta: { title: '404', noCache: true }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/user/Index'),
+        name: 'UserData',
+        meta: { title: 'UserData', icon: 'dashboard', affix: true }
+      },
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
-  }
+  },
 ]
 
 const createRouter = () => new Router({

@@ -1,6 +1,6 @@
-import { asyncRoutes, constantRoutes } from '@/router';
+import { asyncRoutes, constantRoutes } from '@/router'
 
-const SET_ROUTES="SET_ROUTES";
+const SET_ROUTES = 'SET_ROUTES'
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -13,7 +13,6 @@ function hasPermission(roles, route) {
     return true
   }
 }
-
 
 /**
  * Filter asynchronous routing tables by recursion
@@ -36,12 +35,10 @@ export function filterAsyncRoutes(routes, roles) {
   return res
 }
 
-
 const state = {
-  routes: [],
+  routes: constantRoutes,
   addRoutes: []
 }
-
 
 const mutations = {
   [SET_ROUTES]: (state, routes) => {
@@ -49,7 +46,6 @@ const mutations = {
     state.routes = constantRoutes.concat(routes)
   }
 }
-
 
 const actions = {
   generateRoutes({ commit }, roles) {
@@ -65,7 +61,6 @@ const actions = {
     })
   }
 }
-
 
 export default {
   namespaced: true,

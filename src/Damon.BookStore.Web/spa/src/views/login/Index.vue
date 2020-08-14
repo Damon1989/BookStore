@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import router from '@/router'
 export default {
   name: 'Login',
   data() {
@@ -69,12 +70,20 @@ export default {
             message: '登录成功',
             type: 'success'
           })
-          var urlObj = {
-            path: this.redirect || '/',
-            query: this.otherQuery
-          }
-          console.log(urlObj)
-          this.$router.push(urlObj)
+          that.$store.dispatch('user/getInfo').then(({ roles }) => {
+            that.$store
+              .dispatch('permission/generateRoutes', roles)
+              .then((accessRoutes) => {
+                router.addRoutes(accessRoutes)
+                var urlObj = {
+                  path: that.redirect || '/',
+                  query: that.otherQuery
+                }
+
+                that.$router.push(urlObj)
+              })
+          })
+
           // if (that.$route.query.redirect) {
           //   that.$router.push(that.$route.query.redirect)
           // } else {
