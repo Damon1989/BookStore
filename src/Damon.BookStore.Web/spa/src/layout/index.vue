@@ -14,7 +14,7 @@
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <!-- <navbar /> -->
+        <navbar />
         <tags-view v-if="needTagsView" />
       </div>
       <app-main />
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { Sidebar,AppMain,TagsView} from "./components";
+import { Sidebar,AppMain,TagsView,Navbar} from "./components";
 import { mapState } from "vuex";
 
 export default {
   name: "Layout",
-  components: { Sidebar,AppMain,TagsView },
+  components: { Sidebar,AppMain,TagsView,Navbar },
 
   methods: {
     loginExit() {
