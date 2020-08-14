@@ -15,7 +15,7 @@
       </el-header>
       <el-container>
         <sidebar class="sidebar-container" />
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+        <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
           <el-menu>
             <el-submenu index="1">
               <template slot="title">
@@ -35,7 +35,7 @@
               </el-menu-item>
             </el-submenu>
           </el-menu>
-        </el-aside>
+        </el-aside> -->
         <el-main style="height: 750px; border: 1px solid #eee">
           <router-view></router-view>
         </el-main>

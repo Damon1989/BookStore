@@ -61,16 +61,12 @@ router.beforeEach(async (to, from, next) => {
     if (hasRoles) {
       next()
     } else {
-    const {roles}= await store.dispatch("user/getInfo");
-    // roles.then(res=>{
-
-
-
-
-
-
-
-
+      const { roles } = await store.dispatch("user/getInfo");
+      // roles.then(res=>{
+      const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+      console.log("accessRoutes");
+      console.log(accessRoutes);
+      router.addRoutes(accessRoutes)
     }
 
   } else {
