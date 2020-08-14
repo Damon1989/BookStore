@@ -13,121 +13,161 @@ export const asyncRoutes = [
   {
     path: '/',
     component: Layout,
-    // hidden: false,
-    redirect: '/home',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/home/index'),
-        // meta: { title: 'Error Log', icon: 'bug',roles:["admin"] }
-        meta: { title: 'home', icon: 'dashboard', affix: true,roles:["admin"] }
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/booklist',
-    component: Layout,
-    redirect: '/booklist',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/book/index'),
-        name: 'Booklist',
-        meta: { title: 'booklist', icon: 'dashboard', affix: true,roles:["admin"] }
-      }
-    ]
-  },
-  {
-    path: '/role',
-    component: Layout,
-    redirect: '/role',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/role/index'),
-        name: 'Role',
-        meta: { title: 'role', icon: 'dashboard', affix: true,roles:["admin"] }
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: Layout,
     redirect: '/user',
+    alwaysShow: true, // will always show the root menu
+    name: 'system',
+    meta: {
+      title: '系统管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [
+      // {
+      //   path: 'home',
+      //   component: () => import('@/views/home/Index'),
+      //   name: 'Home',
+      //   meta: {
+      //     title: 'Home',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // },
       {
-        path: '',
-        component: () => import('@/views/user/index'),
-        name: 'User',
-        meta: { title: 'user', icon: 'dashboard', affix: true,roles:["admin"] }
+        path: 'user',
+        component: () => import('@/views/user/Index'),
+        name: 'DirectivePermission',
+        meta: {
+          title: '用户管理'
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/role/Index'),
+        name: 'RolePermission',
+        meta: {
+          title: '角色管理',
+          roles: ['admin']
+        }
       }
     ]
   },
+  // {
+  //   path: '/home',
+  //   component: Layout,
+  //   // hidden: false,
+  //   redirect: '/home',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/home/index'),
+  //       // meta: { title: 'Error Log', icon: 'bug',roles:["admin"] }
+  //       meta: { title: 'home', icon: 'dashboard', affix: true,roles:["admin"] }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/login/index'),
+  //   hidden: true
+  // },
+  // {
+  //   path: '/booklist',
+  //   component: Layout,
+  //   redirect: '/booklist',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/book/index'),
+  //       name: 'Booklist',
+  //       meta: { title: 'booklist', icon: 'dashboard', affix: true,roles:["admin"] }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/role',
+  //   component: Layout,
+  //   redirect: '/role',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/role/index'),
+  //       name: 'Role',
+  //       meta: { title: 'role', icon: 'dashboard', affix: true,roles:["admin"] }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/user',
+  //   component: Layout,
+  //   redirect: '/user',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/user/index'),
+  //       name: 'User',
+  //       meta: { title: 'user', icon: 'dashboard', affix: true,roles:["admin"] }
+  //     }
+  //   ]
+  // },
 ]
 
 export const constantRoutes = [
-  {
-    path: '/',
-    component: Layout,
-    // hidden: false,
-    redirect: '/home',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/home/index'),
-        meta: { title: '静态home', icon: 'bug',roles:["admin"] }
-      }
-    ]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   // hidden: false,
+  //   redirect: '/home',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/home/index'),
+  //       meta: { title: '静态home', icon: 'bug',roles:["admin"] }
+  //     }
+  //   ]
+  // },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
   },
-  {
-    path: '/booklist',
-    component: Layout,
-    redirect: '/booklist',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/book/index'),
-        name: 'Booklist',
-        meta: { title: '静态BookList', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/role',
-    component: Layout,
-    redirect: '/role',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/role/index'),
-        name: 'Role',
-        meta: { title: '静态Role', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: Layout,
-    redirect: '/user',
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/user/index'),
-        name: 'User',
-        meta: { title: '静态user', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/booklist',
+  //   component: Layout,
+  //   redirect: '/booklist',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/book/index'),
+  //       name: 'Booklist',
+  //       meta: { title: '静态BookList', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/role',
+  //   component: Layout,
+  //   redirect: '/role',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/role/index'),
+  //       name: 'Role',
+  //       meta: { title: '静态Role', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/user',
+  //   component: Layout,
+  //   redirect: '/user',
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: () => import('@/views/user/index'),
+  //       name: 'User',
+  //       meta: { title: '静态user', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/documentation',
   //   component: Layout,

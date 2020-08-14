@@ -15,27 +15,6 @@
       </el-header>
       <el-container>
         <sidebar class="sidebar-container" />
-        <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-          <el-menu>
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-message"></i>导航一
-              </template>
-              <el-menu-item index="1-2">
-                <router-link to="/">首页</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-1">
-                <router-link to="/booklist">图书管理</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-3">
-                <router-link to="/role">角色</router-link>
-              </el-menu-item>
-              <el-menu-item index="1-4">
-                <router-link to="/user">用户</router-link>
-              </el-menu-item>
-            </el-submenu>
-          </el-menu>
-        </el-aside> -->
         <el-main style="height: 750px; border: 1px solid #eee">
           <router-view></router-view>
         </el-main>
