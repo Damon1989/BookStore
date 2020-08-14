@@ -16,10 +16,79 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="%2a%2a\**" />
     <Compile Remove="Logs\**" />
+    <Content Remove="%2a%2a\**" />
     <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="%2a%2a\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <None Remove="%2a%2a\**" />
     <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="%2a%2a/%2a.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="%2a%2a\%2a.config" />
+    <Content Remove="%2a%2a\%2a.cshtml" />
+    <Content Remove="%2a%2a\%2a.json" />
+    <Content Remove="%2a%2a\%2a.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="%2a%2a/%2a.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="%2a%2a/%2a" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="BookStoreBrandingProvider.cs" />
+    <Compile Include="BookStoreWebAutoMapperProfile.cs" />
+    <Compile Include="BookStoreWebModule.cs" />
+    <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Menus\BookStoreMenuContributor.cs" />
+    <Compile Include="Pages\BookStorePageModel.cs" />
+    <Compile Include="Pages\Books\CreateModal.cshtml.cs" />
+    <Compile Include="Pages\Books\EditModal.cshtml.cs" />
+    <Compile Include="Pages\Books\Index.cshtml.cs" />
+    <Compile Include="Pages\Index.cshtml.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json" />
+    <Content Include="appsettings.json" />
+    <Content Include="package-lock.json" />
+    <Content Include="package.json" />
+    <Content Include="Pages\Books\CreateModal.cshtml" />
+    <Content Include="Pages\Books\EditModal.cshtml" />
+    <Content Include="Pages\Books\Index.cshtml" />
+    <Content Include="Pages\Index.cshtml" />
+    <Content Include="Pages\_ViewImports.cshtml" />
+    <Content Include="Views\Book\CreateModal.cshtml" />
+    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\MainPageIndex.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewImports.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="abp.resourcemapping.js" />
+    <None Include="gulpfile.js" />
+    <None Include="Pages\Books\Index.js" />
+    <None Include="Pages\Index.css" />
+    <None Include="Pages\Index.js" />
+    <None Include="spacopy.bat" />
+    <None Include="tempkey.rsa" />
+    <None Include="yarn.lock" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,11 +122,6 @@
     <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="3.0.4" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="3.0.4" />
     <PackageReference Include="Volo.Abp.FeatureManagement.Web" Version="3.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="spa\" />
-    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
 </Project>
