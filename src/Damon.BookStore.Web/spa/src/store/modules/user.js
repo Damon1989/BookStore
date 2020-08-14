@@ -1,9 +1,10 @@
-import { login, getInfo,logout } from '@/api/user'
-import { getToken,  setAccessToken, setTokenType,removeAccessToken,removeTokenType } from '@/utils/auth'
+import { login, getInfo, logout } from '@/api/user'
+import { getToken, setAccessToken, setTokenType, removeAccessToken, removeTokenType } from '@/utils/auth'
+import router, { resetRouter } from '@/router'
 
-const SET_TOKEN="SET_TOKEN";
-const SET_NAME="SET_NAME";
-const SET_ROLES="SET_ROLES";
+const SET_TOKEN = 'SET_TOKEN'
+const SET_NAME = 'SET_NAME'
+const SET_ROLES = 'SET_ROLES'
 
 const state = {
   token: getToken(),
@@ -35,18 +36,18 @@ const actions = {
   login({ commit }, userInfo) {
     const { userNameOrEmailAddress, password } = userInfo
     return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append("username", userNameOrEmailAddress);
-      formData.append("password", password);
-      formData.append("grant_type", "password");
-      formData.append("scope", "BookStore");
-      formData.append("client_id", "BookStore_App");
-      formData.append("client_secret", "1q2w3e*");
+      const formData = new FormData()
+      formData.append('username', userNameOrEmailAddress)
+      formData.append('password', password)
+      formData.append('grant_type', 'password')
+      formData.append('scope', 'BookStore')
+      formData.append('client_id', 'BookStore_App')
+      formData.append('client_secret', '1q2w3e*')
 
       login(formData).then((res) => {
         if (res.access_token != undefined) {
-          setAccessToken(res.access_token);
-          setTokenType(res.token_type);
+          setAccessToken(res.access_token)
+          setTokenType(res.token_type)
           commit(SET_TOKEN, res.access_token)
           resolve(res)
         }
@@ -56,37 +57,35 @@ const actions = {
     })
   },
 
-
   // get user info
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then((res) => {
-        const { roles ,userName} = res;
+        const { roles, userName } = res
         commit(SET_ROLES, roles)
-        commit(SET_NAME,userName)
+        commit(SET_NAME, userName)
         resolve(res)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  logout({commit}){
-    return new Promise((resolve,reject)=>{
-      logout().then(()=>{
-        commit(SET_TOKEN, '');
-        commit(SET_ROLES, []);
-        removeAccessToken();
-        removeTokenType();
-        resolve();
+  logout({ commit }) {
+    return new Promise((resolve, reject) => {
+      logout().then(() => {
+        commit(SET_TOKEN, '')
+        commit(SET_ROLES, [])
+        removeAccessToken()
+        removeTokenType()
+        resetRouter()
+        resolve()
       })
-      .catch(error=>{
-        reject(error)
-      })
+        .catch(error => {
+          reject(error)
+        })
     })
   }
 }
-
-
 
 export default {
   namespaced: true,

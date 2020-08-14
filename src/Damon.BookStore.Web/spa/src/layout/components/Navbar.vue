@@ -11,7 +11,7 @@
         <!-- <error-log class="errLog-container right-menu-item hover-effect" /> -->
 
         <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
-<!--
+        <!--
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip> -->
@@ -75,17 +75,17 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      var that=this;
+      var that = this
       // await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      this.$store.dispatch("user/logout").then(() => {
+      this.$store.dispatch('user/logout').then(() => {
         this.$message({
-          message: "退出成功",
-          type: "success",
-        });
-        // that.$router.push("/login");
-        that.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      });
+          message: '退出成功',
+          type: 'success'
+        })
+        that.$router.push('/login')
+        // that.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      })
     }
   }
 }
