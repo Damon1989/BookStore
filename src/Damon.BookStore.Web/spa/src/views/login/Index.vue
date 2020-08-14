@@ -34,24 +34,52 @@ export default {
         userNameOrEmailAddress: '',
         password: '',
         rememberMe: true
-      }
+      },
+      redirect: undefined,
+      otherQuery: {}
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
+        }
+      },
+      immediate: true
     }
   },
   methods: {
+    getOtherQuery(query) {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
+        }
+        return acc
+      }, {})
+    },
     submit() {
       var that = this
       this.$store.dispatch('user/login', this.form).then((res) => {
-        if (res.access_token != undefined) {
+        if (res.access_token !== undefined) {
           // 登录成功提示
           this.$message({
             message: '登录成功',
             type: 'success'
           })
-          if (that.$route.query.redirect) {
-            that.$router.push(that.$route.query.redirect)
-          } else {
-            that.$router.push('/')
+          var urlObj = {
+            path: this.redirect || '/',
+            query: this.otherQuery
           }
+          console.log(urlObj)
+          this.$router.push(urlObj)
+          // if (that.$route.query.redirect) {
+          //   that.$router.push(that.$route.query.redirect)
+          // } else {
+          //   that.$router.push('/')
+          // }
         } else {
           // 登录成功提示
           this.$message({

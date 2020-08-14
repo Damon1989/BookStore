@@ -1,6 +1,6 @@
 import { login, getInfo, logout } from '@/api/user'
 import { getToken, setAccessToken, setTokenType, removeAccessToken, removeTokenType } from '@/utils/auth'
-import router, { resetRouter } from '@/router'
+import { resetRouter } from '@/router'
 
 const SET_TOKEN = 'SET_TOKEN'
 const SET_NAME = 'SET_NAME'
@@ -45,7 +45,7 @@ const actions = {
       formData.append('client_secret', '1q2w3e*')
 
       login(formData).then((res) => {
-        if (res.access_token != undefined) {
+        if (res.access_token !== undefined) {
           setAccessToken(res.access_token)
           setTokenType(res.token_type)
           commit(SET_TOKEN, res.access_token)
