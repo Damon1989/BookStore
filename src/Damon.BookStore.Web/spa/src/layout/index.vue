@@ -1,18 +1,6 @@
 <template>
-  <div id="app">
+  <!-- <div id="app">
     <el-container style=" border: 1px solid #eee">
-      <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>{{name}}</span>
-        <el-button type="warning" size="small" @click="loginExit">退出</el-button>
-      </el-header>
       <el-container>
         <sidebar class="sidebar-container" />
         <el-main style="height: 750px; border: 1px solid #eee">
@@ -20,16 +8,30 @@
         </el-main>
       </el-container>
     </el-container>
+  </div>-->
+  <div  class="app-wrapper">
+    <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
+    <sidebar class="sidebar-container" />
+    <div class="main-container">
+      <!-- <div :class="{'fixed-header':fixedHeader}">
+        <navbar />
+        <tags-view v-if="needTagsView" />
+      </div>-->
+      <app-main />
+      <!-- <right-panel v-if="showSettings">
+        <settings />
+      </right-panel>-->
+    </div>
   </div>
 </template>
 
 <script>
-import {  Sidebar } from "./components"
-import { mapGetters } from 'vuex'
+import { Sidebar,AppMain} from "./components";
+import { mapGetters } from "vuex";
 
 export default {
   name: "App",
-  components: { Sidebar },
+  components: { Sidebar,AppMain },
 
   methods: {
     loginExit() {
@@ -41,24 +43,58 @@ export default {
         });
         that.$router.push("/login");
       });
-    }
+    },
+    handleClickOutside() {
+      this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
+    },
   },
-  computed:{
-    ...mapGetters([
-      "name"
-    ])
-  }
+  computed: {
+    ...mapGetters(["name"])
+  },
 };
 </script>
 
-<style>
-.el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
+<style lang="scss" scoped>
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
+
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &.mobile.openSidebar {
+    position: fixed;
+    top: 0;
+  }
 }
 
-.el-aside {
-  color: #333;
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px);
+}
+
+.mobile .fixed-header {
+  width: 100%;
 }
 </style>
+

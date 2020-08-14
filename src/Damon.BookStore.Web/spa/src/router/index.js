@@ -1,9 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import Home from '@/components/Home'
-// import Login from '@/components/Login';
-// import About from '@/components/About';
-// import BookList  from '@/components/BookList';
+
 
 /* Layout */
 import Layout from '@/layout';
@@ -50,6 +47,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   // {
   //   path: '/home',
   //   component: Layout,

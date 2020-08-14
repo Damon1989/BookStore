@@ -8,6 +8,8 @@ import store from './store'
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import '@/styles/index.scss' // global css
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
