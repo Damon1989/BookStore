@@ -1,15 +1,5 @@
 <template>
-  <!-- <div id="app">
-    <el-container style=" border: 1px solid #eee">
-      <el-container>
-        <sidebar class="sidebar-container" />
-        <el-main style="height: 750px; border: 1px solid #eee">
-          <router-view></router-view>
-        </el-main>
-      </el-container>
-    </el-container>
-  </div>-->
-  <div  class="app-wrapper">
+  <div class="app-wrapper">
     <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
     <sidebar class="sidebar-container" />
     <div class="main-container">
@@ -26,35 +16,35 @@
 </template>
 
 <script>
-import { Sidebar,AppMain,TagsView,Navbar} from "./components";
-import { mapState } from "vuex";
+import { Sidebar, AppMain, TagsView, Navbar } from './components'
+import { mapState } from 'vuex'
 
 export default {
-  name: "Layout",
-  components: { Sidebar,AppMain,TagsView,Navbar },
+  name: 'Layout',
+  components: { Sidebar, AppMain, TagsView, Navbar },
 
   methods: {
     loginExit() {
-      var that = this;
-      this.$store.dispatch("user/logout").then(() => {
+      var that = this
+      this.$store.dispatch('user/logout').then(() => {
         this.$message({
-          message: "退出成功",
-          type: "success",
-        });
-        that.$router.push("/login");
-      });
+          message: '退出成功',
+          type: 'success'
+        })
+        that.$router.push('/login')
+      })
     },
     handleClickOutside() {
-      this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
-    },
+      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    }
   },
   computed: {
     ...mapState({
       needTagsView: state => state.settings.tagsView,
       fixedHeader: state => state.settings.fixedHeader
-    }),
-  },
-};
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>
