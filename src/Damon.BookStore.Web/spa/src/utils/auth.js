@@ -2,40 +2,40 @@ import Cookies from 'js-cookie'
 
 const TokenKey = 'access_token'
 
-const TokenTypeKey="token_type"
+const TokenTypeKey = 'token_type'
 
 export function getAccessToken() {
-  return Cookies.get(TokenKey)
+  return sessionStorage.getItem(TokenKey)
 }
 
 export function setAccessToken(token) {
-  return Cookies.set(TokenKey, token)
+  sessionStorage.setItem(TokenKey, token)
 }
 
 export function removeAccessToken() {
-  return Cookies.remove(TokenKey)
+  sessionStorage.removeItem(TokenKey)
 }
 
-export function getTokenType(){
-  return Cookies.get(TokenTypeKey)
+export function getTokenType() {
+  return sessionStorage.getItem(TokenTypeKey)
 }
 
-export function setTokenType(tokenType){
-  return Cookies.set(TokenTypeKey,tokenType)
+export function setTokenType(tokenType) {
+  sessionStorage.setItem(TokenTypeKey, tokenType)
 }
 
-export function removeTokenType(){
-  return Cookies.remove(TokenTypeKey)
+export function removeTokenType() {
+  sessionStorage.removeItem(TokenTypeKey)
 }
 
-export function getToken() {
-  return Cookies.get(TokenKey)
+export function getToken(key) {
+  return Cookies.get(key)
 }
 
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function setToken(key, token) {
+  return Cookies.set(key, token)
 }
 
-export function removeToken() {
-  return Cookies.remove(TokenKey)
+export function removeToken(key) {
+  return Cookies.remove(key)
 }

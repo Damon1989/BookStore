@@ -30,12 +30,12 @@ Vue.use(VueCookies)
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
-  if (checkUserIsLogin()) {
+  if (getAccessToken()) {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      console.log("hasRoles"+hasRoles);
+      console.log('hasRoles' + hasRoles)
       if (hasRoles) {
         next()
       } else {
@@ -55,11 +55,6 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
-
-function checkUserIsLogin() {
-  var data = getAccessToken()
-  return data
-}
 
 /* eslint-disable no-new */
 new Vue({

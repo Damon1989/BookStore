@@ -22,13 +22,13 @@ export const asyncRoutes = [
         path: 'user',
         component: () => import('@/views/user/Index'),
         name: 'UserData',
-        meta: { title: 'UserData', icon: 'dashboard', affix: true }
+        meta: { title: '用户管理', icon: 'dashboard', affix: true }
       },
       {
         path: 'role',
         component: () => import('@/views/role/Index'),
         name: 'RoleData',
-        meta: { title: 'RoleData', icon: 'dashboard', affix: true }
+        meta: { title: '角色管理', icon: 'dashboard', affix: true }
       }
     ]
   }
@@ -61,13 +61,7 @@ export const constantRoutes = [
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
         meta: { title: '404', noCache: true }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/user/Index'),
-        name: 'UserData',
-        meta: { title: 'UserData', icon: 'dashboard', affix: true }
-      },
+      }
     ]
   },
   {
