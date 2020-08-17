@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import router from "@/router";
+import router, { resetRouter } from "@/router";
 export default {
   name: "Login",
   data() {
@@ -134,6 +134,7 @@ export default {
           type: "success",
         });
       }
+      resetRouter(lang)
     },
   },
 };
