@@ -13,7 +13,7 @@ export const asyncRoutes = [
     // alwaysShow: true, // will always show the root menu
     name: 'system',
     meta: {
-      title: '系统管理',
+      title: 'system.index',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -22,13 +22,13 @@ export const asyncRoutes = [
         path: 'user',
         component: () => import('@/views/user/Index'),
         name: 'UserData',
-        meta: { title: '用户管理', icon: 'dashboard', affix: true }
+        meta: { title: 'system.user', icon: 'dashboard', affix: true }
       },
       {
         path: 'role',
         component: () => import('@/views/role/Index'),
         name: 'RoleData',
-        meta: { title: '角色管理', icon: 'dashboard', affix: true }
+        meta: { title: 'system.role', icon: 'dashboard', affix: true }
       }
     ]
   }
@@ -57,7 +57,7 @@ export const constantRoutes = [
     redirect: 'noRedirect',
     name: 'ErrorPages',
     meta: {
-      title: '异常页面',
+      title: 'exceptionpage',
       icon: '404'
     },
     children: [
@@ -65,13 +65,13 @@ export const constantRoutes = [
         path: '401',
         component: () => import('@/views/error-page/401'),
         name: 'Page401',
-        meta: { title: '401', noCache: true }
+        meta: { title: 'fourzeroone', noCache: true }
       },
       {
         path: '404',
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
-        meta: { title: '404', noCache: true }
+        meta: { title: 'fourzerofour', noCache: true }
       }
     ]
   },
@@ -84,7 +84,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
     ]
   },
