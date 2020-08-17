@@ -3,9 +3,11 @@ export const lang={
     username:"username",
     languageswitching:"Language switching",
     usermanage:"user manage",
-    exceptionpage:"Exception page",
-    fourzeroone:"401 page",
-    fourzerofour:"404 page",
+    exceptionpage:{
+        index:"Exception page",
+        fourzeroone:"401 page",
+        fourzerofour:"404 page",
+    },
     dashboard:"Dashboard",
     system:{
         index:"system manage",

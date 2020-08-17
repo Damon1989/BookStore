@@ -57,7 +57,7 @@ export const constantRoutes = [
     redirect: 'noRedirect',
     name: 'ErrorPages',
     meta: {
-      title: 'exceptionpage',
+      title: 'exceptionpage.index',
       icon: '404'
     },
     children: [
@@ -65,13 +65,13 @@ export const constantRoutes = [
         path: '401',
         component: () => import('@/views/error-page/401'),
         name: 'Page401',
-        meta: { title: 'fourzeroone', noCache: true }
+        meta: { title: 'exceptionpage.fourzeroone', noCache: true }
       },
       {
         path: '404',
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
-        meta: { title: 'fourzerofour', noCache: true }
+        meta: { title: 'exceptionpage.fourzerofour', noCache: true }
       }
     ]
   },
