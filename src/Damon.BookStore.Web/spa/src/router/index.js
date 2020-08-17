@@ -3,8 +3,15 @@ import Router from 'vue-router'
 
 /* Layout */
 import Layout from '@/layout'
+import store from '@/store'
+import { getAccessToken } from '@/utils/auth'
 
 Vue.use(Router)
+
+const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+
+
+
 export const asyncRoutes = [
   {
     path: '/system',
@@ -83,7 +90,7 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: 'dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
     ]
@@ -103,5 +110,32 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+
+router.beforeEach((to, from, next) => {
+    if (getAccessToken()) {
+      if (to.path === '/login') {
+        next({ path: '/' })
+      } else {
+        const hasRoles = store.getters.roles && store.getters.roles.length > 0
+        console.log('hasRoles' + hasRoles)
+        if (hasRoles) {
+          next()
+        } else {
+          store.dispatch('user/getInfo').then(({ roles }) => {
+            store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
+              router.addRoutes(accessRoutes)
+              next({ ...to, replace: true })
+            })
+          })
+        }
+      }
+    } else {
+      if (whiteList.indexOf(to.path) !== -1) {
+        next()
+      } else {
+        next(`/login?redirect=${to.path}`)
+      }
+    }
+  })
 
 export default router

@@ -25,17 +25,17 @@
         <el-row style="margin:200px">
           <el-col :span="6" :offset="8">
             <el-form :model="form" label-width="100px">
-              <el-form-item :label="$t('lang.username')">
+              <el-form-item :label="$t('lang.login.username')">
                 <el-input v-model="form.username" />
               </el-form-item>
-              <el-form-item label="密码">
+              <el-form-item :label="$t('lang.login.password')">
                 <el-input v-model="form.password" type="password" autocomplete="off" />
               </el-form-item>
               <el-form-item>
-                <el-checkbox v-model="form.rememberMe">记住我</el-checkbox>
+                <el-checkbox v-model="form.rememberMe">{{$t('lang.login.rememberMe')}}</el-checkbox>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" style="width: 100%" @click="submit">提交</el-button>
+                <el-button type="primary" style="width: 100%" @click="submit">{{$t('lang.login.login')}}</el-button>
               </el-form-item>
             </el-form>
           </el-col>

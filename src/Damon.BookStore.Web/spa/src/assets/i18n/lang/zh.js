@@ -1,7 +1,15 @@
 export const lang={
-    login:'登录',
-    username:"用户名",
-    languageswitching:"语音切换",
+    login:{
+        username:"用户名",
+        password:"密码",
+        rememberMe:"记住我",
+        login:"登录",
+        logout:'注销'
+    },
+    common:{
+        submit:"提交"
+    },
+    languageswitching:"语言切换",
     exceptionpage:{
         index:"异常页面",
         fourzeroone:"401页面",

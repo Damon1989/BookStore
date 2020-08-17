@@ -1,6 +1,14 @@
 export const lang={
-    login:'login',
-    username:"username",
+    login:{
+        username:"username",
+        password:"password",
+        rememberMe:"remember Me",
+        login:"log in",
+        logout:'log out'
+    },
+    common:{
+        submit:"submit"
+    },
     languageswitching:"Language switching",
     usermanage:"user manage",
     exceptionpage:{
