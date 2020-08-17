@@ -1,5 +1,5 @@
 module.exports = {
-  root: true,
+  root: true, // 此项是用来告诉eslint找当前配置文件不能往父级查找
   parserOptions: {
     parser: 'babel-eslint',
     sourceType: 'module'
@@ -9,7 +9,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: ['plugin:vue/recommended', 'eslint:recommended','@vue/airbnb'],
 
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue

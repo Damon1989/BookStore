@@ -51,6 +51,7 @@
     <Compile Include="BookStoreWebModule.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Menus\BookStoreMenuContributor.cs" />
     <Compile Include="Pages\BookStorePageModel.cs" />
     <Compile Include="Pages\Books\CreateModal.cshtml.cs" />

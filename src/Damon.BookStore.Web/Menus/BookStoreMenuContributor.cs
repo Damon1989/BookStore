@@ -30,7 +30,7 @@
 
             context.Menu.Items.Insert(
                 0,
-                new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "~/Home/MainPageIndex"));
+                new ApplicationMenuItem("BookStore.Home", l["Menu:Home"], "/Home/MainPageIndex"));
             context.Menu.AddItem(new ApplicationMenuItem("BookStore", l["Menu:BookStore"], icon: "fa fa-book")).AddItem(
                 new ApplicationMenuItem("BookStore.Books", l["Menu:Books"], "/Books"));
         }

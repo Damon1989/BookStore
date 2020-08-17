@@ -34,10 +34,10 @@ const mutations = {
 
 const actions = {
   login({ commit }, userInfo) {
-    const { userNameOrEmailAddress, password } = userInfo
+    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       const formData = new FormData()
-      formData.append('username', userNameOrEmailAddress)
+      formData.append('username', username)
       formData.append('password', password)
       formData.append('grant_type', 'password')
       formData.append('scope', 'BookStore')

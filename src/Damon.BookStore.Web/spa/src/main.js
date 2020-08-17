@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 
+import VueI18n from 'vue-i18n'
+
 import router from './router'
 import store from './store'
 
@@ -26,6 +28,16 @@ Vue.prototype.$axios = Axios
 Vue.use(ElementUI)
 Vue.use(VueAxios, Axios)
 Vue.use(VueCookies)
+
+Vue.use(VueI18n)
+const i18n=new VueI18n({
+  locale:'zh',
+  messages:{
+    'zh': require('./assets/i18n/lang/zh'),   // 中文语言包
+    'en': require('./assets/i18n/lang/en')    // 英文语言包
+  }
+})
+
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
@@ -59,6 +71,7 @@ router.beforeEach((to, from, next) => {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   components: { App },
