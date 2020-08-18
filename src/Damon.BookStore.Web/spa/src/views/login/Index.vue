@@ -24,7 +24,7 @@
         </el-row>
         <el-row style="margin:200px">
           <el-col :span="6" :offset="8">
-            <el-form :model="form" label-width="100px" :rules="rules" ref="loginForm">
+            <el-form :model="form" label-width="100px" :rules="rules.login" ref="loginForm">
               <el-form-item prop="username">
                 <el-input v-model="form.username" prefix-icon="el-icon-user-solid" />
               </el-form-item>

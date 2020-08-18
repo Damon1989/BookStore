@@ -23,7 +23,9 @@ export const lang={
     },
     validate:{
         accountrequired:"账号必填",
-        passwordrequired:"密码必填"
+        passwordrequired:"密码必填",
+        accountlengthgreaterthanfour:"账号不允许小于4位",
+        passwordlengthgreaterthansix:"密码不允许小于6位"
     }
 
 }

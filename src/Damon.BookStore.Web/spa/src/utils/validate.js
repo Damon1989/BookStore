@@ -88,38 +88,38 @@ export function isArray(arg) {
 }
 
 
-
 let rules = (i18n) => {
     return {
-        username: [
-            {
-                required: true,
-                message: i18n.t("lang.validate.accountrequired"),
-                trigger: "blur",
-            },
-            {
-                type: "string",
-                min: 4,
-                message: "账号不允许小于4位",
-                trigger: "blur",
-            },
-        ],
-        password: [
-            {
-                required: true,
-                message: i18n.t("lang.validate.passwordrequired"),
-                trigger: "blur",
-            },
-            {
-                type: "string",
-                min: 6,
-                message: "密码不允许小于6位",
-                trigger: "blur",
-            },
-        ],
+        login:{
+            username: [
+                {
+                    required: true,
+                    message: i18n.t("lang.validate.accountrequired"),
+                    trigger: "blur",
+                },
+                {
+                    type: "string",
+                    min: 4,
+                    message: i18n.t('lang.validate.accountlengthgreaterthanfour'),
+                    trigger: "blur",
+                },
+            ],
+            password: [
+                {
+                    required: true,
+                    message: i18n.t("lang.validate.passwordrequired"),
+                    trigger: "blur",
+                },
+                {
+                    type: "string",
+                    min: 6,
+                    message: i18n.t('lang.validate.passwordlengthgreaterthansix'),
+                    trigger: "blur",
+                },
+            ],
+        }
+
     }
-
-
 }
 
 export default rules

@@ -24,6 +24,8 @@ export const lang={
     },
     validate:{
         accountrequired:"account required",
-        passwordrequired:"password required"
+        passwordrequired:"password required",
+        accountlengthgreaterthanfour:"account number cannot be less than 4 digits",
+        passwordlengthgreaterthansix:"password cannot be less than 6 digits"
     }
 }
