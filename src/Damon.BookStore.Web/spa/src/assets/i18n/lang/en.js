@@ -21,5 +21,9 @@ export const lang={
         index:"system manage",
         user:"user manage",
         role:"role manage"
+    },
+    validate:{
+        accountrequired:"account required",
+        passwordrequired:"password required"
     }
 }

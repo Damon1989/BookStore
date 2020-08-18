@@ -3,7 +3,7 @@
     <el-container>
       <el-main>
         <el-row>
-          <el-col :span="4"  :offset="20">
+          <el-col :span="4" :offset="20">
             <el-dropdown>
               <span class="el-dropdown-link">
                 {{$t('lang.languageswitching')}}
@@ -24,18 +24,22 @@
         </el-row>
         <el-row style="margin:200px">
           <el-col :span="6" :offset="8">
-            <el-form :model="form" label-width="100px">
-              <el-form-item :label="$t('lang.login.username')">
-                <el-input v-model="form.username" />
+            <el-form :model="form" label-width="100px" :rules="rules" ref="loginForm">
+              <el-form-item prop="username">
+                <el-input v-model="form.username" prefix-icon="el-icon-user-solid" />
               </el-form-item>
-              <el-form-item :label="$t('lang.login.password')">
-                <el-input v-model="form.password" type="password" autocomplete="off" />
+              <el-form-item prop="password">
+                <el-input v-model="form.password" type="password" prefix-icon="el-icon-lock" />
               </el-form-item>
               <el-form-item>
                 <el-checkbox v-model="form.rememberMe">{{$t('lang.login.rememberMe')}}</el-checkbox>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" style="width: 100%" @click="submit">{{$t('lang.login.login')}}</el-button>
+                <el-button
+                  type="primary"
+                  style="width: 100%"
+                  @click="submit('loginForm')"
+                >{{$t('lang.login.login')}}</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -46,6 +50,9 @@
 </template>
 <script>
 import router, { resetRouter } from "@/router";
+
+import rules,{langChange} from '@/utils/validate'
+
 export default {
   name: "Login",
   data() {
@@ -59,6 +66,11 @@ export default {
       redirect: undefined,
       otherQuery: {},
     };
+  },
+  computed: {
+      rules() {
+          return rules(this.$i18n)
+      }
   },
   watch: {
     $route: {
@@ -81,39 +93,37 @@ export default {
         return acc;
       }, {});
     },
-    submit() {
+    submit(formName) {
       var that = this;
-      this.$store.dispatch("user/login", this.form).then((res) => {
-        if (res.access_token !== undefined) {
-          // 登录成功提示
-          this.$message({
-            message: "登录成功",
-            type: "success",
-          });
-          that.$store.dispatch("user/getInfo").then(({ roles }) => {
-            that.$store
-              .dispatch("permission/generateRoutes", roles)
-              .then((accessRoutes) => {
-                router.addRoutes(accessRoutes);
-                var urlObj = {
-                  path: that.redirect || "/",
-                  query: that.otherQuery,
-                };
-
-                that.$router.push(urlObj);
+      that.$refs[formName].validate((valid) => {
+        if (valid) {
+          that.$store.dispatch("user/login", this.form).then((res) => {
+            if (res.access_token !== undefined) {
+              // 登录成功提示
+              that.$message({
+                message: "登录成功",
+                type: "success",
               });
-          });
+              that.$store.dispatch("user/getInfo").then(({ roles }) => {
+                that.$store
+                  .dispatch("permission/generateRoutes", roles)
+                  .then((accessRoutes) => {
+                    router.addRoutes(accessRoutes);
+                    var urlObj = {
+                      path: that.redirect || "/",
+                      query: that.otherQuery,
+                    };
 
-          // if (that.$route.query.redirect) {
-          //   that.$router.push(that.$route.query.redirect)
-          // } else {
-          //   that.$router.push('/')
-          // }
-        } else {
-          // 登录成功提示
-          this.$message({
-            message: "账号或密码错误",
-            type: "warning",
+                    that.$router.push(urlObj);
+                  });
+              });
+            } else {
+              // 登录成功提示
+              this.$message({
+                message: "账号或密码错误",
+                type: "warning",
+              });
+            }
           });
         }
       });
@@ -134,7 +144,7 @@ export default {
           type: "success",
         });
       }
-      resetRouter(lang)
+      resetRouter(lang);
     },
   },
 };

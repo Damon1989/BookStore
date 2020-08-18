@@ -20,6 +20,10 @@ export const lang={
         index:"系统管理",
         user:"用户管理",
         role:"角色管理"
+    },
+    validate:{
+        accountrequired:"账号必填",
+        passwordrequired:"密码必填"
     }
 
 }
