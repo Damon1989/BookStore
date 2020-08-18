@@ -24,7 +24,7 @@
         </el-row>
         <el-row style="margin:200px">
           <el-col :span="6" :offset="8">
-            <el-form :model="form" label-width="100px" :rules="rules.login" ref="loginForm">
+            <el-form :model="form" label-width="100px" :rules="rules.login" :ref="formName">
               <el-form-item prop="username">
                 <el-input v-model="form.username" prefix-icon="el-icon-user-solid" />
               </el-form-item>
@@ -32,14 +32,14 @@
                 <el-input v-model="form.password" type="password" prefix-icon="el-icon-lock" />
               </el-form-item>
               <el-form-item>
-                <el-checkbox v-model="form.rememberMe">{{$t('lang.login.rememberMe')}}</el-checkbox>
+                <el-checkbox v-model="form.rememberMe">{{$t('lang.form.login.rememberMe')}}</el-checkbox>
               </el-form-item>
               <el-form-item>
                 <el-button
                   type="primary"
                   style="width: 100%"
-                  @click="submit('loginForm')"
-                >{{$t('lang.login.login')}}</el-button>
+                  @click="submit()"
+                >{{$t('lang.form.login.login')}}</el-button>
               </el-form-item>
             </el-form>
           </el-col>
@@ -51,7 +51,7 @@
 <script>
 import router, { resetRouter } from "@/router";
 
-import rules,{langChange} from '@/utils/validate'
+import rules from '@/utils/validate'
 
 export default {
   name: "Login",
@@ -65,6 +65,7 @@ export default {
       },
       redirect: undefined,
       otherQuery: {},
+      formName:'loginForm'
     };
   },
   computed: {
@@ -93,9 +94,9 @@ export default {
         return acc;
       }, {});
     },
-    submit(formName) {
+    submit() {
       var that = this;
-      that.$refs[formName].validate((valid) => {
+      that.$refs[that.formName].validate((valid) => {
         if (valid) {
           that.$store.dispatch("user/login", this.form).then((res) => {
             if (res.access_token !== undefined) {
@@ -145,6 +146,10 @@ export default {
         });
       }
       resetRouter(lang);
+    //   console.log(1);
+    //   console.log(this.formName);
+    //   this.$refs[this.formName].resetFields();
+    //   console.log(2);
     },
   },
 };

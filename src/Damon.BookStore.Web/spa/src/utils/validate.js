@@ -1,4 +1,4 @@
-// import i18n from '@/assets/i18n/index'
+import lang from '@/assets/i18n/lang/zh'
 /**
  *
  */
@@ -90,30 +90,59 @@ export function isArray(arg) {
 
 let rules = (i18n) => {
     return {
+
         login:{
             username: [
                 {
                     required: true,
-                    message: i18n.t("lang.validate.accountrequired"),
+                    message: i18n.t("lang.validate.login.accountrequired"),
                     trigger: "blur",
                 },
                 {
                     type: "string",
                     min: 4,
-                    message: i18n.t('lang.validate.accountlengthgreaterthanfour'),
+                    message: i18n.t('lang.validate.login.accountlengthgreaterthanfour'),
                     trigger: "blur",
                 },
             ],
             password: [
                 {
                     required: true,
-                    message: i18n.t("lang.validate.passwordrequired"),
+                    message: i18n.t("lang.validate.login.passwordrequired"),
                     trigger: "blur",
                 },
                 {
                     type: "string",
                     min: 6,
-                    message: i18n.t('lang.validate.passwordlengthgreaterthansix'),
+                    message: i18n.t('lang.validate.login.passwordlengthgreaterthansix'),
+                    trigger: "blur",
+                },
+            ],
+        },
+        user:{
+            userName: [
+                {
+                    required: true,
+                    message: i18n.t("lang.validate.user.accountrequired"),
+                    trigger: "blur",
+                },
+                // {
+                //     type: "string",
+                //     min: 4,
+                //     message: i18n.t('lang.validate.user.accountlengthgreaterthanfour'),
+                //     trigger: "blur",
+                // },
+            ],
+            password: [
+                {
+                    required: true,
+                    message: i18n.t("lang.validate.user.passwordrequired"),
+                    trigger: "blur",
+                },
+                {
+                    type: "string",
+                    min: 6,
+                    message: i18n.t('lang.validate.user.passwordlengthgreaterthansix'),
                     trigger: "blur",
                 },
             ],

@@ -36,7 +36,7 @@
             <el-dropdown-item>Docs</el-dropdown-item>
           </a> -->
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">{{$t('lang.login.logout')}}</span>
+            <span style="display:block;">{{$t('lang.form.login.logout')}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

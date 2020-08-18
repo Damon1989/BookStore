@@ -27,10 +27,10 @@
       @pagination="getList"
     />
     <el-dialog title="用户管理" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
+      <el-form :model="form" :ref="formName" :rules="rules.user">
         <el-tabs v-model="activeName">
           <el-tab-pane label="用户信息" name="first">
-            <el-form-item label="用户名称" :label-width="formLabelWidth">
+            <el-form-item label="账号" :label-width="formLabelWidth" prop="userName">
               <el-input v-model="form.userName" autocomplete="off" />
             </el-form-item>
             <el-form-item label="名" :label-width="formLabelWidth">
@@ -39,7 +39,7 @@
             <el-form-item label="姓" :label-width="formLabelWidth">
               <el-input v-model="form.surname" autocomplete="off" />
             </el-form-item>
-            <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-form-item label="密码" :label-width="formLabelWidth" prop="password">
               <el-input v-model="form.password" autocomplete="off" />
             </el-form-item>
             <el-form-item label="邮箱" :label-width="formLabelWidth">
@@ -58,18 +58,27 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="newUser">确 定</el-button>
+        <el-button type="primary" @click="newUser()">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
-import { getUserList, getUser, getUserRoles, addUser, editUser, deleteUser } from '@/api/user'
-import { getRoleList } from '@/api/role'
+import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import {
+  getUserList,
+  getUser,
+  getUserRoles,
+  addUser,
+  editUser,
+  deleteUser,
+} from "@/api/user";
+import { getRoleList } from "@/api/role";
+import rules from "@/utils/validate";
+
 export default {
-  name: 'UserData',
+  name: "UserData",
   components: { Pagination },
   data() {
     return {
@@ -78,113 +87,138 @@ export default {
 
       listQuery: {
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
       },
       dialogFormVisible: false,
-      formLabelWidth: '120px',
+      formLabelWidth: "120px",
 
       new: true,
       form: {
-        id: '',
-        userName: '',
-        name: '',
-        surname: '',
-        password: '',
-        email: '',
-        phoneNumber: '',
+        id: "",
+        userName: "",
+        name: "",
+        surname: "",
+        password: "",
+        email: "",
+        phoneNumber: "",
         twoFactorEnabled: false,
         lockoutEnabled: false,
         roleNames: [],
-        concurrencyStamp: ''
+        concurrencyStamp: "",
       },
       roleNameList: [],
-      activeName: 'first'
-    }
+      activeName: "first",
+      formName: "userForm",
+    };
+  },
+  computed: {
+    rules() {
+      return rules(this.$i18n);
+    },
   },
   created() {
-    this.getList()
-    this.getRoles()
+    this.getList();
+    this.getRoles();
   },
   methods: {
     getList() {
       var skipCount =
-        (this.listQuery.currentPage - 1) * this.listQuery.pageSize
-      getUserList({ skipCount: skipCount, pageSize: this.listQuery.pageSize }).then(
-        (res) => {
-          this.tableData = res.items
-          this.total = res.totalCount
-        }
-      )
+        (this.listQuery.currentPage - 1) * this.listQuery.pageSize;
+      getUserList({
+        skipCount: skipCount,
+        pageSize: this.listQuery.pageSize,
+      }).then((res) => {
+        this.tableData = res.items;
+        this.total = res.totalCount;
+      });
     },
 
     showNewUser() {
-      this.dialogFormVisible = true
-      this.new = true
-      this.activeName = 'first'
+      this.dialogFormVisible = true;
+      this.new = true;
+      this.activeName = "first";
+      this.$refs[this.formName].resetFields();
+      this.form = {
+        id: "",
+        userName: "",
+        name: "",
+        surname: "",
+        password: "",
+        email: "",
+        phoneNumber: "",
+        twoFactorEnabled: false,
+        lockoutEnabled: false,
+        roleNames: [],
+        concurrencyStamp: "",
+      };
     },
     getRoles() {
-      var that = this
-      getRoleList({ skipCount: 0, pageSize: 1000 })
-        .then((res) => {
-          var roles = new Array()
-          res.items.forEach((item) => {
-            roles.push(item.name)
-          })
-          that.roleNameList = roles
-        })
+      var that = this;
+      getRoleList({ skipCount: 0, pageSize: 1000 }).then((res) => {
+        var roles = new Array();
+        res.items.forEach((item) => {
+          roles.push(item.name);
+        });
+        that.roleNameList = roles;
+      });
     },
     newUser() {
-      var that = this
-      if (this.new) {
-        addUser(this.form).then(() => {
-          that.dialogFormVisible = false
-          that.getList()
-        })
-      } else {
-        editUser(this.form)
-          .then(() => {
-            that.dialogFormVisible = false
-            that.getList()
-          })
-      }
+      var that = this;
+
+      that.$refs[that.formName].validate((valid) => {
+        if (valid) {
+          if (that.new) {
+            addUser(that.form).then(() => {
+              that.dialogFormVisible = false;
+              that.getList();
+            });
+          } else {
+            editUser(that.form).then(() => {
+              that.dialogFormVisible = false;
+              that.getList();
+            });
+          }
+        }
+      });
     },
     getUser(id) {
-      var that = this
+      var that = this;
       getUser(id).then((res) => {
-        var data = res
-        that.form.id = data.id
-        that.form.userName = data.userName
-        that.form.name = data.name
-        that.form.surname = data.surname
-        that.form.email = data.email
-        that.form.phoneNumber = data.phoneNumber
-        that.form.concurrencyStamp = data.concurrencyStamp
-      })
+        var data = res;
+        that.form.id = data.id;
+        that.form.userName = data.userName;
+        that.form.name = data.name;
+        that.form.surname = data.surname;
+        that.form.email = data.email;
+        that.form.phoneNumber = data.phoneNumber;
+        that.form.concurrencyStamp = data.concurrencyStamp;
+      });
     },
     getUserRole(id) {
-      var that = this
+      var that = this;
       getUserRoles(id).then((res) => {
-        var roles = new Array()
+        var roles = new Array();
         res.items.forEach((item) => {
-          roles.push(item.name)
-        })
-        that.form.roleNames = roles
-      })
+          roles.push(item.name);
+        });
+        that.form.roleNames = roles;
+      });
     },
     editSingle(id) {
-      this.activeName = 'first'
-      this.new = false
-      this.dialogFormVisible = true
-      this.getUser(id)
-      this.getUserRole(id)
+      this.activeName = "first";
+      this.new = false;
+      this.dialogFormVisible = true;
+      this.$refs[this.formName].resetFields();
+      this.getUser(id);
+      this.getUserRole(id);
     },
     deleteSingle(id) {
-      var that = this
-      deleteUser(id).then(function() {
-        that.listQuery.currentPage = 1
-        that.getList()
-      })
-    }
-  }
-}
+      var that = this;
+      deleteUser(id).then(function () {
+        that.listQuery.currentPage = 1;
+        that.getList();
+      });
+    },
+  },
+};
 </script>
