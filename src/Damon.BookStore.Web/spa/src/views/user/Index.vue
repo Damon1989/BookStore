@@ -15,6 +15,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="editSingle(scope.row.id)">编辑</el-button>
+          <el-button type="text" size="small" @click="showUserPermissionDialog(scope.row.id)">权限</el-button>
           <!-- <el-button @click.native.prevent="deleteSingle(scope.row.id)" type="text" size="small">移除</el-button> -->
         </template>
       </el-table-column>
@@ -61,6 +62,23 @@
         <el-button type="primary" @click="newUser()">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="权限管理" :visible.sync="dialogUserPermissionVisible">
+      <el-button type="primary" style="float:right" @click="saveUserPermission">保存</el-button>
+      <el-tabs :tab-position="tabPosition" style="height: 400px;">
+        <el-tab-pane v-for="(item,index) in tabGroups" :key="index" :label="item.displayName">
+          <el-tree
+            :data="item.permissions"
+            :props="defaultProps"
+            node-key="name"
+            show-checkbox
+            ref='tree'
+            :default-checked-keys="permissionCheckedKeys"
+            @check-change="treeNodeCheckChange"
+          />
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
@@ -73,9 +91,12 @@ import {
   addUser,
   editUser,
   deleteUser,
+  getUserPermission,
+  addUserPermission
 } from "@/api/user";
 import { getRoleList } from "@/api/role";
 import rules from "@/utils/validate";
+import { forEach } from "shelljs/commands";
 
 export default {
   name: "UserData",
@@ -109,6 +130,15 @@ export default {
       roleNameList: [],
       activeName: "first",
       formName: "userForm",
+      userId: "",
+      dialogUserPermissionVisible: false,
+      permissionCheckedKeys: [],
+      tabPosition: "left",
+      tabGroups: [],
+      defaultProps: {
+        children: "permissions",
+        label: "displayName",
+      },
     };
   },
   computed: {
@@ -218,6 +248,80 @@ export default {
         that.listQuery.currentPage = 1;
         that.getList();
       });
+    },
+    getUserPermission(userId) {
+      getUserPermission(userId).then((res) => {
+        var groups = res.groups;
+        groups.forEach((group) => {
+          group.permissions.forEach((permission) => {
+            if (
+              permission.isGranted &&
+              permission.grantedProviders.filter((c) => c.providerName != "U")
+                .length > 0
+            ) {
+              permission.disabled = true;
+            } else {
+              permission.disabled = false;
+            }
+          });
+        });
+        this.tabGroups = groups;
+        var checkedKeys = new Array();
+        groups.forEach((element) => {
+          element.permissions.forEach((p) => {
+            if (p.isGranted) {
+              checkedKeys.push(p.name);
+            }
+          });
+        });
+        this.permissionCheckedKeys = checkedKeys;
+      });
+    },
+    treeNodeCheckChange(data, checked) {
+      if (checked) {
+        this.permissionCheckedKeys.push(data.name);
+      } else {
+        this.permissionCheckedKeys.splice(
+          this.permissionCheckedKeys.findIndex((item) => item === data.name),
+          1
+        );
+      }
+      this.tabGroups.forEach((group) => {
+        group.permissions.forEach((p) => {
+          if (this.permissionCheckedKeys.includes(p.name)) {
+            p.isGranted = true;
+          } else {
+            p.isGranted = false;
+          }
+        });
+      });
+    },
+    saveUserPermission() {
+      var permissions = new Array()
+      this.tabGroups.forEach((e) => {
+        e.permissions.forEach((p) => {
+          if (!p.disabled) {
+          permissions.push({
+            name: p.name,
+            isGranted: p.isGranted
+          })
+          }
+        })
+      })
+      var submitData = {
+        Permissions: permissions
+      }
+      addUserPermission(this.userId, submitData).then(() => {
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
+        this.dialogUserPermissionVisible = false
+      })
+    },
+    showUserPermissionDialog(userId) {
+      this.userId = userId;
+      (this.dialogUserPermissionVisible = true), this.getUserPermission(userId);
     },
   },
 };

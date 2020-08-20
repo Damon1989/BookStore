@@ -68,3 +68,21 @@ export function getUserList(query) {
     method: 'get',
   })
 }
+
+
+
+export function getUserPermission(userId) {
+  return request({
+    url: "/api/permission-management/permissions?providerName=U&providerKey=" + userId,
+    method: "get"
+  })
+}
+
+
+export function addUserPermission(userId, data) {
+  return request({
+    url: "/api/permission-management/permissions?providerName=U&providerKey=" + userId,
+    method: "put",
+    data
+  })
+}
