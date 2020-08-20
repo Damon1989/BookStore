@@ -6,6 +6,9 @@
       </el-col>
       <el-col :span="1" :offset="1">
         <el-button @click="showNewRole">新增</el-button>
+        1
+        <d-button label='新增' perms='AbpIdentity.Roles.Create'></d-button>
+        2
       </el-col>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">
@@ -66,6 +69,7 @@
 
 <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import DButton from '@/components/Button';
 import {
   getRoleList,
   getRole,
@@ -77,7 +81,7 @@ import {
 } from "@/api/role";
 export default {
   name: "RoleData",
-  components: { Pagination },
+  components: { Pagination,DButton },
   data() {
     return {
       tableData: [],

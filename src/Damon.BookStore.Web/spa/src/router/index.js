@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Layout from '@/layout'
 import store from '@/store'
 import { getAccessToken } from '@/utils/auth'
-
+import { getUserPermission } from "@/api/user";
 Vue.use(Router)
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
@@ -120,7 +120,25 @@ router.beforeEach((to, from, next) => {
         if (hasRoles) {
           next()
         } else {
-          store.dispatch('user/getInfo').then(({ roles }) => {
+          store.dispatch('user/getInfo').then(({ roles,id }) => {
+
+            var permissions = [];
+                getUserPermission(id).then((res) => {
+                  res.groups.forEach((group) => {
+                    group.permissions.forEach((permission) => {
+                      if (permission.isGranted) {
+                        permissions.push(permission.name);
+                      }
+                    });
+                  });
+                  console.log(permissions);
+                  store.dispatch(
+                    "permission/generatePermissions",
+                    permissions
+                  );
+                });
+
+
             store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
               router.addRoutes(accessRoutes)
               next({ ...to, replace: true })

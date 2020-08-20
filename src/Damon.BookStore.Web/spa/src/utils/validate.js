@@ -113,7 +113,7 @@ let rules = (i18n) => {
                 },
                 {
                     type: "string",
-                    min: 6,
+                    min: 4,
                     message: i18n.t('lang.validate.login.passwordlengthgreaterthansix'),
                     trigger: "blur",
                 },

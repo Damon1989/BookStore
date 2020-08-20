@@ -1,12 +1,13 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 
 const SET_ROUTES = 'SET_ROUTES'
+const SET_PERMISSIONS = 'SET_PERMISSIONS'
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
  * @param route
  */
-function hasPermission(roles, route) {
+function hasMenuPermission(roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -24,7 +25,7 @@ export function filterAsyncRoutes(routes, roles) {
 
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
+    if (hasMenuPermission(roles, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, roles)
       }
@@ -37,13 +38,17 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: constantRoutes,
-  addRoutes: []
+  addRoutes: [],
+  permissions: []
 }
 
 const mutations = {
   [SET_ROUTES]: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+  },
+  [SET_PERMISSIONS]: (state, permissions) => {
+    state.permissions = permissions;
   }
 }
 
@@ -58,6 +63,12 @@ const actions = {
       }
       commit(SET_ROUTES, accessedRoutes)
       resolve(accessedRoutes)
+    })
+  },
+  generatePermissions({commit},permissions){
+    return new Promise(resolve=>{
+      commit(SET_PERMISSIONS,permissions)
+      resolve(permissions)
     })
   }
 }

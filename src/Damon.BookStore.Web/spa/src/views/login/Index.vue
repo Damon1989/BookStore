@@ -54,6 +54,8 @@ import router, { resetRouter } from "@/router";
 import rules from "@/utils/validate";
 import { changeLang } from "@/api/env";
 
+import { getUserPermission } from "@/api/user";
+
 export default {
   name: "Login",
   data() {
@@ -109,7 +111,9 @@ export default {
                 message: "登录成功",
                 type: "success",
               });
-              this.$store.dispatch("user/getInfo").then(({ roles }) => {
+              this.$store.dispatch("user/getInfo").then(({ roles, id }) => {
+                console.log(id);
+
                 this.$store
                   .dispatch("permission/generateRoutes", roles)
                   .then((accessRoutes) => {
@@ -121,6 +125,22 @@ export default {
 
                     this.$router.push(urlObj);
                   });
+
+                var permissions = [];
+                getUserPermission(id).then((res) => {
+                  res.groups.forEach((group) => {
+                    group.permissions.forEach((permission) => {
+                      if (permission.isGranted) {
+                        permissions.push(permission.name);
+                      }
+                    });
+                  });
+                  console.log(permissions);
+                  this.$store.dispatch(
+                    "permission/generatePermissions",
+                    permissions
+                  );
+                });
               });
             } else {
               // 登录成功提示
@@ -151,10 +171,6 @@ export default {
         });
       }
       resetRouter(lang);
-      //   console.log(1);
-      //   console.log(this.formName);
-      //   this.$refs[this.formName].resetFields();
-      //   console.log(2);
     },
   },
 };
