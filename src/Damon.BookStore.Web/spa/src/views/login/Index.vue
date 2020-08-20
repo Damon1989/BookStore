@@ -95,27 +95,27 @@ export default {
       }, {});
     },
     submit() {
-      var that = this;
-      that.$refs[that.formName].validate((valid) => {
+      // var that = this;
+      this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          that.$store.dispatch("user/login", this.form).then((res) => {
+          this.$store.dispatch("user/login", this.form).then((res) => {
             if (res.access_token !== undefined) {
               // 登录成功提示
-              that.$message({
+              this.$message({
                 message: "登录成功",
                 type: "success",
               });
-              that.$store.dispatch("user/getInfo").then(({ roles }) => {
-                that.$store
+              this.$store.dispatch("user/getInfo").then(({ roles }) => {
+                this.$store
                   .dispatch("permission/generateRoutes", roles)
                   .then((accessRoutes) => {
                     router.addRoutes(accessRoutes);
                     var urlObj = {
-                      path: that.redirect || "/",
-                      query: that.otherQuery,
+                      path: this.redirect || "/",
+                      query: this.otherQuery,
                     };
 
-                    that.$router.push(urlObj);
+                    this.$router.push(urlObj);
                   });
               });
             } else {

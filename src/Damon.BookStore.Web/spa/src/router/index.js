@@ -117,7 +117,6 @@ router.beforeEach((to, from, next) => {
         next({ path: '/' })
       } else {
         const hasRoles = store.getters.roles && store.getters.roles.length > 0
-        console.log('hasRoles' + hasRoles)
         if (hasRoles) {
           next()
         } else {
