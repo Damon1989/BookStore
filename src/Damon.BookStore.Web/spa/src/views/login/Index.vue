@@ -11,8 +11,8 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item
-                  @click.native="toggleLang('zh')"
-                  :disabled="$i18n.locale == 'zh'"
+                  @click.native="toggleLang('zh-Hans')"
+                  :disabled="$i18n.locale == 'zh-Hans'"
                 >中文</el-dropdown-item>
                 <el-dropdown-item
                   @click.native="toggleLang('en')"
@@ -51,7 +51,8 @@
 <script>
 import router, { resetRouter } from "@/router";
 
-import rules from '@/utils/validate'
+import rules from "@/utils/validate";
+import { changeLang } from "@/api/env";
 
 export default {
   name: "Login",
@@ -65,13 +66,13 @@ export default {
       },
       redirect: undefined,
       otherQuery: {},
-      formName:'loginForm'
+      formName: "loginForm",
     };
   },
   computed: {
-      rules() {
-          return rules(this.$i18n)
-      }
+    rules() {
+      return rules(this.$i18n);
+    },
   },
   watch: {
     $route: {
@@ -84,6 +85,9 @@ export default {
       },
       immediate: true,
     },
+  },
+  created() {
+    changeLang("zh-Hans");
   },
   methods: {
     getOtherQuery(query) {
@@ -130,7 +134,8 @@ export default {
       });
     },
     toggleLang(lang) {
-      if (lang === "zh") {
+      changeLang(lang);
+      if (lang === "zh-Hans") {
         localStorage.setItem("locale", lang);
         this.$i18n.locale = localStorage.getItem("locale");
         this.$message({
@@ -146,10 +151,10 @@ export default {
         });
       }
       resetRouter(lang);
-    //   console.log(1);
-    //   console.log(this.formName);
-    //   this.$refs[this.formName].resetFields();
-    //   console.log(2);
+      //   console.log(1);
+      //   console.log(this.formName);
+      //   this.$refs[this.formName].resetFields();
+      //   console.log(2);
     },
   },
 };
