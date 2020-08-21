@@ -5,10 +5,8 @@
         <el-button @click="getList">查询</el-button>
       </el-col>
       <el-col :span="1" :offset="1">
-        <el-button @click="showNewRole">新增</el-button>
-        1
-        <d-button label='新增' perms='AbpIdentity.Roles.Create'></d-button>
-        2
+        <el-button @click="showNewRole">新增</el-button>1
+        <d-button label="新增" perms="AbpIdentity.Roles.Create"></d-button>2
       </el-col>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">
@@ -23,7 +21,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
+    <d-pagination
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.currentPage"
@@ -68,8 +66,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
-import DButton from '@/components/Button';
+// import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import {
   getRoleList,
   getRole,
@@ -81,7 +78,7 @@ import {
 } from "@/api/role";
 export default {
   name: "RoleData",
-  components: { Pagination,DButton },
+  // components: { Pagination },
   data() {
     return {
       tableData: [],

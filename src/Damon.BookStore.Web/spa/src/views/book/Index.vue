@@ -50,10 +50,10 @@
 </template>
 
   <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+// import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 export default {
   name:"book",
-  components: { Pagination },
+  // components: { Pagination },
   data() {
     return {
       tableData: [],

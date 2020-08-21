@@ -46,10 +46,6 @@ export default {
     },
     hasPerms: function (perms) {
       // 根据权限标识和外部指示状态进行权限判断
-      console.log(123);
-      console.log(perms);
-      console.log(hasPermission(perms));
-      console.log(!this.disabled);
       return hasPermission(perms) & !this.disabled
     }
   },

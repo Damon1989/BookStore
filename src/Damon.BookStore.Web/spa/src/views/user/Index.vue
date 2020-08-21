@@ -20,7 +20,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination
+    <d-pagination
       v-show="total>0"
       :total="total"
       :page.sync="listQuery.currentPage"
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+// import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import {
   getUserList,
   getUser,
@@ -100,7 +100,7 @@ import { forEach } from "shelljs/commands";
 
 export default {
   name: "UserData",
-  components: { Pagination },
+  // components: { Pagination },
   data() {
     return {
       tableData: [],
