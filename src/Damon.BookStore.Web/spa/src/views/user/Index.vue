@@ -83,7 +83,6 @@
 </template>
 
 <script>
-// import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import {
   getUserList,
   getUser,
@@ -100,7 +99,6 @@ import { forEach } from "shelljs/commands";
 
 export default {
   name: "UserData",
-  // components: { Pagination },
   data() {
     return {
       tableData: [],
@@ -252,6 +250,7 @@ export default {
     getUserPermission(userId) {
       getUserPermission(userId).then((res) => {
         var groups = res.groups;
+        console.log(groups);
         groups.forEach((group) => {
           group.permissions.forEach((permission) => {
             if (

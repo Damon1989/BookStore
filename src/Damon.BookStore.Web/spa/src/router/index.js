@@ -131,7 +131,6 @@ router.beforeEach((to, from, next) => {
                       }
                     });
                   });
-                  console.log(permissions);
                   store.dispatch(
                     "permission/generatePermissions",
                     permissions

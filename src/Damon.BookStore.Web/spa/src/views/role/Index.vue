@@ -56,6 +56,7 @@
             :props="defaultProps"
             node-key="name"
             show-checkbox
+            default-expand-all
             :default-checked-keys="permissionCheckedKeys"
             @check-change="treeNodeCheckChange"
           />
@@ -66,7 +67,6 @@
 </template>
 
 <script>
-// import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import {
   getRoleList,
   getRole,
@@ -78,7 +78,6 @@ import {
 } from "@/api/role";
 export default {
   name: "RoleData",
-  // components: { Pagination },
   data() {
     return {
       tableData: [],
@@ -129,15 +128,31 @@ export default {
       var that = this;
       getRolePermission(role).then((res) => {
         var groups = res.groups;
-        that.tabGroups = groups;
         var checkedKeys = new Array();
+        let newGroups = new Array();
         groups.forEach((element) => {
+          var groupPermissions = new Array();
           element.permissions.forEach((p) => {
             if (p.isGranted) {
               checkedKeys.push(p.name);
             }
           });
+
+          var firstPermissions = element.permissions.filter(
+            (c) => c.parentName == null
+          );
+          firstPermissions.forEach((e) => {
+            var secondPermissions = element.permissions.filter(
+              (c) => c.parentName == e.name
+            );
+            groupPermissions.push({ ...e, permissions: secondPermissions });
+          });
+          that.tabGroups.filter(
+            (c) => c.name == element.name
+          ).permissions = groupPermissions;
+          newGroups.push({ ...element, permissions: groupPermissions });
         });
+        that.tabGroups = newGroups;
         that.permissionCheckedKeys = checkedKeys;
       });
     },
@@ -197,12 +212,19 @@ export default {
         );
       }
       this.tabGroups.forEach((group) => {
-        group.permissions.forEach((p) => {
-          if (this.permissionCheckedKeys.includes(p.name)) {
-            p.isGranted = true;
+        group.permissions.forEach((first) => {
+          if (this.permissionCheckedKeys.includes(first.name)) {
+            first.isGranted = true;
           } else {
-            p.isGranted = false;
+            first.isGranted = false;
           }
+          first.permissions.forEach((second) => {
+            if (this.permissionCheckedKeys.includes(second.name)) {
+              second.isGranted = true;
+            } else {
+              second.isGranted = false;
+            }
+          });
         });
       });
     },
@@ -210,10 +232,16 @@ export default {
       var that = this;
       var permissions = new Array();
       that.tabGroups.forEach((e) => {
-        e.permissions.forEach((p) => {
+        e.permissions.forEach((first) => {
           permissions.push({
-            name: p.name,
-            isGranted: p.isGranted,
+            name: first.name,
+            isGranted: first.isGranted,
+          });
+          first.permissions.forEach((second) => {
+            permissions.push({
+              name: second.name,
+              isGranted: second.isGranted,
+            });
           });
         });
       });
