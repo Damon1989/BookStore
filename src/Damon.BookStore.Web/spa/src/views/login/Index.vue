@@ -112,8 +112,6 @@ export default {
                 type: "success",
               });
               this.$store.dispatch("user/getInfo").then(({ roles, id }) => {
-                console.log(id);
-
                 this.$store
                   .dispatch("permission/generateRoutes", roles)
                   .then((accessRoutes) => {
