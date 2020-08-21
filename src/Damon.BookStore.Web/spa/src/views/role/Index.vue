@@ -49,8 +49,8 @@
 
     <el-dialog title="权限管理" :visible.sync="dialogRolePermissionVisible">
       <el-button type="primary" style="float:right" @click="saveRolePermission">保存</el-button>
-      <el-tabs :tab-position="tabPosition" style="height: 400px;">
-        <el-tab-pane v-for="(item,index) in tabGroups" :key="index" :label="item.displayName">
+      <el-tabs :tab-position="tabPosition" v-model="tabFirst" style="height: 400px;">
+        <el-tab-pane v-for="(item,index) in tabGroups" :key="index" :name="item.name" :label="item.displayName">
           <el-tree
             :data="item.permissions"
             :props="defaultProps"
@@ -100,6 +100,7 @@ export default {
 
       dialogRolePermissionVisible: false,
       tabPosition: "left",
+      tabFirst:'',
       tabGroups: [],
       defaultProps: {
         children: "permissions",
@@ -128,8 +129,10 @@ export default {
       var that = this;
       getRolePermission(role).then((res) => {
         var groups = res.groups;
+        this.tabFirst=groups[0].name;
         var checkedKeys = new Array();
         let newGroups = new Array();
+
         groups.forEach((element) => {
           var groupPermissions = new Array();
           element.permissions.forEach((p) => {
@@ -147,9 +150,7 @@ export default {
             );
             groupPermissions.push({ ...e, permissions: secondPermissions });
           });
-          that.tabGroups.filter(
-            (c) => c.name == element.name
-          ).permissions = groupPermissions;
+
           newGroups.push({ ...element, permissions: groupPermissions });
         });
         that.tabGroups = newGroups;

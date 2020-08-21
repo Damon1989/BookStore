@@ -65,14 +65,20 @@
 
     <el-dialog title="权限管理" :visible.sync="dialogUserPermissionVisible">
       <el-button type="primary" style="float:right" @click="saveUserPermission">保存</el-button>
-      <el-tabs :tab-position="tabPosition" style="height: 400px;">
-        <el-tab-pane v-for="(item,index) in tabGroups" :key="index" :label="item.displayName">
+      <el-tabs :tab-position="tabPosition" v-model="tabFirst" style="height: 400px;">
+        <el-tab-pane
+          v-for="(item,index) in tabGroups"
+          :key="index"
+          :name="item.name"
+          :label="item.displayName"
+        >
           <el-tree
             :data="item.permissions"
             :props="defaultProps"
             node-key="name"
             show-checkbox
-            ref='tree'
+            default-expand-all
+            ref="tree"
             :default-checked-keys="permissionCheckedKeys"
             @check-change="treeNodeCheckChange"
           />
@@ -91,11 +97,10 @@ import {
   editUser,
   deleteUser,
   getUserPermission,
-  addUserPermission
+  addUserPermission,
 } from "@/api/user";
 import { getRoleList } from "@/api/role";
 import rules from "@/utils/validate";
-import { forEach } from "shelljs/commands";
 
 export default {
   name: "UserData",
@@ -133,6 +138,7 @@ export default {
       permissionCheckedKeys: [],
       tabPosition: "left",
       tabGroups: [],
+      tabFirst: "",
       defaultProps: {
         children: "permissions",
         label: "displayName",
@@ -160,12 +166,16 @@ export default {
         this.total = res.totalCount;
       });
     },
-
+    resetForm(){
+      this.$nextTick(()=>{
+                    this.$refs[this.formName].resetFields();
+                })
+    },
     showNewUser() {
       this.dialogFormVisible = true;
       this.new = true;
       this.activeName = "first";
-      this.$refs[this.formName].resetFields();
+      this.resetForm();
       this.form = {
         id: "",
         userName: "",
@@ -191,19 +201,17 @@ export default {
       });
     },
     newUser() {
-      var that = this;
-
-      that.$refs[that.formName].validate((valid) => {
+      this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          if (that.new) {
+          if (this.new) {
             addUser(that.form).then(() => {
-              that.dialogFormVisible = false;
-              that.getList();
+              this.dialogFormVisible = false;
+              this.getList();
             });
           } else {
-            editUser(that.form).then(() => {
-              that.dialogFormVisible = false;
-              that.getList();
+            editUser(this.form).then(() => {
+              this.dialogFormVisible = false;
+              this.getList();
             });
           }
         }
@@ -236,7 +244,7 @@ export default {
       this.activeName = "first";
       this.new = false;
       this.dialogFormVisible = true;
-      this.$refs[this.formName].resetFields();
+      this.resetForm();
       this.getUser(id);
       this.getUserRole(id);
     },
@@ -250,7 +258,7 @@ export default {
     getUserPermission(userId) {
       getUserPermission(userId).then((res) => {
         var groups = res.groups;
-        console.log(groups);
+        this.tabFirst = groups[0].name;
         groups.forEach((group) => {
           group.permissions.forEach((permission) => {
             if (
@@ -264,15 +272,41 @@ export default {
             }
           });
         });
-        this.tabGroups = groups;
-        var checkedKeys = new Array();
+
+        // this.tabGroups = groups;
+
+        // groups.forEach((element) => {
+        //   element.permissions.forEach((p) => {
+        //     if (p.isGranted) {
+        //       checkedKeys.push(p.name);
+        //     }
+        //   });
+        // });
+
+        let checkedKeys = new Array();
+        let newGroups = new Array();
         groups.forEach((element) => {
+          var groupPermissions = new Array();
           element.permissions.forEach((p) => {
             if (p.isGranted) {
               checkedKeys.push(p.name);
             }
           });
+
+          var firstPermissions = element.permissions.filter(
+            (c) => c.parentName == null
+          );
+          firstPermissions.forEach((e) => {
+            var secondPermissions = element.permissions.filter(
+              (c) => c.parentName == e.name
+            );
+            groupPermissions.push({ ...e, permissions: secondPermissions });
+          });
+
+          newGroups.push({ ...element, permissions: groupPermissions });
         });
+        this.tabGroups = newGroups;
+
         this.permissionCheckedKeys = checkedKeys;
       });
     },
@@ -286,37 +320,53 @@ export default {
         );
       }
       this.tabGroups.forEach((group) => {
-        group.permissions.forEach((p) => {
-          if (this.permissionCheckedKeys.includes(p.name)) {
-            p.isGranted = true;
+        group.permissions.forEach((first) => {
+          if (this.permissionCheckedKeys.includes(first.name)) {
+            first.isGranted = true;
           } else {
-            p.isGranted = false;
+            first.isGranted = false;
           }
+          first.permissions.forEach((second) => {
+            if (this.permissionCheckedKeys.includes(second.name)) {
+              second.isGranted = true;
+            } else {
+              second.isGranted = false;
+            }
+          });
         });
       });
     },
     saveUserPermission() {
-      var permissions = new Array()
+      var permissions = new Array();
       this.tabGroups.forEach((e) => {
-        e.permissions.forEach((p) => {
-          if (!p.disabled) {
-          permissions.push({
-            name: p.name,
-            isGranted: p.isGranted
-          })
+        e.permissions.forEach((first) => {
+          if (!first.disabled) {
+            permissions.push({
+              name: first.name,
+              isGranted: first.isGranted,
+            });
           }
-        })
-      })
+
+          first.permissions.forEach((second) => {
+            if (!second.disabled) {
+              permissions.push({
+                name: second.name,
+                isGranted: second.isGranted,
+              });
+            }
+          });
+        });
+      });
       var submitData = {
-        Permissions: permissions
-      }
+        Permissions: permissions,
+      };
       addUserPermission(this.userId, submitData).then(() => {
         this.$message({
-          message: '保存成功',
-          type: 'success'
-        })
-        this.dialogUserPermissionVisible = false
-      })
+          message: "保存成功",
+          type: "success",
+        });
+        this.dialogUserPermissionVisible = false;
+      });
     },
     showUserPermissionDialog(userId) {
       this.userId = userId;
