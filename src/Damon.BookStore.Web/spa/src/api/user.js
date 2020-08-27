@@ -15,6 +15,13 @@ export function logout(){
   })
 }
 
+export function getOauthUserInfo(){
+  return request({
+    url:'/oauth/connect/userinfo',
+    method: 'get',
+  })
+}
+
 export function getInfo(){
   return request({
     url: '/api/app/book/user',

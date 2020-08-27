@@ -54,7 +54,7 @@ import router, { resetRouter } from "@/router";
 import rules from "@/utils/validate";
 import { changeLang } from "@/api/env";
 
-import { getUserPermission } from "@/api/user";
+import { getUserPermission,getOauthUserInfo } from "@/api/user";
 
 export default {
   name: "Login",
@@ -112,6 +112,7 @@ export default {
                 type: "success",
               });
               this.$store.dispatch("user/getInfo").then(({ roles, id }) => {
+                console.log(roles);
                 this.$store
                   .dispatch("permission/generateRoutes", roles)
                   .then((accessRoutes) => {
@@ -121,6 +122,10 @@ export default {
                       query: this.otherQuery,
                     };
 
+getOauthUserInfo().then((result)=>{
+  console.log(111);
+  console.log(result);
+})
                     this.$router.push(urlObj);
                   });
 
