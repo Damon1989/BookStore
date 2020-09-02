@@ -11,12 +11,39 @@ Vue.use(Router);
 
 const whiteList = ['/login', '/auth-redirect'];
 
-export const asyncRoutes = [];
+export const asyncRoutes = [
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/role',
+    // alwaysShow: true, // will always show the root menu
+    name: 'system',
+    meta: {
+      title: 'system.index',
+      icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/user/index'),
+        name: 'UserData',
+        meta: { title: 'system.user', icon: 'dashboard', affix: true },
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/role/index'),
+        name: 'RoleData',
+        meta: { title: 'system.role', icon: 'dashboard', affix: true },
+      },
+    ],
+  },
+];
 
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login'),
+    component: () => import('@/views/login/index'),
     hidden: true,
   },
   {
@@ -26,14 +53,16 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect'),
+        component: () => import('@/views/redirect/index'),
       },
     ],
-  }, {
+  },
+  {
     path: '/error',
     component: Layout,
     redirect: 'noRedirect',
     name: 'ErrorPages',
+    hidden: true,
     meta: {
       title: 'exceptionpage.index',
       icon: '404',
@@ -43,9 +72,7 @@ export const constantRoutes = [
         path: '401',
         component: () => import('@/views/error-page/401'),
         name: 'Page401',
-        meta: {
-          title: 'exceptionpage.fourzeroone', noCache: true,
-        },
+        meta: { title: 'exceptionpage.fourzeroone', noCache: true },
       },
       {
         path: '404',
@@ -54,21 +81,21 @@ export const constantRoutes = [
         meta: { title: 'exceptionpage.fourzerofour', noCache: true },
       },
     ],
-  }, {
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard'),
+        component: () => import('@/views/dashboard/index'),
         name: 'dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', affix: true },
       },
     ],
   },
 ];
-
 
 const createRouter = () => new Router({
   scrollBehavior: () => ({ y: 0 }),

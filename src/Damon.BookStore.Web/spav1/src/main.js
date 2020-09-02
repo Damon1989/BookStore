@@ -3,21 +3,22 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import router from './router';
 
 import i18n from '@/assets/i18n/index';
+import router from './router';
 import store from './store';
 
 
+import '@/styles/index.scss'; // global css
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 
-Vue.use(ElementUI);
-
 Vue.config.productionTip = false;
+
+Vue.use(ElementUI);
 
 
 const requireComponent = require.context(

@@ -34,7 +34,6 @@
                 <el-input v-model="form.password" type="password" prefix-icon="el-icon-lock" />
               </el-form-item>
               <el-form-item>
-                // eslint-disable-next-line max-len
                 <el-checkbox v-model="form.rememberMe">{{ $t('lang.form.login.rememberMe') }}</el-checkbox>
               </el-form-item>
               <el-form-item>
