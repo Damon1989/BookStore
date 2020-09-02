@@ -12,6 +12,7 @@ namespace Damon.BookStore.Web
 
         public void Configure(IApplicationBuilder app)
         {
+            // 配置 ASP.NET Core MVC 相关参数
             app.InitializeApplication();
         }
     }
