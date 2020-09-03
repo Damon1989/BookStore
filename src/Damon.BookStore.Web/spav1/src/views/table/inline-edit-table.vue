@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width:100%">
@@ -81,6 +82,12 @@
         </template>
       </el-table-column>
     </el-table>
+        <d-pagination
+     v-show="total>0"
+     :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+       @pagination="getList" />
   </div>
 </template>
 
@@ -119,16 +126,18 @@ export default {
       this.listLoading = true;
       const { data } = await fetchList(this.listQuery);
       const items = data.items;
-      console.log(items);
       this.list = items.map((v) => {
         this.$set(v, 'edit', false);
+        // eslint-disable-next-line no-param-reassign
         v.originalTitle = v.title;
         return v;
       });
       this.listLoading = false;
     },
     cancelEdit(row) {
+      // eslint-disable-next-line no-param-reassign
       row.title = row.originalTitle;
+      // eslint-disable-next-line no-param-reassign
       row.edit = false;
       this.$message({
         message: 'The title has been restored to the original value',
@@ -136,7 +145,9 @@ export default {
       });
     },
     confirmEdit(row) {
+      // eslint-disable-next-line no-param-reassign
       row.edit = false;
+      // eslint-disable-next-line no-param-reassign
       row.originalTitle = row.title;
       this.$message({
         message: 'The Title has been edited',

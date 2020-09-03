@@ -43,7 +43,9 @@ export const lang = {
   table: {
     table: 'table',
     dynamictable: 'dynamic table',
+    dragtable: 'drag table',
     inlineedittable: 'inline edit table',
+    complextable: 'complex table',
   },
 };
 

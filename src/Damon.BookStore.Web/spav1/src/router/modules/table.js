@@ -22,7 +22,7 @@ const tableRouter = {
       path: 'drag-table',
       component: () => import('@/views/table/drag-table'),
       name: 'DragTable',
-      meta: { title: 'Drag Table' },
+      meta: { title: 'table.dragtable' },
     },
     {
       path: 'inline-edit-table',
@@ -30,12 +30,12 @@ const tableRouter = {
       name: 'InlineEditTable',
       meta: { title: 'table.inlineedittable' },
     },
-    // {
-    //   path: 'complex-table',
-    //   component: () => import('@/views/table/complex-table'),
-    //   name: 'ComplexTable',
-    //   meta: { title: 'Complex Table' },
-    // },
+    {
+      path: 'complex-table',
+      component: () => import('@/views/table/complex-table'),
+      name: 'ComplexTable',
+      meta: { title: 'table.complextable' },
+    },
   ],
 };
 export default tableRouter;

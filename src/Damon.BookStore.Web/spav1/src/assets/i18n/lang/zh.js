@@ -41,7 +41,9 @@ export const lang = {
   table: {
     table: '表格',
     dynamictable: '动态表格',
+    dragtable: '拖曳表格',
     inlineedittable: '内联编辑表格',
+    complextable: '复杂表格',
   },
 };
 
