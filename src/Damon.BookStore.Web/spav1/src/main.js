@@ -8,13 +8,14 @@ import i18n from '@/assets/i18n/index';
 import router from './router';
 import store from './store';
 
-
+import './icons'; // icon
 import '@/styles/index.scss'; // global css
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
+import * as filters from './filters'; // global filters
 
 Vue.config.productionTip = false;
 
@@ -67,6 +68,10 @@ requireComponent.keys().forEach((fileName) => {
   );
 });
 
+// register global utility filters
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 
 /* eslint-disable no-new */
 new Vue({
