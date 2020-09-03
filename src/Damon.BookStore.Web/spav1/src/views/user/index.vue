@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 <template>
   <div class="app-container">
     <el-row :gutter="20">
@@ -269,8 +270,10 @@ export default {
               permission.grantedProviders.filter(c => c.providerName !== 'U')
                 .length > 0
             ) {
+              // eslint-disable-next-line no-param-reassign
               permission.disabled = true;
             } else {
+              // eslint-disable-next-line no-param-reassign
               permission.disabled = false;
             }
           });
@@ -325,14 +328,18 @@ export default {
       this.tabGroups.forEach((group) => {
         group.permissions.forEach((first) => {
           if (this.permissionCheckedKeys.includes(first.name)) {
+            // eslint-disable-next-line no-param-reassign
             first.isGranted = true;
           } else {
+            // eslint-disable-next-line no-param-reassign
             first.isGranted = false;
           }
           first.permissions.forEach((second) => {
             if (this.permissionCheckedKeys.includes(second.name)) {
+              // eslint-disable-next-line no-param-reassign
               second.isGranted = true;
             } else {
+              // eslint-disable-next-line no-param-reassign
               second.isGranted = false;
             }
           });

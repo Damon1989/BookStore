@@ -47,5 +47,9 @@ export const lang = {
     inlineedittable: 'inline edit table',
     complextable: 'complex table',
   },
+  components: {
+    components: 'components',
+    backtotop: 'back to top',
+  },
 };
 

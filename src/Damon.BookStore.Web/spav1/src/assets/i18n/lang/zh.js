@@ -45,5 +45,9 @@ export const lang = {
     inlineedittable: '内联编辑表格',
     complextable: '复杂表格',
   },
+  components: {
+    components: '组件库',
+    backtotop: '返回顶部',
+  },
 };
 
