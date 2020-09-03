@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="1" :offset="18">
         <el-button @click="getList">查询</el-button>

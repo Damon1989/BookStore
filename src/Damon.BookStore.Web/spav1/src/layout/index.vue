@@ -3,8 +3,8 @@
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <!-- <navbar />
-        <tags-view v-if="needTagsView" /> -->
+        <navbar />
+        <tags-view v-if="needTagsView" />
       </div>
       <app-main />
       <!-- <right-panel v-if="showSettings">
@@ -16,13 +16,14 @@
 
 <script>
 import { mapState } from 'vuex';
-import { Sidebar, AppMain } from './components';
+import { Sidebar, AppMain, TagsView, Navbar } from './components';
+import ResizeMixin from './mixin/ResizeHandler';
 
 
 export default {
   name: 'Layout',
-  components: { Sidebar, AppMain },
-
+  components: { Sidebar, AppMain, TagsView, Navbar },
+  mixins: [ResizeMixin],
   methods: {
     loginExit() {
       const that = this;
@@ -54,7 +55,7 @@ export default {
 .app-wrapper {
   @include clearfix;
   position: relative;
-  height: 100%;
+  height: 90%;
   width: 100%;
 
   &.mobile.openSidebar {

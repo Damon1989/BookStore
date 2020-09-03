@@ -34,7 +34,9 @@
                 <el-input v-model="form.password" type="password" prefix-icon="el-icon-lock" />
               </el-form-item>
               <el-form-item>
-                <el-checkbox v-model="form.rememberMe">{{ $t('lang.form.login.rememberMe') }}</el-checkbox>
+                <el-checkbox v-model="form.rememberMe">
+                  {{ $t('lang.form.login.rememberMe') }}
+                  </el-checkbox>
               </el-form-item>
               <el-form-item>
                 <el-button
@@ -177,7 +179,7 @@ export default {
 };
 </script>
 
-<style>
+<style >
 .el-dropdown-link {
   cursor: pointer;
   color: #409eff;
@@ -185,4 +187,5 @@ export default {
 .el-icon-arrow-down {
   font-size: 12px;
 }
+
 </style>

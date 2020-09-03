@@ -23,7 +23,7 @@
 <script>
 
 export default {
-  // name: 'DPagination',
+  name: 'DPagination',
   props: {
     total: {
       required: true,
