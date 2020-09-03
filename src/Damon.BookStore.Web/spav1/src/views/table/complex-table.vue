@@ -103,13 +103,6 @@
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
        @pagination="getList" />
-    <!-- <d-pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.currentPage"
-      :limit.sync="listQuery.pageSize"
-      @pagination="getList"
-    /> -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="Type" prop="type">
@@ -194,7 +187,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
+        limit: 10,
         importance: undefined,
         title: undefined,
         type: undefined,
@@ -238,7 +231,7 @@ export default {
       this.listLoading = true;
       fetchList(this.listQuery).then((res) => {
         this.list = res.data.items;
-        this.totla = res.data.total;
+        this.total = res.data.total;
 
         setTimeout(() => {
           this.listLoading = false;

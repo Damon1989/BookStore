@@ -82,7 +82,8 @@
         </template>
       </el-table-column>
     </el-table>
-        <d-pagination
+
+    <d-pagination
      v-show="total>0"
      :total="total"
       :page.sync="listQuery.page"
@@ -112,6 +113,7 @@ export default {
     return {
       list: null,
       listLoading: true,
+      total: 0,
       listQuery: {
         page: 1,
         limit: 10,
@@ -126,6 +128,7 @@ export default {
       this.listLoading = true;
       const { data } = await fetchList(this.listQuery);
       const items = data.items;
+      this.total = data.total;
       this.list = items.map((v) => {
         this.$set(v, 'edit', false);
         // eslint-disable-next-line no-param-reassign

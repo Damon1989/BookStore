@@ -1,7 +1,7 @@
 <template>
   <div :class="{'hidden':hidden}" class="pagination-container">
     <el-row :gutter="20">
-      <el-col :span="5" :offset="15">
+      <el-col :span="5" :offset="13">
         <div class="block">
           <el-pagination
             :background="background"
