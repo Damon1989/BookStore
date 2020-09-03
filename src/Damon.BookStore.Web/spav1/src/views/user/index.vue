@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="1" :offset="18">
-        <el-button @click="getList">查询</el-button>
+      <el-col :span="1" :offset="20">
+        <el-button @click="getList" size="medium">查询</el-button>
       </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button @click="showNewUser">新增</el-button>
+      <el-col :span="1" >
+        <el-button @click="showNewUser" size="medium">新增</el-button>
       </el-col>
     </el-row>
     <el-table :data="tableData" border style="width: 100%">

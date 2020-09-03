@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <el-col :span="1" :offset="18">
-        <el-button @click="getList">查询</el-button>
+      <el-col :span="1" :offset="20">
+        <el-button @click="getList" size='medium'>查询</el-button>
       </el-col>
-      <el-col :span="1" :offset="1">
-        <el-button @click="showNewRole">新增</el-button>
+      <el-col :span="1" >
+        <el-button @click="showNewRole" size="medium">新增</el-button>
         <!-- <d-button label="新增" perms="AbpIdentity.Roles.Create"></d-button>2 -->
       </el-col>
     </el-row>
