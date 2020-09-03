@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
@@ -95,7 +96,9 @@ export default {
       return tags;
     },
     initTags() {
+      // eslint-disable-next-line no-multi-assign
       const affixTags = this.affixTags = this.filterAffixTags(this.routes);
+      // eslint-disable-next-line no-restricted-syntax
       for (const tag of affixTags) {
         // Must have tag name
         if (tag.name) {
@@ -113,6 +116,7 @@ export default {
     moveToCurrentTag() {
       const tags = this.$refs.tag;
       this.$nextTick(() => {
+        // eslint-disable-next-line no-restricted-syntax
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag);
@@ -163,6 +167,7 @@ export default {
       } else {
         // now the default is to redirect to the home page if there is no tags-view,
         // you can adjust it according to your needs.
+        // eslint-disable-next-line no-lonely-if
         if (view.name === 'Dashboard') {
           // to reload home page
           this.$router.replace({ path: `/redirect${view.fullPath}` });

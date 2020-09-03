@@ -5,6 +5,8 @@ import Layout from '@/layout';
 import store from '@/store';
 import { getAccessToken } from '@/utils/auth';
 import { getUserPermission } from '@/api/user';
+import tableRouter from './modules/table'
+  ;
 
 Vue.use(Router);
 
@@ -38,6 +40,7 @@ export const asyncRoutes = [
       },
     ],
   },
+  tableRouter,
 ];
 
 export const constantRoutes = [

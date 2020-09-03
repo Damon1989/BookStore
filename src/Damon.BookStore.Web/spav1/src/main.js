@@ -20,6 +20,18 @@ Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
 
+/**
+ * If you don't want to use mock-server
+ * you want to use MockJs for mock api
+ * you can execute: mockXHR()
+ *
+ * Currently MockJs will be used in the production environment,
+ * please remove it before going online ! ! !
+ */
+
+const { mockXHR } = require('../mock');
+
+mockXHR();
 
 const requireComponent = require.context(
   // 其组件目录的相对路径

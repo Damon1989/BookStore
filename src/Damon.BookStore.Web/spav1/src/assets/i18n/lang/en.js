@@ -40,5 +40,10 @@ export const lang = {
       passwordlengthgreaterthansix: 'password cannot be less than 6 digits',
     },
   },
+  table: {
+    table: 'table',
+    dynamictable: 'dynamic table',
+    inlineedittable: 'inline edit table',
+  },
 };
 

@@ -38,5 +38,10 @@ export const lang = {
       passwordlengthgreaterthansix: '密码不允许小于6位',
     },
   },
+  table: {
+    table: '表格',
+    dynamictable: '动态表格',
+    inlineedittable: '内联编辑表格',
+  },
 };
 
