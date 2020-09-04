@@ -45,9 +45,13 @@ export const lang = {
     inlineedittable: '内联编辑表格',
     complextable: '复杂表格',
   },
-  components: {
+  component: {
     components: '组件库',
     backtotop: '返回顶部',
+  },
+  adviser: {
+    manage: '顾问管理',
+    list: '顾问列表',
   },
 };
 

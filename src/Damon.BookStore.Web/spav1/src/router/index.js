@@ -40,6 +40,32 @@ export const asyncRoutes = [
       },
     ],
   },
+  {
+    path: '/adviser',
+    component: Layout,
+    redirect: '/adviser/list',
+    // alwaysShow: true, // will always show the root menu
+    name: 'system',
+    meta: {
+      title: 'adviser.manage',
+      icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/adviser/list'),
+        name: 'adviserlist',
+        meta: { title: 'adviser.list', icon: 'dashboard', affix: true },
+      },
+      {
+        path: 'create',
+        component: () => import('@/views/adviser/create'),
+        name: 'RoleData',
+        meta: { title: 'adviser.create', icon: 'dashboard', affix: true },
+      },
+    ],
+  },
   tableRouter,
   componentsRouter,
   // {

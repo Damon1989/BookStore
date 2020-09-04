@@ -8,7 +8,7 @@ const componentsRouter = {
   redirect: 'noRedirect',
   name: 'ComponentDemo',
   meta: {
-    title: 'components',
+    title: 'component.components',
     icon: 'component',
   },
   children: [
@@ -70,7 +70,7 @@ const componentsRouter = {
       path: 'back-to-top',
       component: () => import('@/views/components-demo/back-to-top'),
       name: 'BackToTopDemo',
-      meta: { title: 'components.backtotop' },
+      meta: { title: 'component.backtotop' },
     },
     // {
     //   path: 'drag-dialog',
