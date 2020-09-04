@@ -56,7 +56,7 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/adviser/list'),
         name: 'adviserlist',
-        meta: { title: 'adviser.list', icon: 'dashboard', affix: true },
+        meta: { title: 'adviser.list', icon: 'dashboard' },
       },
       {
         path: 'import',
@@ -69,7 +69,39 @@ export const asyncRoutes = [
         component: () => import('@/views/adviser/edit'),
         name: 'RoleData',
         hidden: true,
-        meta: { title: 'adviser.edit', icon: 'dashboard', hidden: true },
+        meta: { title: 'adviser.edit', icon: 'dashboard' },
+      },
+    ],
+  },
+  {
+    path: '/leader',
+    component: Layout,
+    redirect: '/leader/list',
+    // alwaysShow: true, // will always show the root menu
+    name: 'leader',
+    meta: {
+      title: 'leader.manage',
+      icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/leader/list'),
+        name: 'adviserlist',
+        meta: { title: 'leader.list', icon: 'dashboard', affix: true },
+      },
+      // {
+      //   path: 'import',
+      //   component: () => import('@/views/adviser/import'),
+      //   name: 'import',
+      //   meta: { title: 'adviser.import', icon: 'dashboard' },
+      // },leader
+      {
+        path: 'edit/:id',
+        component: () => import('@/views/leader/edit'),
+        name: 'RoleData',
+        meta: { title: 'leader.edit', icon: 'dashboard' },
       },
     ],
   },

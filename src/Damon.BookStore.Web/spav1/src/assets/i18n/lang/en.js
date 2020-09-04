@@ -52,10 +52,16 @@ export const lang = {
     backtotop: 'back to top',
   },
   adviser: {
-    manage: 'manage',
+    manage: 'adviser manage',
     list: 'adviser list',
-    edit: 'edit',
-    import: 'import',
+    edit: 'adviser edit',
+    import: 'adviser import',
+  },
+  leader: {
+    manage: 'manage',
+    list: 'leader list',
+    edit: 'leader edit',
+    import: 'leader import',
   },
 };
 
