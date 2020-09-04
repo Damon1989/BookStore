@@ -52,6 +52,8 @@ export const lang = {
   adviser: {
     manage: '顾问管理',
     list: '顾问列表',
+    edit: '顾问编辑',
+    import: '顾问导入',
   },
 };
 

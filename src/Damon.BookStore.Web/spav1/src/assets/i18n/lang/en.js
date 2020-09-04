@@ -54,6 +54,8 @@ export const lang = {
   adviser: {
     manage: 'manage',
     list: 'adviser list',
+    edit: 'edit',
+    import: 'import',
   },
 };
 

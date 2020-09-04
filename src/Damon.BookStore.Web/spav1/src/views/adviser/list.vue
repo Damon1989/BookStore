@@ -119,10 +119,12 @@
         </template>
       </el-table-column>
       <el-table-column label="Actions" align="center" min-width="60" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" >
-            编辑
-          </el-button>
+         <template slot-scope="scope">
+          <router-link :to="'/adviser/edit/'+scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
+              编辑
+            </el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -142,6 +144,7 @@ const enterpriseList = ['美善品', '可宝', '知淳'];
 const branchCompanies = ['分公司一', '分公司二', '分公司三'];
 const positionList = ['SA', 'TL', 'BM', 'AM'];
 const datalist = [{
+  id: 1,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -152,6 +155,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 2,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -162,6 +166,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 3,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -172,6 +177,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 4,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -182,6 +188,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 5,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -192,6 +199,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 6,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -202,6 +210,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 7,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -212,6 +221,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 8,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -222,6 +232,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 9,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -232,6 +243,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 10,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -242,6 +254,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 11,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -252,6 +265,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 12,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -262,6 +276,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 13,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -272,6 +287,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 14,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -282,6 +298,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 15,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
@@ -292,6 +309,7 @@ const datalist = [{
   registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
   entryDateTime: '2016-09-21  08:50:08',
 }, {
+  id: 16,
   branchCompany: 'CNTM',
   num: '10402213',
   jobNum: '2SH061.03',
