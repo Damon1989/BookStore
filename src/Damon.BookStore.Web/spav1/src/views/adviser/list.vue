@@ -78,12 +78,12 @@
           <span>{{ row.branchCompany }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="顾问编号"   align="center" width="100" >
+      <el-table-column label="顾问编号"   align="center" width="120" >
         <template slot-scope="{row}">
           <span>{{ row.num }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="工号"  align="center" width="100" >
+      <el-table-column label="工号"  align="center" width="120" >
         <template slot-scope="{row}">
           <span>{{ row.jobNum }}</span>
         </template>
@@ -98,12 +98,12 @@
           <span>{{ row.phone }}</span>
         </template>
       </el-table-column>
-                  <el-table-column label="职位"  align="center" width="60" >
+                  <el-table-column label="职位"  align="center" width="100" >
         <template slot-scope="{row}">
           <span>{{ row.position }}</span>
         </template>
       </el-table-column>
-                 <el-table-column label="等级"  align="center" width="60" >
+                 <el-table-column label="等级"  align="center" width="100" >
         <template slot-scope="{row}">
           <span>{{ row.level }}</span>
         </template>
@@ -113,21 +113,15 @@
           <span>{{ row.registerAddress }}</span>
         </template>
       </el-table-column>
-                 <el-table-column label="入职时间"  align="center" width="160" >
+                 <el-table-column label="入职时间"  align="center" width="180" >
         <template slot-scope="{row}">
           <span>{{ row.entryDateTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" min-width="240" class-name="small-padding fixed-width">
+      <el-table-column label="Actions" align="center" min-width="60" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" >
-            Edit
-          </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" >
-            Publish
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" >
-            Delete
+            编辑
           </el-button>
         </template>
       </el-table-column>
@@ -335,7 +329,7 @@ export default {
   },
   methods: {
     getList() {
-      this.total = 20;
+      this.total = 400;
       this.list = datalist.slice(0, this.listQuery.limit);
     },
   },
