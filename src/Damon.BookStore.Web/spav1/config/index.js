@@ -19,6 +19,14 @@ module.exports = {
           '^/oauth': ''
         }
       },
+      '/ids.svc/api': {
+        target: 'https://qa.vorwerk.com.cn/ids.svc/api',//请求域名
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true,//如果是跨域访问，需要配置这个参数
+        pathRewrite: {
+          '^/ids.svc/api': '/ids.svc/api'
+        }
+      },
       '/api': {
         target: 'https://localhost:44397/api',//请求域名
         secure: false, // 如果是https接口，需要配置这个参数

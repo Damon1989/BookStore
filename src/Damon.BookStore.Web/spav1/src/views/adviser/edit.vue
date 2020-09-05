@@ -27,8 +27,8 @@
 
        <el-row class="margintop">
          <el-col :span="4">
-          <el-select size="medium" v-model="form.provice"  clearable  class="filter-item ">
-                <el-option v-for="item in proviceList" :key="item" :label="item" :value="item" />
+          <el-select size="medium" v-model="form.province"  clearable  class="filter-item ">
+                <el-option v-for="item in provinceList" :key="item" :label="item" :value="item" />
           </el-select>
          </el-col>
           <el-col :span="4">
@@ -45,6 +45,9 @@
      </div>
      <div class="margintop">
       其他信息
+    </div>
+         <div class="margintop">
+      等级
     </div>
     <div class="margintop">
       <el-row class="margintop">
@@ -67,24 +70,23 @@
 </template>
 
 <script>
-const proviceList = ['上海市 ', '江苏省'];
-const cityList = ['上海市 ', '盐城市'];
-const areaList = ['浦东新区 ', '东台'];
-const levelList = ['1星', '2星', '3星', '4星', '5星'];
+
+import { getLevelList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+
 export default {
   name: 'adviseredit',
   data() {
     return {
-      proviceList,
-      cityList,
-      areaList,
-      levelList,
+      provinceList: [],
+      cityList: [],
+      areaList: [],
+      levelList: [],
       form: {
         num: '',
         jobNum: '',
         name: '',
         enterprise: '',
-        provice: '',
+        province: '',
         city: '',
         area: '',
         level: '',
@@ -95,6 +97,7 @@ export default {
     const id = this.$route.params && this.$route.params.id;
     console.log(id);
     this.getDetail();
+    this.getBaseData();
   },
   computed: {
     message() {
@@ -114,7 +117,22 @@ export default {
         level: '',
       };
     },
+    getBaseData() {
+      getLevelList().then((res) => {
+        this.levelList = res;
+      });
+      getProvinceList().then((res) => {
+        this.provinceList = res;
+      });
+      getCityList().then((res) => {
+        this.cityList = res;
+      });
+      getAreaList().then((res) => {
+        this.areaList = res;
+      });
+    },
   },
+
 };
 </script>
 

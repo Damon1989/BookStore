@@ -139,194 +139,16 @@
 </template>
 
 <script>
+import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
+import { getList } from '@/api/adviser';
 
-const enterpriseList = ['美善品', '可宝', '知淳'];
-const branchCompanies = ['分公司一', '分公司二', '分公司三'];
-const positionList = ['SA', 'TL', 'BM', 'AM'];
-const datalist = [{
-  id: 1,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽0',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 2,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽1',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 3,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽2',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 4,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽3',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 5,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽4',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 6,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽5',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 7,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽6',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 8,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽7',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 9,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽8',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 10,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽9',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 11,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽10',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 12,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽11',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 13,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽12',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 14,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽13',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 15,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽14',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}, {
-  id: 16,
-  branchCompany: 'CNTM',
-  num: '10402213',
-  jobNum: '2SH061.03',
-  name: '王小丽15',
-  phone: '13589784586',
-  position: 'TL',
-  level: '5星',
-  registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-  entryDateTime: '2016-09-21  08:50:08',
-}];
 export default {
   name: 'list',
   data() {
     return {
-      enterpriseList,
-      branchCompanies,
-      positionList,
+      enterpriseList: [],
+      branchCompanies: [],
+      positionList: [],
       list: null,
       listLoading: false,
       listQuery: {
@@ -347,8 +169,19 @@ export default {
   },
   methods: {
     getList() {
-      this.total = 400;
-      this.list = datalist.slice(0, this.listQuery.limit);
+      getEnterprises().then((result) => {
+        this.enterpriseList = result;
+      });
+      getBranchCompanies().then((res) => {
+        this.branchCompanies = res;
+      });
+      getPositionList().then((res) => {
+        this.positionList = res;
+      });
+      getList().then((res) => {
+        this.list = res.slice(0, this.listQuery.limit);
+        this.total = 400;
+      });
     },
   },
 };
