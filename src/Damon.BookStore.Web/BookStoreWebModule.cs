@@ -36,6 +36,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.IdentityModel.Logging;
 
 namespace Damon.BookStore.Web
 {
@@ -99,7 +100,10 @@ namespace Damon.BookStore.Web
                     options.Authority = configuration["AuthServer:Authority"];
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "BookStore";
+
+                    IdentityModelEventSource.ShowPII = true;
                 });
+
         }
 
         private void ConfigureAutoMapper()

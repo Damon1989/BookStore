@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/oauth': {
-        target: 'https://localhost:44397/',//请求域名
+        //target: !process.env.NODE_ENV === 'production' ? 'https://localhost:443/' : 'https://localhost:44397/',//请求域名
+        target: 'https://localhost/',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
         pathRewrite: {
@@ -28,7 +29,8 @@ module.exports = {
         }
       },
       '/api': {
-        target: 'https://localhost:44397/api',//请求域名
+        //target: !process.env.NODE_ENV === 'production' ? 'https://localhost:443/api' : 'https://localhost:44397/api',//请求域名
+        target: 'https://localhost/api',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
         pathRewrite: {
