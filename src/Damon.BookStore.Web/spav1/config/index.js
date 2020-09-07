@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/oauth': {
-        //target: !process.env.NODE_ENV === 'production' ? 'https://localhost:443/' : 'https://localhost:44397/',//请求域名
-        target: 'https://localhost/',
+      '/connect': {
+        target: process.env.NODE_ENV === 'production' ? 'http://www.damon.com:8089/connect' : 'http://www.damon.com:8089/connect',//请求域名
+        // target: 'http://www.damon.com:8089/',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
         pathRewrite: {
-          '^/oauth': ''
+          '^/connect': ''
         }
       },
       '/ids.svc/api': {
@@ -29,12 +29,12 @@ module.exports = {
         }
       },
       '/api': {
-        //target: !process.env.NODE_ENV === 'production' ? 'https://localhost:443/api' : 'https://localhost:44397/api',//请求域名
-        target: 'https://localhost/api',
+        // target: process.env.NODE_ENV === 'production' ? 'https://localhost:443/api' : 'https://localhost:44397/api',//请求域名
+        target: 'http://www.damon.com:8089/api',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
         pathRewrite: {
-          '^/api': '/'
+          '^/api': ''
         }
       },
     },

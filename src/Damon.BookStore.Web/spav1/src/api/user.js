@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function login(data) {
   return request({
-    url: '/oauth/connect/token',
+    url: '/connect/token',
     method: 'post',
     data,
     headers: { 'Content-Type': 'multipart/form-data' },
