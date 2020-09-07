@@ -1,3 +1,7 @@
+import url from 'postcss-url';
+import request from '@/utils/request';
+
+
 /* eslint-disable import/prefer-default-export */
 export function getList() {
   const datalist = [{
@@ -180,4 +184,12 @@ export function getList() {
   return Promise.resolve(
     datalist,
   );
+}
+
+
+export function getRawList() {
+  return request({
+    url: '/ids.svc/api/Organization/salesUser/getAll?v=1.0',
+    type: 'get',
+  });
 }

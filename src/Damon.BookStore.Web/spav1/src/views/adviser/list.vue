@@ -59,7 +59,7 @@
     </el-row>
       <el-alert
       title="该事业部总计SA 400 名,TL 52 名, BM 21 名, AM 6 名"
-      type="info"
+      type="warning"
       description=""
       show-icon :closable="false" class="filtertext">
     </el-alert>
@@ -72,6 +72,7 @@
       highlight-current-row
       style="width: 100%;"
       class="filtertext"
+      :header-cell-style="headClass"
     >
       <el-table-column label="分公司"   align="center" width="100" >
         <template slot-scope="{row}">
@@ -118,7 +119,7 @@
           <span>{{ row.entryDateTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" min-width="60" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
           <router-link :to="'/adviser/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
@@ -140,7 +141,7 @@
 
 <script>
 import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
-import { getList } from '@/api/adviser';
+import { getList, getRawList } from '@/api/adviser';
 
 export default {
   name: 'list',
@@ -162,6 +163,7 @@ export default {
         limit: 5,
       },
       total: 20,
+      // headerClassName: 'headerbgcolor',
     };
   },
   created() {
@@ -182,6 +184,13 @@ export default {
         this.list = res.slice(0, this.listQuery.limit);
         this.total = 400;
       });
+      // getRawList().then((res) => {
+      //   console.log(res);
+      // });
+    },
+
+    headClass() {
+      return 'background:rgba(227, 230, 230, 0.897);';
     },
   },
 };
@@ -196,4 +205,5 @@ export default {
 .filtercontrol{
   width: 220px;
 }
+
 </style>

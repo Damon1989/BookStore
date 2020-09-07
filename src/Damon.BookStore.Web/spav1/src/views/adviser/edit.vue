@@ -3,10 +3,10 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
     <span>
-      编号: {{form.num}} &nbsp;&nbsp;
-      工号: {{form.jobNum}} &nbsp;&nbsp;
-      姓名: {{form.num}} &nbsp;&nbsp;
-      事业部:{{form.enterprise}} &nbsp;&nbsp;
+      编号: <span class="spancolor">{{form.num}}</span>  &nbsp;&nbsp;
+      工号: <span class="spancolor">{{form.jobNum}}</span>  &nbsp;&nbsp;
+      姓名: <span class="spancolor">{{form.num}}</span> &nbsp;&nbsp;
+      事业部:<span class="spancolor">{{form.enterprise}}</span> &nbsp;&nbsp;
     </span>
   </div>
     <div>
@@ -61,7 +61,7 @@
     </el-card>
 <el-row style="margin-top:30px">
   <el-col :span="8" :offset="8">
-  <el-button type="primary" plain>提交</el-button>
+  <el-button type="success" plain>提交</el-button>
   <el-button plain>返回</el-button>
   </el-col>
 
@@ -139,5 +139,9 @@ export default {
 <style>
 .margintop{
   margin-top:10px;
+}
+
+.spancolor{
+  color: rgba(35, 172, 35, 0.719);
 }
 </style>
