@@ -52,22 +52,32 @@
           <span>{{ row.enterprise }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="顾问编号"   align="center"  >
+      <el-table-column label="省/直辖市/自治区"   align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.num }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="姓名"  align="center" >
+            <el-table-column label="城市"  align="center" >
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="顾问等级"  align="center"  >
+      <el-table-column label="区/县"  align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.level }}</span>
         </template>
       </el-table-column>
-                   <el-table-column label="注册地址"  align="center" >
+       <el-table-column label="区域负责人"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.registerAddress }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="负责人工号"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.registerAddress }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注"  align="center" >
         <template slot-scope="{row}">
           <span>{{ row.registerAddress }}</span>
         </template>

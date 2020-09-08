@@ -61,13 +61,13 @@ export const asyncRoutes = [
       {
         path: 'import',
         component: () => import('@/views/adviser/import'),
-        name: 'import',
+        name: 'adviserimport',
         meta: { title: 'adviser.import', icon: 'dashboard' },
       },
       {
         path: 'edit/:id',
         component: () => import('@/views/adviser/edit'),
-        name: 'RoleData',
+        name: 'adviserdata',
         hidden: true,
         meta: { title: 'adviser.edit', icon: 'dashboard' },
       },
@@ -88,19 +88,20 @@ export const asyncRoutes = [
       {
         path: 'list',
         component: () => import('@/views/leader/list'),
-        name: 'adviserlist',
+        name: 'leaderlist',
         meta: { title: 'leader.list', icon: 'dashboard', affix: true },
       },
-      // {
-      //   path: 'import',
-      //   component: () => import('@/views/adviser/import'),
-      //   name: 'import',
-      //   meta: { title: 'adviser.import', icon: 'dashboard' },
-      // },leader
+      {
+        path: 'import',
+        component: () => import('@/views/leader/import'),
+        name: 'leaderimport',
+        meta: { title: 'leader.import', icon: 'dashboard' },
+      },
       {
         path: 'edit/:id',
         component: () => import('@/views/leader/edit'),
-        name: 'RoleData',
+        name: 'leaderdata',
+        hidden: true,
         meta: { title: 'leader.edit', icon: 'dashboard' },
       },
     ],

@@ -14,29 +14,29 @@
     </div>
      <div>
        <el-row class="margintop">
-         <el-col :span="4">
+         <el-col :span="6" :offset="2">
           省/直辖市/自治区
          </el-col>
-           <el-col :span="4">
+           <el-col :span="6">
           城市
          </el-col>
-           <el-col :span="4">
+           <el-col :span="6">
           区/县
          </el-col>
        </el-row>
 
        <el-row class="margintop">
-         <el-col :span="4">
+         <el-col :span="6" :offset="2">
           <el-select size="medium" v-model="form.province"  clearable  class="filter-item ">
                 <el-option v-for="item in provinceList" :key="item" :label="item" :value="item" />
           </el-select>
          </el-col>
-          <el-col :span="4">
+          <el-col :span="6">
           <el-select size="medium" v-model="form.city"  clearable  class="filter-item ">
                 <el-option v-for="item in cityList" :key="item" :label="item" :value="item" />
           </el-select>
          </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
           <el-select size="medium" v-model="form.area"  clearable  class="filter-item ">
                 <el-option v-for="item in areaList" :key="item" :label="item" :value="item" />
           </el-select>
@@ -46,12 +46,14 @@
      <div class="margintop">
       其他信息
     </div>
-         <div class="margintop">
-      等级
+    <div class="margintop">
+      <el-row>
+        <el-col :span="6" :offset="2">等级</el-col>
+      </el-row>
     </div>
     <div class="margintop">
       <el-row class="margintop">
-         <el-col :span="4">
+         <el-col :span="6" :offset="2">
           <el-select size="medium" v-model="form.level"  clearable  class="filter-item ">
                 <el-option v-for="item in levelList" :key="item" :label="item" :value="item" />
           </el-select>

@@ -122,9 +122,9 @@
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
           <router-link :to="'/adviser/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
+            <el-link type="primary" size="small" >
               编辑
-            </el-button>
+            </el-link>
           </router-link>
         </template>
       </el-table-column>
@@ -141,7 +141,7 @@
 
 <script>
 import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
-import { getList, getRawList } from '@/api/adviser';
+import { getList } from '@/api/adviser';
 
 export default {
   name: 'list',
@@ -196,7 +196,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .filtertext{
   text-align: right;
   margin-top: 6px;
