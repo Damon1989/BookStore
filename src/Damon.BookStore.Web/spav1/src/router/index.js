@@ -106,6 +106,33 @@ export const asyncRoutes = [
       },
     ],
   },
+  {
+    path: '/shop',
+    component: Layout,
+    redirect: '/shop/list',
+    // alwaysShow: true, // will always show the root menu
+    name: 'shop',
+    meta: {
+      title: 'shop.manage',
+      icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/shop/list'),
+        name: 'shoplist',
+        meta: { title: 'shop.list', icon: 'dashboard', affix: true },
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('@/views/shop/edit'),
+        name: 'shopdata',
+        hidden: true,
+        meta: { title: 'shop.edit', icon: 'dashboard' },
+      },
+    ],
+  },
   tableRouter,
   componentsRouter,
   // {

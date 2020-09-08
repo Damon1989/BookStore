@@ -61,5 +61,10 @@ export const lang = {
     edit: '负责人编辑',
     import: '负责人导入',
   },
+  shop: {
+    manage: '门店管理',
+    list: '门店列表',
+    edit: '门店编辑',
+  },
 };
 

@@ -63,5 +63,10 @@ export const lang = {
     edit: 'leader edit',
     import: 'leader import',
   },
+  shop: {
+    manage: 'manage',
+    list: 'shop list',
+    edit: 'shop edit',
+  },
 };
 
