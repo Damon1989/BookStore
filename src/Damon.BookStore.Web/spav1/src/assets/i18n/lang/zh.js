@@ -53,7 +53,7 @@ export const lang = {
     manage: '顾问管理',
     list: '顾问列表',
     edit: '顾问编辑',
-    import: '顾问导入',
+    import: '顾问星级导入',
   },
   leader: {
     manage: '负责人管理',

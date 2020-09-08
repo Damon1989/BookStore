@@ -1,4 +1,3 @@
-import url from 'postcss-url';
 import request from '@/utils/request';
 
 
@@ -180,6 +179,80 @@ export function getList() {
     level: '5星',
     registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
     entryDateTime: '2016-09-21  08:50:08',
+  }];
+  return Promise.resolve(
+    datalist,
+  );
+}
+
+export function getImportList() {
+  const datalist = [{
+    id: 1,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽0',
+    phone: '13589784586',
+    level: '5星',
+    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
+    valid: true,
+    validMsg: '成功',
+  }, {
+    id: 2,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽1',
+    phone: '13589784586',
+    level: '5星',
+    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
+    valid: true,
+    validMsg: '成功',
+  }, {
+    id: 3,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽2',
+    phone: '13589784586',
+    level: '---',
+    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
+    valid: false,
+    validMsg: '顾问等级无效',
+  }, {
+    id: 4,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽3',
+    phone: '13589784586',
+    level: '5星',
+    registerAddress: '---',
+    valid: false,
+    validMsg: '注册地无效',
+  }, {
+    id: 5,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽4',
+    phone: '13589784586',
+    level: '5星',
+    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
+    valid: false,
+    validMsg: '顾问不存在',
+  },
+  {
+    id: 6,
+    enterprise: '美善品',
+    num: '10402213',
+    jobNum: '2SH061.03',
+    name: '王小丽4',
+    phone: '13589784586',
+    level: '5星',
+    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
+    valid: false,
+    validMsg: '顾问不存在',
   }];
   return Promise.resolve(
     datalist,
