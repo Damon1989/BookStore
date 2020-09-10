@@ -1,7 +1,33 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-row>
+          <el-row>
+      <el-col :span="2"  class="filtertext">
+            事业部：
+      </el-col>
+      <el-col :span="6" >
+        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
+        </el-select>
+      </el-col>
+      <el-col :span="2" class="filtertext">
+            来源：
+      </el-col>
+      <el-col :span="6">
+        <el-select size="medium" v-model="listQuery.source"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in sourceList" :key="item" :label="item" :value="item" />
+        </el-select>
+        </el-col>
+              <el-col :span="2" class="filtertext">
+            状态：
+      </el-col>
+      <el-col :span="6">
+        <el-select size="medium" v-model="listQuery.status"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in statusList" :key="item" :label="item" :value="item" />
+        </el-select>
+        </el-col>
+    </el-row>
+      <el-row v-show="showQueryDetail">
         <el-col :span="2"  class="filtertext">
             省：
         </el-col>
@@ -27,31 +53,73 @@
         </el-select>
         </el-col>
     </el-row>
-
-    <el-row>
+    <el-row v-show="showQueryDetail">
       <el-col :span="2"  class="filtertext">
-            事业部：
+            经理：
       </el-col>
-      <el-col :span="8" >
-        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
-        </el-select>
-        <i class="el-icon-warning icolor"></i> <span class="tipsstyle">事业部必选</span>
+      <el-col :span="6" >
+        <el-input size="medium" v-model="listQuery.managerJobNum" placeholder="请输入经理工号" class="filter-item filtercontrol"></el-input>
       </el-col>
-      <el-col :span="3">
-
+       <el-col :span="2"  class="filtertext">
+            顾问：
+      </el-col>
+      <el-col :span="6" >
+        <el-input size="medium" v-model="listQuery.adviserJobNum" placeholder="请输入顾问工号" class="filter-item filtercontrol"></el-input>
+      </el-col>
+       <el-col :span="2"  class="filtertext">
+            顾客：
+      </el-col>
+      <el-col :span="6" >
+        <el-input size="medium" v-model="listQuery.customerName" placeholder="请输入顾客姓名" class="filter-item filtercontrol"></el-input>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="4" :offset="2" class="filtertext">
-        <el-button size="medium" type="success" icon="el-icon-plus">新  建</el-button>
-        <el-button size="medium" type="success" icon="el-icon-plus">导  入</el-button>
+    <el-row v-show="showQueryDetail">
+      <el-col :span="2"  class="filtertext">
+            创建：
       </el-col>
-      <el-col :span="4" :offset="12" class="filtertext">
+      <el-col :span="6" >
+        <el-date-picker  size="medium"
+      v-model="listQuery.createdate"
+      type="daterange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期" >
+    </el-date-picker>
+      </el-col>
+       <el-col :span="6"  class="filtertext">
+            <el-checkbox v-model="listQuery.checkedTransactionRecord">仅显示成交记录</el-checkbox>
+      </el-col>
+
+    </el-row>
+    <el-row>
+      <el-col :span="4"  class="filtertext">
+        <el-button size="medium" type="success" >预约单导入</el-button>
+        <el-button size="medium" type="success" >导出Excel</el-button>
+      </el-col>
+      <el-col :span="1"  class="filtertext">
+          排序规则
+      </el-col>
+      <el-col :span="6" class="filtertext">
+
+         <el-radio-group v-model="sortrule">
+          <el-radio :label="3">创建时间</el-radio>
+          <el-radio :label="6">地址</el-radio>
+          <el-radio :label="9">来源</el-radio>
+          <el-radio :label="1">响应时间</el-radio>
+        </el-radio-group>
+      </el-col>
+      <el-col :span="4" :offset="6" class="filtertext">
+         <el-link type="primary" @click="showQueryDetail=!showQueryDetail">展开</el-link>
         <el-button size="medium" type="success">查  询</el-button>
         <el-button size="medium">重  置</el-button>
       </el-col>
     </el-row>
+       <el-alert
+      title="该事业部预约服务总计完成 400 单，处理中 52 单"
+      type="warning"
+      description=""
+      show-icon :closable="false" class="filtertext">
+    </el-alert>
 <el-table
       v-loading="listLoading"
       :data="list"
@@ -61,37 +129,62 @@
       style="width: 100%;"
       class="filtertext"
     >
-      <el-table-column label="省/直辖市/自治区"   align="center"  >
+      <el-table-column label="单号"   align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.branchCompany }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="城市"   align="center"  >
+      <el-table-column label="来源"   align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.num }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="区/县"  align="center"  >
+      <el-table-column label="状态"  align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.jobNum }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="负责人"  align="center"  >
+            <el-table-column label="地址"  align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-       <el-table-column label="工号"  align="center" >
+       <el-table-column label="门店"  align="center" >
         <template slot-scope="{row}">
           <span>{{ row.phone }}</span>
         </template>
       </el-table-column>
-                  <el-table-column label="备注"  align="center"  >
+      <el-table-column label="顾客"  align="center"  >
         <template slot-scope="{row}">
           <span>{{ row.position }}</span>
         </template>
       </el-table-column>
-                 <el-table-column label="创建日期"  align="center" >
+      <el-table-column label="经理"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.level }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="顾问"  align="center"  >
+        <template slot-scope="{row}">
+          <span>{{ row.position }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建日期"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.level }}</span>
+        </template>
+      </el-table-column>
+     <el-table-column label="分配日期"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.level }}</span>
+        </template>
+      </el-table-column>
+            <el-table-column label="接单日期"  align="center" >
+        <template slot-scope="{row}">
+          <span>{{ row.level }}</span>
+        </template>
+      </el-table-column>
+            <el-table-column label="完成日期"  align="center" >
         <template slot-scope="{row}">
           <span>{{ row.level }}</span>
         </template>
@@ -121,7 +214,7 @@
 </template>
 
 <script>
-import { getEnterprises, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getEnterprises, getProvinceList, getCityList, getAreaList,getSourceList,getOrderStatusList } from '@/api/basedata';
 import { getList } from '@/api/adviser';
 
 export default {
@@ -132,16 +225,24 @@ export default {
       cityList: [],
       areaList: [],
       enterpriseList: [],
+      sourceList:[],
+      stutusList:[],
       list: null,
       listLoading: false,
+      showQueryDetail:false,
       listQuery: {
         province: '',
         city: '',
         area: '',
-        name: '',
-        jobnum: '',
-        phone: '',
+        managerJobNum: '',
+        adviserJobNum: '',
+        customerName: '',
         enterprise: '美善品',
+        source:'全部',
+        status:'全部',
+        createdate:'',
+        checkedTransactionRecord:true,
+        sortrule:'1',
         page: 1,
         limit: 5,
       },
@@ -166,6 +267,14 @@ export default {
           this.provinceList = data;
         }
       });
+
+      getSourceList().then(res=>{
+        this.sourceList=res;
+      });
+
+      getOrderStatusList().then(res=>{
+        this.statusList=res;
+      })
 
       getList().then((res) => {
         this.total = 400;

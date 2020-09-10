@@ -23,6 +23,15 @@ export function getPositionList() {
   return Promise.resolve(data);
 }
 
+
+export function getSourceList() {
+  return Promise.resolve(['全部', '官网预约', '小程序导入', '天猫导入']);
+}
+
+export function getOrderStatusList() {
+  return Promise.resolve(['全部', '待分配', '待接单', '处理中', '已完成']);
+}
+
 export function getLevelList() {
   return Promise.resolve(['1星', '2星', '3星', '4星', '5星']);
 }
