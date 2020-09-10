@@ -66,5 +66,11 @@ export const lang = {
     list: '门店列表',
     edit: '门店编辑',
   },
+  order: {
+    manage: '预约单管理',
+    list: '预约单总览',
+    detail: '预约单详情',
+    import: '预约单导入'
+  },
 };
 

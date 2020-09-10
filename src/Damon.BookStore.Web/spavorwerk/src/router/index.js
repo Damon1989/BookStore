@@ -133,6 +133,39 @@ export const asyncRoutes = [
       },
     ],
   },
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/list',
+    // alwaysShow: true, // will always show the root menu
+    name: 'order',
+    meta: {
+      title: 'order.manage',
+      icon: 'lock',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/order/list'),
+        name: 'orderlist',
+        meta: { title: 'order.list', icon: 'dashboard', affix: true },
+      },
+      {
+        path: 'detail/:id',
+        component: () => import('@/views/order/detail'),
+        name: 'orderdata',
+        hidden: true,
+        meta: { title: 'order.detail', icon: 'dashboard' },
+      },
+      {
+        path: 'import',
+        component: () => import('@/views/order/import'),
+        name: 'orderimport',
+        meta: { title: 'order.import', icon: 'dashboard' },
+      },
+    ],
+  },
   tableRouter,
   componentsRouter,
   // {

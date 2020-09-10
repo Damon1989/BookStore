@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-
       <el-row>
         <el-col :span="2"  class="filtertext">
             省：
@@ -29,7 +28,7 @@
         </el-col>
     </el-row>
 
-<el-row>
+    <el-row>
       <el-col :span="2"  class="filtertext">
             事业部：
       </el-col>
