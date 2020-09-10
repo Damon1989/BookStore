@@ -27,18 +27,18 @@
 
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.province"  clearable  class="filter-item ">
-                <el-option v-for="item in provinceList" :key="item" :label="item" :value="item" />
+          <el-select size="medium" v-model="form.province" @change="provinceSelect"  clearable  class="filter-item ">
+                <el-option v-for="item in provinceList" :key="item.code" :label="item.name" :value="item.code" />
           </el-select>
          </el-col>
           <el-col :span="6">
-          <el-select size="medium" v-model="form.city"  clearable  class="filter-item ">
-                <el-option v-for="item in cityList" :key="item" :label="item" :value="item" />
+          <el-select size="medium" v-model="form.city"  clearable  @change="citySelect" class="filter-item ">
+                <el-option v-for="item in cityList" :key="item.code" :label="item.name" :value="item.code" />
           </el-select>
          </el-col>
             <el-col :span="6">
           <el-select size="medium" v-model="form.area"  clearable  class="filter-item ">
-                <el-option v-for="item in areaList" :key="item" :label="item" :value="item" />
+                <el-option v-for="item in areaList" :key="item.code" :label="item.name" :value="item.code" />
           </el-select>
          </el-col>
        </el-row>
@@ -113,10 +113,10 @@ export default {
         jobNum: '2SH001.01',
         name: '王小丽',
         enterprise: '美善品',
-        provice: '',
-        city: '',
-        area: '',
-        level: '',
+         province: '310000',
+        city: '310115',
+        area: '310115139',
+        level: '2星',
       };
     },
     getBaseData() {
@@ -124,15 +124,58 @@ export default {
         this.levelList = res;
       });
       getProvinceList().then((res) => {
-        this.provinceList = res;
+         var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.provinceList = data;
+        }
       });
-      getCityList().then((res) => {
-        this.cityList = res;
+      getCityList(this.form.province).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.cityList = data;
+        }
       });
-      getAreaList().then((res) => {
-        this.areaList = res;
+      getAreaList(this.form.city).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.areaList = data;
+        }
       });
     },
+    provinceSelect(){
+      this.form.city='';
+      this.form.area='';
+      getCityList(this.form.province).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.cityList = data;
+        }
+      });
+    },
+    citySelect(){
+      this.form.area='';
+      getAreaList(this.form.city).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.areaList = data;
+        }
+      });
+    }
   },
 
 };

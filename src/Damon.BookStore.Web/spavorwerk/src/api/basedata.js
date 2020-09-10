@@ -1,6 +1,14 @@
 // eslint-disable-next-line import/prefer-default-export
+
+import request from '@/utils/request';
+
 export function getEnterprises() {
-  return Promise.resolve(['美善品', '可宝', '知淳']);
+  var data = [
+    { code: 'KS', name: '可宝' },
+    { code: 'TM', name: '美善品' },
+    { code: 'TI', name: '知淳' },
+  ]
+  return Promise.resolve(data);
 }
 
 export function getBranchCompanies() {
@@ -8,7 +16,11 @@ export function getBranchCompanies() {
 }
 
 export function getPositionList() {
-  return Promise.resolve(['SA', 'TL', 'BM', 'AM']);
+  var data = [
+    { code: 'SA', name: '销售顾问' },
+    { code: 'TL', name: '销售主任' },
+  ]
+  return Promise.resolve(data);
 }
 
 export function getLevelList() {
@@ -16,14 +28,23 @@ export function getLevelList() {
 }
 
 export function getProvinceList() {
-  return Promise.resolve(['上海市 ', '江苏省']);
+  return request({
+    url: 'ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ',
+    method: 'get',
+  });
 }
 
 
-export function getCityList() {
-  return Promise.resolve(['上海市 ', '盐城市']);
+export function getCityList(province) {
+  return request({
+    url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${province}`,
+    method: 'get',
+  });
 }
 
-export function getAreaList() {
-  return Promise.resolve(['浦东新区 ', '东台市']);
+export function getAreaList(city) {
+  return request({
+    url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${city}`,
+    method: 'get',
+  });
 }

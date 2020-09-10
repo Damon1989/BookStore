@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="4" >
         <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item" :label="item" :value="item" />
+              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
          <el-col :span="2" class="filtertext">
@@ -23,7 +23,7 @@
         </el-col>
         <el-col :span="4" >
         <el-select size="medium" v-model="listQuery.position"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in positionList" :key="item" :label="item" :value="item" />
+              <el-option v-for="item in positionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
     </el-row>

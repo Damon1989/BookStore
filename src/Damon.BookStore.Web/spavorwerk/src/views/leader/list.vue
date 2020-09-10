@@ -6,16 +6,16 @@
             省：
         </el-col>
         <el-col :span="6" >
-        <el-select size="medium" v-model="listQuery.provice"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in proviceList" :key="item" :label="item" :value="item" />
+        <el-select size="medium" v-model="listQuery.province" @change="provinceSelect"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in provinceList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
          <el-col :span="2" class="filtertext">
             市：
         </el-col>
         <el-col :span="6">
-        <el-select size="medium" v-model="listQuery.city"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in cityList" :key="item" :label="item" :value="item" />
+        <el-select size="medium" v-model="listQuery.city"  clearable   @change="citySelect" class="filter-item filtercontrol">
+              <el-option v-for="item in cityList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
         <el-col :span="2" class="filtertext">
@@ -23,7 +23,7 @@
         </el-col>
         <el-col :span="6" >
         <el-select size="medium" v-model="listQuery.area"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in areaList" :key="item" :label="item" :value="item" />
+              <el-option v-for="item in areaList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
     </el-row>
@@ -34,7 +34,7 @@
       </el-col>
       <el-col :span="8" >
         <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item" :label="item" :value="item" />
+              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         <i class="el-icon-warning icolor"></i> <span class="tipsstyle">事业部必选</span>
       </el-col>
@@ -128,14 +128,14 @@ export default {
   name: 'list',
   data() {
     return {
-      proviceList: [],
+      provinceList: [],
       cityList: [],
       areaList: [],
       enterpriseList: [],
       list: null,
       listLoading: false,
       listQuery: {
-        provice: '',
+        province: '',
         city: '',
         area: '',
         name: '',
@@ -158,14 +158,15 @@ export default {
         this.enterpriseList = result;
       });
       getProvinceList().then((res) => {
-        this.proviceList = res;
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.provinceList = data;
+        }
       });
-      getCityList().then((res) => {
-        this.cityList = res;
-      });
-      getAreaList().then((res) => {
-        this.areaList = res;
-      });
+
       getList().then((res) => {
         this.total = 400;
         this.list = res.slice(0, this.listQuery.limit);
@@ -174,6 +175,28 @@ export default {
     deleteLeader() {
 
     },
+    provinceSelect(){
+      getCityList(this.listQuery.province).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.cityList = data;
+        }
+      });
+    },
+    citySelect(){
+      getAreaList(this.listQuery.city).then((res) => {
+        var data=[];
+        if(res.status=="0"){
+          res.result[0].forEach(element => {
+            data.push({code:element.id,name:element.fullname})
+          });
+          this.areaList = data;
+        }
+      });
+    }
   },
 };
 </script>
