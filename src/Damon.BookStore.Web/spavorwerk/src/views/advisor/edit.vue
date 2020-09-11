@@ -54,8 +54,8 @@
     <div class="margintop">
       <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.level"  clearable  class="filter-item ">
-                <el-option v-for="item in levelList" :key="item" :label="item" :value="item" />
+          <el-select size="medium" v-model="form.grade"  clearable  class="filter-item ">
+                <el-option v-for="item in gradeList" :key="item" :label="item" :value="item" />
           </el-select>
          </el-col>
        </el-row>
@@ -73,16 +73,16 @@
 
 <script>
 
-import { getLevelList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getGradeList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
 
 export default {
-  name: 'adviseredit',
+  name: 'advisoredit',
   data() {
     return {
       provinceList: [],
       cityList: [],
       areaList: [],
-      levelList: [],
+      gradeList: [],
       form: {
         num: '',
         jobNum: '',
@@ -91,7 +91,7 @@ export default {
         province: '',
         city: '',
         area: '',
-        level: '',
+        grade: '',
       },
     };
   },
@@ -116,12 +116,12 @@ export default {
          province: '310000',
         city: '310115',
         area: '310115139',
-        level: '2星',
+        grade: '2星',
       };
     },
     getBaseData() {
-      getLevelList().then((res) => {
-        this.levelList = res;
+      getGradeList().then((res) => {
+        this.gradeList = res;
       });
       getProvinceList().then((res) => {
          var data=[];

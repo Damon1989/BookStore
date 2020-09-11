@@ -84,7 +84,7 @@
       </el-table-column>
        <el-table-column label="工号"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.phone }}</span>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
                   <el-table-column label="备注"  align="center"  >
@@ -94,7 +94,7 @@
       </el-table-column>
                  <el-table-column label="创建日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.grade }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
@@ -123,7 +123,7 @@
 
 <script>
 import { getEnterprises, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
-import { getList } from '@/api/adviser';
+import { getList } from '@/api/advisor';
 
 export default {
   name: 'list',
@@ -141,7 +141,7 @@ export default {
         area: '',
         name: '',
         jobnum: '',
-        phone: '',
+        phoneNumber: '',
         enterprise: '美善品',
         page: 1,
         limit: 5,

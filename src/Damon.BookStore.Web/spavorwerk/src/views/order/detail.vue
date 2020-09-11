@@ -51,7 +51,7 @@
          顾客姓名：{{form.orderInfo.customer.name}}
        </el-col>
       <el-col :offset="2" :span="6">
-         手机号 : {{form.orderInfo.customer.phone}}
+         手机号 : {{form.orderInfo.customer.phoneNumber}}
        </el-col>
         <el-col :offset="2" :span="6">
          门店 : {{form.orderInfo.customer.shop}}
@@ -78,10 +78,10 @@
          是否体验过产品 :  {{form.orderInfo.attachment.experiencedProduct}}
        </el-col>
       <el-col :offset="2" :span="6">
-         是否与顾问接洽 :  {{form.orderInfo.attachment.contactAdviser}}
+         是否与顾问接洽 :  {{form.orderInfo.attachment.contactAdvisor}}
        </el-col>
         <el-col :offset="2" :span="6">
-         接洽顾问 :  {{form.orderInfo.attachment.adviser}}
+         接洽顾问 :  {{form.orderInfo.attachment.advisor}}
        </el-col>
      </el-row>
        <el-row class="margintop">
@@ -106,13 +106,13 @@
      </el-row>
      <el-row class="margintop">
        <el-col :offset="2" :span="6">
-         顾客是否下单： {{form.adviserfeedback.placeOrder}}
+         顾客是否下单： {{form.advisorfeedback.placeOrder}}
        </el-col>
       <el-col :offset="2" :span="6">
-         购买产品类型 : {{form.adviserfeedback.buyProductType}}
+         购买产品类型 : {{form.advisorfeedback.buyProductType}}
        </el-col>
       <el-col :offset="2" :span="6">
-         订单号 : {{form.adviserfeedback.orderNum}}
+         订单号 : {{form.advisorfeedback.orderNum}}
        </el-col>
      </el-row>
    </div>
@@ -197,7 +197,7 @@
          下单渠道 :  {{form.dataAnalysis.orderChannel}}
        </el-col>
       <el-col :offset="2" :span="6">
-         下单顾问 :  {{form.dataAnalysis.orderAdviser}}
+         下单顾问 :  {{form.dataAnalysis.orderAdvisor}}
        </el-col>
      </el-row>
 </div>
@@ -234,7 +234,7 @@ export default {
           },
           customer:{
             name:'',
-            phone:'',
+            phoneNumber:'',
             shop:'',
             province:'',
             city:'',
@@ -242,14 +242,14 @@ export default {
           },
           attachment:{
             experiencedProduct:'',
-            contactAdviser:'',
-            adviser:'',
+            contactAdvisor:'',
+            advisor:'',
             wheretolearn:'',
             city:'',
             area:''
           }
         },
-        adviserfeedback:{
+        advisorfeedback:{
           placeOrder:'',
           buyProductType:'',
           orderNum:''
@@ -271,7 +271,7 @@ export default {
           orderDateTime:'',
           amount:'',
           orderChannel:'',
-          orderAdviser:''
+          orderAdvisor:''
         }
       },
     };
@@ -313,7 +313,7 @@ export default {
           },
           customer:{
             name:'张先生',
-            phone:'13988882222',
+            phoneNumber:'13988882222',
             shop:'上海金虹桥点',
             province:'上海市',
             city:'上海',
@@ -321,14 +321,14 @@ export default {
           },
           attachment:{
             experiencedProduct:'否',
-            contactAdviser:'是',
-            adviser:'13988556633',
+            contactAdvisor:'是',
+            advisor:'13988556633',
             wheretolearn:'官网',
             city:'上海',
             area:'长宁区'
           }
         },
-        adviserfeedback:{
+        advisorfeedback:{
           placeOrder:'是',
           buyProductType:'TM6',
           orderNum:'20598751513012'
@@ -350,13 +350,13 @@ export default {
           orderDateTime:'2020-08-10 12:30',
           amount:'10,888.00',
           orderChannel:'官网商城',
-          orderAdviser:'李顾问(2SH002.02)'
+          orderAdvisor:'李顾问(2SH002.02)'
         }
       };
     },
     getBaseData() {
-      getLevelList().then((res) => {
-        this.levelList = res;
+      getGradeList().then((res) => {
+        this.gradeList = res;
       });
     },
   },

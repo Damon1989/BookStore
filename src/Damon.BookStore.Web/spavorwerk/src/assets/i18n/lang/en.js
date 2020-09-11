@@ -51,11 +51,11 @@ export const lang = {
     components: 'components',
     backtotop: 'back to top',
   },
-  adviser: {
-    manage: 'adviser manage',
-    list: 'adviser list',
-    edit: 'adviser edit',
-    import: 'adviser import',
+  advisor: {
+    manage: 'advisor manage',
+    list: 'advisor list',
+    edit: 'advisor edit',
+    import: 'advisor import',
   },
   leader: {
     manage: 'manage',

@@ -64,7 +64,7 @@
             顾问：
       </el-col>
       <el-col :span="6" >
-        <el-input size="medium" v-model="listQuery.adviserJobNum" placeholder="请输入顾问工号" class="filter-item filtercontrol"></el-input>
+        <el-input size="medium" v-model="listQuery.advisorJobNum" placeholder="请输入顾问工号" class="filter-item filtercontrol"></el-input>
       </el-col>
        <el-col :span="2"  class="filtertext">
             顾客：
@@ -148,7 +148,7 @@
       </el-table-column>
        <el-table-column label="门店"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.phone }}</span>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="顾客"  align="center"  >
@@ -158,7 +158,7 @@
       </el-table-column>
       <el-table-column label="经理"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.position }}</span>
         </template>
       </el-table-column>
       <el-table-column label="顾问"  align="center"  >
@@ -168,22 +168,22 @@
       </el-table-column>
       <el-table-column label="创建日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.position }}</span>
         </template>
       </el-table-column>
      <el-table-column label="分配日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.position }}</span>
         </template>
       </el-table-column>
             <el-table-column label="接单日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.position }}</span>
         </template>
       </el-table-column>
             <el-table-column label="完成日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.position }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
@@ -208,7 +208,7 @@
 
 <script>
 import { getEnterprises, getProvinceList, getCityList, getAreaList,getSourceList,getOrderStatusList } from '@/api/basedata';
-import { getList } from '@/api/adviser';
+import { getList } from '@/api/advisor';
 
 export default {
   name: 'list',
@@ -228,7 +228,7 @@ export default {
         city: '',
         area: '',
         managerJobNum: '',
-        adviserJobNum: '',
+        advisorJobNum: '',
         customerName: '',
         enterprise: '美善品',
         source:'全部',

@@ -87,7 +87,7 @@
       </el-table-column>
        <el-table-column label="电话"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.phone }}</span>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
                   <el-table-column label="详细地址"  align="center"  >
@@ -117,7 +117,7 @@
 
 <script>
 import { getEnterprises, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
-import { getList } from '@/api/adviser';
+import { getList } from '@/api/advisor';
 
 export default {
   name: 'list',
@@ -135,7 +135,7 @@ export default {
         area: '',
         name: '',
         jobnum: '',
-        phone: '',
+        phoneNumber: '',
         enterprise: '美善品',
         page: 1,
         limit: 5,

@@ -32,7 +32,7 @@ export function getOrderStatusList() {
   return Promise.resolve(['全部', '待分配', '待接单', '处理中', '已完成']);
 }
 
-export function getLevelList() {
+export function getGradeList() {
   return Promise.resolve(['1星', '2星', '3星', '4星', '5星']);
 }
 

@@ -49,7 +49,7 @@ export const lang = {
     components: '组件库',
     backtotop: '返回顶部',
   },
-  adviser: {
+  advisor: {
     manage: '顾问管理',
     list: '顾问列表',
     edit: '顾问编辑',

@@ -84,16 +84,16 @@
 
 <script>
 
-import { getLevelList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getGradeList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
 
 export default {
-  name: 'adviseredit',
+  name: 'advisoredit',
   data() {
     return {
       provinceList: null,
       cityList: [],
       areaList: [],
-      levelList: [],
+      gradeList: [],
       leaders:[],
       form: {
         num: '',
@@ -103,7 +103,7 @@ export default {
         province: '',
         city: '',
         area: '',
-        level: '',
+        grade: '',
       },
     };
   },
@@ -127,12 +127,12 @@ export default {
         province: '310000',
         city: '310115',
         area: '310115139',
-        level: '',
+        grade: '',
       };
     },
     getBaseData() {
-      getLevelList().then((res) => {
-        this.levelList = res;
+      getGradeList().then((res) => {
+        this.gradeList = res;
       });
       getProvinceList().then((res) => {
         var data=[];

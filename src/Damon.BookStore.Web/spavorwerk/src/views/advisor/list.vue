@@ -45,7 +45,7 @@
             手机：
       </el-col>
       <el-col :span="4" >
-        <el-input size="medium" v-model="listQuery.phone" placeholder="请输入" class="filter-item filtercontrol"></el-input>
+        <el-input size="medium" v-model="listQuery.phoneNumber" placeholder="请输入" class="filter-item filtercontrol"></el-input>
       </el-col>
     </el-row>
     <el-row>
@@ -91,12 +91,12 @@
       </el-table-column>
             <el-table-column label="姓名"  align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.realName }}</span>
         </template>
       </el-table-column>
        <el-table-column label="手机"  align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.phone }}</span>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
                   <el-table-column label="职位"  align="center" width="100" >
@@ -116,12 +116,12 @@
       </el-table-column>
                  <el-table-column label="入职时间"  align="center" width="180" >
         <template slot-scope="{row}">
-          <span>{{ row.entryDateTime }}</span>
+          <span>{{ row.entryDate }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
-          <router-link :to="'/adviser/edit/'+scope.row.id">
+          <router-link :to="'/advisor/edit/'+scope.row.id">
             <el-link type="primary" size="small" >
               编辑
             </el-link>
@@ -141,7 +141,7 @@
 
 <script>
 import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
-import { getList } from '@/api/adviser';
+import { getList } from '@/api/advisor';
 
 export default {
   name: 'list',
@@ -156,14 +156,13 @@ export default {
         enterprise: '美善品',
         branchCompany: '',
         position: '',
-        name: '',
+        realName: '',
         jobnum: '',
-        phone: '',
+        phoneNumber: '',
         page: 1,
         limit: 5,
       },
       total: 20,
-      // headerClassName: 'headerbgcolor',
     };
   },
   created() {

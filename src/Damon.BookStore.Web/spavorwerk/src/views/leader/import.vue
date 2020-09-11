@@ -64,7 +64,7 @@
       </el-table-column>
       <el-table-column label="区/县"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.grade }}</span>
         </template>
       </el-table-column>
        <el-table-column label="区域负责人"  align="center" >
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { getImportList } from '@/api/adviser';
+import { getImportList } from '@/api/advisor';
 
 export default {
   name: 'import',
@@ -115,7 +115,7 @@ export default {
       listQuery: {
         name: '',
         jobnum: '',
-        phone: '',
+        phoneNumber: '',
         page: 1,
         limit: 5,
       },

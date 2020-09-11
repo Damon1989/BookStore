@@ -41,35 +41,35 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/adviser',
+    path: '/advisor',
     component: Layout,
-    redirect: '/adviser/list',
+    redirect: '/advisor/list',
     // alwaysShow: true, // will always show the root menu
     name: 'system',
     meta: {
-      title: 'adviser.manage',
+      title: 'advisor.manage',
       icon: 'lock',
       roles: ['admin', 'editor'], // you can set roles in root nav
     },
     children: [
       {
         path: 'list',
-        component: () => import('@/views/adviser/list'),
-        name: 'adviserlist',
-        meta: { title: 'adviser.list', icon: 'dashboard' },
+        component: () => import('@/views/advisor/list'),
+        name: 'advisorlist',
+        meta: { title: 'advisor.list', icon: 'dashboard' },
       },
       {
         path: 'import',
-        component: () => import('@/views/adviser/import'),
-        name: 'adviserimport',
-        meta: { title: 'adviser.import', icon: 'dashboard' },
+        component: () => import('@/views/advisor/import'),
+        name: 'advisorimport',
+        meta: { title: 'advisor.import', icon: 'dashboard' },
       },
       {
         path: 'edit/:id',
-        component: () => import('@/views/adviser/edit'),
-        name: 'adviserdata',
+        component: () => import('@/views/advisor/edit'),
+        name: 'advisordata',
         hidden: true,
-        meta: { title: 'adviser.edit', icon: 'dashboard' },
+        meta: { title: 'advisor.edit', icon: 'dashboard' },
       },
     ],
   },
