@@ -92,23 +92,20 @@
 
     </el-row>
     <el-row>
-      <el-col :span="4"  class="filtertext">
+      <el-col :span="6"  class="filtertext">
         <el-button size="medium" type="success" >预约单导入</el-button>
         <el-button size="medium" type="success" >导出Excel</el-button>
       </el-col>
-      <el-col :span="1"  class="filtertext">
-          排序规则
-      </el-col>
-      <el-col :span="6" class="filtertext">
-
+      <el-col :span="8" class="filtertext">
+        <span>排序规则</span>
          <el-radio-group v-model="sortrule">
-          <el-radio :label="3">创建时间</el-radio>
-          <el-radio :label="6">地址</el-radio>
-          <el-radio :label="9">来源</el-radio>
-          <el-radio :label="1">响应时间</el-radio>
+          <el-radio :label="1">创建时间</el-radio>
+          <el-radio :label="2">地址</el-radio>
+          <el-radio :label="3">来源</el-radio>
+          <el-radio :label="4">响应时间</el-radio>
         </el-radio-group>
       </el-col>
-      <el-col :span="4" :offset="6" class="filtertext">
+      <el-col :span="4" :offset="2" class="filtertext">
          <el-link type="primary" @click="showQueryDetail=!showQueryDetail">展开</el-link>
         <el-button size="medium" type="success">查  询</el-button>
         <el-button size="medium">重  置</el-button>
@@ -191,15 +188,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
-          <router-link :to="'/leader/edit/'+scope.row.id">
+          <router-link :to="'/order/detail/'+scope.row.id">
             <el-link type="primary" size="small" >
-              编辑
+              详情
             </el-link>
           </router-link>
-          <el-popconfirm
-            title="确定要删除负责人信息吗？" @onConfirm="deleteLeader">
-            <el-link size="medium" slot="reference" type="primary" >删除</el-link>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
