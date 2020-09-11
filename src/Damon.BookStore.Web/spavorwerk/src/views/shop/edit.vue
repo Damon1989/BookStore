@@ -4,42 +4,36 @@
         <div slot="header" class="clearfix">
     <span>
       编号: <span class="spancolor">{{form.num}}</span>  &nbsp;&nbsp;
-      工号: <span class="spancolor">{{form.jobNum}}</span>  &nbsp;&nbsp;
-      姓名: <span class="spancolor">{{form.num}}</span> &nbsp;&nbsp;
       事业部:<span class="spancolor">{{form.enterprise}}</span> &nbsp;&nbsp;
+      所在地区: <span class="spancolor">{{form.jobNum}}</span>  &nbsp;&nbsp;
+      门店经理: <span class="spancolor">{{form.num}}</span> &nbsp;&nbsp;
     </span>
   </div>
     <div>
-      注册地
+      基本信息
     </div>
      <div>
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          省/直辖市/自治区
+          门店名称
          </el-col>
-           <el-col :span="6">
-          城市
+           <el-col :span="6" :offset="2">
+          地址
          </el-col>
-           <el-col :span="6">
-          区/县
+           <el-col :span="6" :offset="2">
+          电话
          </el-col>
        </el-row>
 
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.province"  clearable  class="filter-item ">
-                <el-option v-for="item in provinceList" :key="item" :label="item" :value="item" />
-          </el-select>
+           <el-input size="medium"  placeholder="请输入" class="filter-item filtercontrol"></el-input>
          </el-col>
-          <el-col :span="6">
-          <el-select size="medium" v-model="form.city"  clearable  class="filter-item ">
-                <el-option v-for="item in cityList" :key="item" :label="item" :value="item" />
-          </el-select>
+          <el-col :span="6"  :offset="2">
+          <el-input size="medium"  placeholder="请输入" class="filter-item filtercontrol"></el-input>
          </el-col>
-            <el-col :span="6">
-          <el-select size="medium" v-model="form.area"  clearable  class="filter-item ">
-                <el-option v-for="item in areaList" :key="item" :label="item" :value="item" />
-          </el-select>
+        <el-col :span="6"  :offset="2">
+          <el-input size="medium"  placeholder="请输入" class="filter-item filtercontrol"></el-input>
          </el-col>
        </el-row>
      </div>
@@ -47,22 +41,11 @@
       其他信息
     </div>
     <div class="margintop">
-      <el-row>
-        <el-col :span="6" :offset="2">等级</el-col>
-      </el-row>
-    </div>
-    <div class="margintop">
-      <el-row class="margintop">
-         <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.grade"  clearable  class="filter-item ">
-                <el-option v-for="item in gradeList" :key="item" :label="item" :value="item" />
-          </el-select>
-         </el-col>
-       </el-row>
+
     </div>
     </el-card>
 <el-row style="margin-top:30px">
-  <el-col :span="8" :offset="8">
+  <el-col :span="8" :offset="10">
   <el-button type="success" plain>提交</el-button>
   <el-button plain>返回</el-button>
   </el-col>

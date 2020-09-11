@@ -14,32 +14,32 @@ Vue.use(Router);
 const whiteList = ['/login', '/auth-redirect'];
 
 export const asyncRoutes = [
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/system/role',
-    // alwaysShow: true, // will always show the root menu
-    name: 'system',
-    meta: {
-      title: 'system.index',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'user',
-        component: () => import('@/views/user/index'),
-        name: 'UserData',
-        meta: { title: 'system.user', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/role/index'),
-        name: 'RoleData',
-        meta: { title: 'system.role', icon: 'dashboard', affix: true },
-      },
-    ],
-  },
+  // {
+  //   path: '/system',
+  //   component: Layout,
+  //   redirect: '/system/role',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'system',
+  //   meta: {
+  //     title: 'system.index',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'user',
+  //       component: () => import('@/views/user/index'),
+  //       name: 'UserData',
+  //       meta: { title: 'system.user', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'role',
+  //       component: () => import('@/views/role/index'),
+  //       name: 'RoleData',
+  //       meta: { title: 'system.role', icon: 'dashboard', affix: true },
+  //     },
+  //   ],
+  // },
   {
     path: '/advisor',
     component: Layout,
@@ -166,8 +166,8 @@ export const asyncRoutes = [
       },
     ],
   },
-  tableRouter,
-  componentsRouter,
+  // tableRouter,
+  // componentsRouter,
   // {
   //   path: '/example',
   //   component: Layout,
