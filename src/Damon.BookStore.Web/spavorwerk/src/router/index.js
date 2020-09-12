@@ -272,42 +272,51 @@ export function resetRouter() {
 
 
 router.beforeEach((to, from, next) => {
+  debugger
   if (getAccessToken()) {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0;
-      if (hasRoles) {
-        next();
-      } else {
-        store.dispatch('user/getInfo').then(({ roles, id }) => {
-          const permissions = [];
-          getUserPermission(id).then((res) => {
-            res.groups.forEach((group) => {
-              group.permissions.forEach((permission) => {
-                if (permission.isGranted) {
-                  permissions.push(permission.name);
-                }
-              });
-            });
-            store.dispatch(
-              'permission/generatePermissions',
-              permissions,
-            );
-          });
+      next();
 
 
-          store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
-            router.addRoutes(accessRoutes);
-            next({ ...to, replace: true });
-          });
-        });
-      }
+      // const hasRoles = store.getters.roles && store.getters.roles.length > 0;
+      // if (hasRoles) {
+      //   next();
+      // } else {
+      //   store.dispatch('user/getInfo').then(({ roles, id }) => {
+      //     const permissions = [];
+      //     getUserPermission(id).then((res) => {
+      //       res.groups.forEach((group) => {
+      //         group.permissions.forEach((permission) => {
+      //           if (permission.isGranted) {
+      //             permissions.push(permission.name);
+      //           }
+      //         });
+      //       });
+      //       store.dispatch(
+      //         'permission/generatePermissions',
+      //         permissions,
+      //       );
+      //     });
+
+
+      //     store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
+      //       router.addRoutes(accessRoutes);
+      //       next({ ...to, replace: true });
+      //     });
+      //   });
+      // }
     }
   } else if (whiteList.indexOf(to.path) !== -1) {
     next();
   } else {
-    next(`/login?redirect=${to.path}`);
+    store.dispatch('permission/generateRoutes', 'admin').then((accessRoutes) => {
+      router.addRoutes(accessRoutes);
+      // next({ ...to, replace: true });
+      next(`/login?redirect=${to.path}`);
+    });
+
   }
 });
 

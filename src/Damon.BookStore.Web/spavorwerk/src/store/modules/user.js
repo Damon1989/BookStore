@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { login, getInfo, logout } from '@/api/user';
+import { login, getOAuthAccessToken, getInfo, logout } from '@/api/user';
 import { getToken, setAccessToken, setTokenType, removeAccessToken, removeTokenType } from '@/utils/auth';
 import { resetRouter } from '@/router';
 
@@ -57,7 +57,28 @@ const actions = {
       });
     });
   },
+  getToken({ commit }) {
+    return new Promise((resolve) => {
+      // const formData = new FormData();
+      // formData.append('username', username);
+      // formData.append('password', password);
+      // formData.append('grant_type', 'password');
+      // formData.append('scope', 'BookStore');
+      // formData.append('client_id', 'BookStore_App');
+      // formData.append('client_secret', '1q2w3e*');
 
+      getOAuthAccessToken().then((res) => {
+        if (res !== undefined) {
+          setAccessToken(res);
+          // setTokenType(res.token_type);
+          commit(SET_TOKEN, res);
+          resolve(res);
+        }
+      }).catch((error) => {
+        resolve(error);
+      });
+    });
+  },
   // get user info
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {

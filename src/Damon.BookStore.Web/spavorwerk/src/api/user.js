@@ -9,6 +9,13 @@ export function login(data) {
   });
 }
 
+export function getOAuthAccessToken() {
+  return request({
+    url: '/auth/token',
+    method: 'get'
+  })
+}
+
 export function logout() {
   return request({
     url: '/api/account/logout',

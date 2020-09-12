@@ -108,43 +108,51 @@ export default {
       // var that = this;
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('user/login', this.form).then((res) => {
-            if (res.access_token !== undefined) {
+          debugger
+          this.$store.dispatch('user/getToken', this.form).then((res) => {
+            if (res !== undefined) {
               // 登录成功提示
               this.$message({
                 message: '登录成功',
                 type: 'success',
               });
-              this.$store.dispatch('user/getInfo').then(({ roles, id }) => {
-                this.$store
-                  .dispatch('permission/generateRoutes', roles)
-                  .then((accessRoutes) => {
-                    router.addRoutes(accessRoutes);
                     const urlObj = {
                       path: this.redirect || '/',
                       query: this.otherQuery,
                     };
 
-                    // getOauthUserInfo().then((result) => {
-                    // });
                     this.$router.push(urlObj);
-                  });
 
-                const permissions = [];
-                getUserPermission(id).then((userPermissionRes) => {
-                  userPermissionRes.groups.forEach((group) => {
-                    group.permissions.forEach((permission) => {
-                      if (permission.isGranted) {
-                        permissions.push(permission.name);
-                      }
-                    });
-                  });
-                  this.$store.dispatch(
-                    'permission/generatePermissions',
-                    permissions,
-                  );
-                });
-              });
+              // this.$store.dispatch('user/getInfo').then(({ roles, id }) => {
+              //   this.$store
+              //     .dispatch('permission/generateRoutes', roles)
+              //     .then((accessRoutes) => {
+              //       router.addRoutes(accessRoutes);
+              //       const urlObj = {
+              //         path: this.redirect || '/',
+              //         query: this.otherQuery,
+              //       };
+
+              //       // getOauthUserInfo().then((result) => {
+              //       // });
+              //       this.$router.push(urlObj);
+              //     });
+
+              //   const permissions = [];
+              //   getUserPermission(id).then((userPermissionRes) => {
+              //     userPermissionRes.groups.forEach((group) => {
+              //       group.permissions.forEach((permission) => {
+              //         if (permission.isGranted) {
+              //           permissions.push(permission.name);
+              //         }
+              //       });
+              //     });
+              //     this.$store.dispatch(
+              //       'permission/generatePermissions',
+              //       permissions,
+              //     );
+              //   });
+              // });
             } else {
               // 登录成功提示
               this.$message({
