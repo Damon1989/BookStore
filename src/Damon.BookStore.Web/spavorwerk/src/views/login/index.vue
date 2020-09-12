@@ -108,7 +108,6 @@ export default {
       // var that = this;
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          debugger
           this.$store.dispatch('user/getToken', this.form).then((res) => {
             if (res !== undefined) {
               // 登录成功提示

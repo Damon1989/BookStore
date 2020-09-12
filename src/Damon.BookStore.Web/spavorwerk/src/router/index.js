@@ -166,7 +166,7 @@ export const asyncRoutes = [
       },
     ],
   },
-  // tableRouter,
+  tableRouter,
   // componentsRouter,
   // {
   //   path: '/example',
@@ -272,11 +272,15 @@ export function resetRouter() {
 
 
 router.beforeEach((to, from, next) => {
-  debugger
   if (getAccessToken()) {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
+      if (store.getters.permission_routes == undefined) {
+        store.dispatch('permission/generateRoutes', 'admin').then((accessRoutes) => {
+          router.addRoutes(accessRoutes);
+        });
+      }
       next();
 
 

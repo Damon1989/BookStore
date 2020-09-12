@@ -2,78 +2,7 @@ import request from '@/utils/request';
 
 
 /* eslint-disable import/prefer-default-export */
-export function getList() {
-  const datalist = [{
-    id: 1,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽0',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }, {
-    id: 2,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽1',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }, {
-    id: 3,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽2',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }, {
-    id: 4,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽3',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }, {
-    id: 5,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽4',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }, {
-    id: 6,
-    branchCompany: 'CNTM',
-    num: '10402213',
-    jobNum: '2SH061.03',
-    name: '王小丽5',
-    phoneNumber: '13589784586',
-    position: 'TL',
-    grade: '5星',
-    registerAddress: '浙,江省,杭州市,西湖区,古荡湾',
-    entryDate: '2016-09-21  08:50:08',
-  }];
-  return Promise.resolve(
-    datalist,
-  );
-}
+
 
 export function getImportList() {
   const datalist = [{
@@ -150,9 +79,12 @@ export function getImportList() {
 }
 
 
-export function getRawList() {
+export function getList(query) {
+  const { pageIndex, pageSize, division, title, realName, phoneNumber } = query;
   return request({
-    url: '/ids.svc/api/Organization/salesUser/getAll?v=1.0',
+    url: `/ids.svc/api/Organization/salesUser/getAll?v=1.0&pageindex=
+    ${pageIndex}&pagesize=${pageSize}&division=${division}&title=${title}
+    &realName=${realName}&phoneNumber=${phoneNumber}`,
     type: 'get',
   });
 }

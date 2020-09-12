@@ -70,7 +70,7 @@ const actions = {
       getOAuthAccessToken().then((res) => {
         if (res !== undefined) {
           setAccessToken(res);
-          // setTokenType(res.token_type);
+          setTokenType("Bearer");
           commit(SET_TOKEN, res);
           resolve(res);
         }

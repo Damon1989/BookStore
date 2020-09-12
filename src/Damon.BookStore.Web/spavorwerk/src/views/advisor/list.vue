@@ -6,7 +6,7 @@
             事业部：
         </el-col>
         <el-col :span="4" >
-        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
+        <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
               <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
@@ -22,7 +22,7 @@
             职位：
         </el-col>
         <el-col :span="4" >
-        <el-select size="medium" v-model="listQuery.position"  clearable  class="filter-item filtercontrol">
+        <el-select size="medium" v-model="listQuery.title"  clearable  class="filter-item filtercontrol">
               <el-option v-for="item in positionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
@@ -33,7 +33,7 @@
             姓名：
       </el-col>
       <el-col :span="4" >
-        <el-input size="medium" v-model="listQuery.name" placeholder="请输入" class="filter-item filtercontrol"></el-input>
+        <el-input size="medium" v-model="listQuery.realName" placeholder="请输入" class="filter-item filtercontrol"></el-input>
       </el-col>
        <el-col :span="2"  class="filtertext">
             工号：
@@ -53,8 +53,8 @@
         <el-button size="medium" type="success">导入</el-button>
       </el-col>
       <el-col :span="4" :offset="12" class="filtertext">
-        <el-button size="medium" type="success">查  询</el-button>
-        <el-button size="medium">重  置</el-button>
+        <el-button size="medium" type="success" @click="getList()">查  询</el-button>
+        <el-button size="medium" @click="reset">重  置</el-button>
       </el-col>
     </el-row>
       <el-alert
@@ -76,17 +76,17 @@
     >
       <el-table-column label="分公司"   align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.branchCompany }}</span>
+          <span>{{ row.branchCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="顾问编号"   align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.num }}</span>
+          <span>{{ row.advisorId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="工号"  align="center" width="120" >
         <template slot-scope="{row}">
-          <span>{{ row.jobNum }}</span>
+          <span>{{ row.userName }}</span>
         </template>
       </el-table-column>
             <el-table-column label="姓名"  align="center" width="100" >
@@ -101,12 +101,12 @@
       </el-table-column>
                   <el-table-column label="职位"  align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.position }}</span>
+          <span>{{ row.title }}</span>
         </template>
       </el-table-column>
                  <el-table-column label="等级"  align="center" width="100" >
         <template slot-scope="{row}">
-          <span>{{ row.level }}</span>
+          <span>{{ row.grade }} 星</span>
         </template>
       </el-table-column>
                    <el-table-column label="注册地址"  align="center" min-width="210">
@@ -142,6 +142,8 @@
 <script>
 import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
 import { getList } from '@/api/advisor';
+import { parseTime } from '@/utils/index';
+
 
 export default {
   name: 'list',
@@ -153,16 +155,16 @@ export default {
       list: null,
       listLoading: false,
       listQuery: {
-        enterprise: '美善品',
+        division: 'TM',
         branchCompany: '',
-        position: '',
+        title: '',
         realName: '',
         jobnum: '',
         phoneNumber: '',
         page: 1,
         limit: 5,
       },
-      total: 20,
+      total: 0,
     };
   },
   created() {
@@ -170,6 +172,9 @@ export default {
   },
   methods: {
     getList() {
+
+      console.log(parseTime('2016-10-08T00:00:00'));
+
       getEnterprises().then((result) => {
         this.enterpriseList = result;
       });
@@ -179,13 +184,35 @@ export default {
       getPositionList().then((res) => {
         this.positionList = res;
       });
-      getList().then((res) => {
-        this.list = res.slice(0, this.listQuery.limit);
-        this.total = 400;
+      var queryModel={
+        pageIndex:this.listQuery.page,
+        pageSize:this.listQuery.limit,
+        division:this.listQuery.division,
+        title:this.listQuery.title,
+        realName:this.listQuery.realName,
+        phoneNumber:this.listQuery.phoneNumber
+      };
+
+      getList(queryModel).then((res) => {
+        console.log(res);
+        if(res.success){
+          this.list=res.result.data;
+          this.total=res.result.totalCount
+        }
       });
-      // getRawList().then((res) => {
-      //   console.log(res);
-      // });
+    },
+
+    reset(){
+      this.listQuery={
+        division: 'TM',
+        branchCompany: '',
+        title: '',
+        realName: '',
+        jobnum: '',
+        phoneNumber: '',
+        page: 1,
+        limit: 5,
+      }
     },
 
     headClass() {
