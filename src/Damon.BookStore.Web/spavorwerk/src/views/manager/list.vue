@@ -145,7 +145,7 @@ export default {
         city: '',
         district: '',
         division: 'TM',
-        page: 0,
+        page: 1,
         limit: 5,
       },
       total: 0,
@@ -211,6 +211,7 @@ export default {
           })
           this.list=res.result.data;
           this.total=res.result.totalCount;
+          console.log(this.total);
         }
       });
     },

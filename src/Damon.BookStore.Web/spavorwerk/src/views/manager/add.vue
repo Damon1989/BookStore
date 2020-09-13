@@ -52,7 +52,7 @@
        </el-row>
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.manager"  clearable placeholder="请输入工号（仅限BM/AM/RM）"  class="filter-item filtercontrol">
+          <el-select size="medium" v-model="form.manager" filterable  clearable placeholder="请输入工号（仅限BM/AM/RM）"  class="filter-item filtercontrol">
                 <el-option v-for="item in managerList" :key="item.userd" :label="item.realNameTitle" :value="item.userId" />
           </el-select>
          </el-col>

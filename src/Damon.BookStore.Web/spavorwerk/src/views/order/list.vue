@@ -98,7 +98,7 @@
       </el-col>
       <el-col :span="8" class="filtertext">
         <span>排序规则</span>
-         <el-radio-group v-model="sortrule">
+         <el-radio-group v-model="listQuery.sortrule">
           <el-radio :label="1">创建时间</el-radio>
           <el-radio :label="2">地址</el-radio>
           <el-radio :label="3">来源</el-radio>
@@ -219,7 +219,7 @@ export default {
       districtList: [],
       divisionList: [],
       sourceList:[],
-      stutusList:[],
+      statusList:[],
       list: null,
       listLoading: false,
       showQueryDetail:false,
@@ -272,12 +272,16 @@ export default {
         pageIndex:this.listQuery.page,
         pageSize:this.listQuery.limit,
         division:this.listQuery.division,
-
+        title:'SA',
+        realName:'',
+        phoneNumber:''
       };
 
       getList(queryModel).then((res) => {
-        this.total = 400;
-        this.list = res.slice(0, this.listQuery.limit);
+        if(res.success){
+          this.list=res.result.data;
+          this.total=res.result.totalCount
+        }
       });
     },
     deleteLeader() {

@@ -22,7 +22,7 @@ export function submitDistrictManager(data) {
 
 export function getDistrictManagerList(query) {
   const { pageIndex, pageSize, division } = query;
-  var url = `/api/ZoneWithoutStoreRelations?v=1.0&pageIndex=${pageIndex}&pageSize=${pageSize}
+  var url = `/api/ZoneWithoutStoreRelations?v=1.0&pageIndex=${pageIndex - 1}&pageSize=${pageSize}
   &division=${division}`;
   return request({
     url,

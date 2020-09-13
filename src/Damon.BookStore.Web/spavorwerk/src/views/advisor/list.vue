@@ -7,7 +7,7 @@
         </el-col>
         <el-col :span="4" >
         <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
+              <el-option v-for="item in divisionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
          <el-col :span="2" class="filtertext">
@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { getEnterprises, getBranchCompanies, getPositionList } from '@/api/basedata';
+import { getDivisions, getBranchCompanies, getPositionList } from '@/api/basedata';
 import { getList } from '@/api/advisor';
 import { parseTime } from '@/utils/index';
 
@@ -149,7 +149,7 @@ export default {
   name: 'list',
   data() {
     return {
-      enterpriseList: [],
+      divisionList: [],
       branchCompanies: [],
       positionList: [],
       list: null,
@@ -173,10 +173,8 @@ export default {
   methods: {
     getList() {
 
-      console.log(parseTime('2016-10-08T00:00:00'));
-
-      getEnterprises().then((result) => {
-        this.enterpriseList = result;
+      getDivisions().then((result) => {
+        this.divisionList = result;
       });
       getBranchCompanies().then((res) => {
         this.branchCompanies = res;
