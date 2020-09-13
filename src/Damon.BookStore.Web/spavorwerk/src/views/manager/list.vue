@@ -34,7 +34,7 @@
             事业部：
       </el-col>
       <el-col :span="8" >
-        <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
+        <el-select size="medium" v-model="listQuery.division"    class="filter-item filtercontrol">
               <el-option v-for="item in divisionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
       </el-col>
@@ -45,7 +45,7 @@
     <el-row>
       <el-col :span="4" :offset="2" class="filtertext">
         <el-button size="medium" type="success" icon="el-icon-plus">
-           <router-link :to="'/manager/edit/0?operate=add&division='+listQuery.division">
+           <router-link :to="'/manager/add?division='+listQuery.division">
             <el-link type="primary" size="small" >
               新  建
             </el-link>
@@ -54,8 +54,8 @@
         <el-button size="medium" type="success" icon="el-icon-plus">导  入</el-button>
       </el-col>
       <el-col :span="4" :offset="12" class="filtertext">
-        <el-button size="medium" type="success">查  询</el-button>
-        <el-button size="medium">重  置</el-button>
+        <el-button size="medium" type="success" @click="search">查  询</el-button>
+        <el-button size="medium" @click=reset>重  置</el-button>
       </el-col>
     </el-row>
 <el-table
@@ -99,7 +99,7 @@
       </el-table-column>
       <el-table-column label="创建日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.createdTime }}</span>
+          <span>{{ row.createdTime | parseDateTime('{y}-{m}-{d} {h}:{i}')  }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
@@ -144,9 +144,6 @@ export default {
         province: '',
         city: '',
         district: '',
-        name: '',
-        jobnum: '',
-        phoneNumber: '',
         division: 'TM',
         page: 0,
         limit: 5,
@@ -155,11 +152,10 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getInfo();
   },
   methods: {
-
-    getList() {
+    getInfo(){
       getDivisions().then((result) => {
         this.divisionList = result;
       });
@@ -172,7 +168,24 @@ export default {
           this.provinceList = data;
         }
       });
-
+      this.getList();
+    },
+    search(){
+      this.listQuery.page=0;
+      this.getList();
+    },
+    reset(){
+      this.listQuery= {
+        province: '',
+        city: '',
+        district: '',
+        division: 'TM',
+        page: 0,
+        limit: 5,
+      }
+      this.search();
+    },
+    getList() {
       var queryModel={
         pageIndex:this.listQuery.page,
         pageSize:this.listQuery.limit,
@@ -182,9 +195,7 @@ export default {
         if(res.success){
           var result=res.result.data;
           result.forEach(item=>{
-            console.log(item.district.name);
             var names= item.district.name.split(',');
-            console.log(names);
             if(names.length==1){
               item.province=names[0];
             }

@@ -6,8 +6,8 @@
             事业部：
       </el-col>
       <el-col :span="6" >
-        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
+        <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in divisionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
       </el-col>
       <el-col :span="2" class="filtertext">
@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import { getEnterprises, getProvinceList, getCityList, getDistrictList,getSourceList,getOrderStatusList } from '@/api/basedata';
+import { getDivisions, getProvinceList, getCityList, getDistrictList,getSourceList,getOrderStatusList } from '@/api/basedata';
 import { getList } from '@/api/advisor';
 
 export default {
@@ -217,7 +217,7 @@ export default {
       provinceList: [],
       cityList: [],
       districtList: [],
-      enterpriseList: [],
+      divisionList: [],
       sourceList:[],
       stutusList:[],
       list: null,
@@ -230,7 +230,7 @@ export default {
         managerJobNum: '',
         advisorJobNum: '',
         customerName: '',
-        enterprise: '美善品',
+        division: 'TM',
         source:'全部',
         status:'全部',
         createdate:'',
@@ -248,8 +248,8 @@ export default {
   methods: {
 
     getList() {
-      getEnterprises().then((result) => {
-        this.enterpriseList = result;
+      getDivisions().then((result) => {
+        this.divisionList = result;
       });
       getProvinceList().then((res) => {
         var data=[];
@@ -268,8 +268,14 @@ export default {
       getOrderStatusList().then(res=>{
         this.statusList=res;
       })
+      var queryModel={
+        pageIndex:this.listQuery.page,
+        pageSize:this.listQuery.limit,
+        division:this.listQuery.division,
 
-      getList().then((res) => {
+      };
+
+      getList(queryModel).then((res) => {
         this.total = 400;
         this.list = res.slice(0, this.listQuery.limit);
       });

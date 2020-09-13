@@ -1,1 +1,1 @@
-export { parseTime } from '@/utils';
+export { parseTime, parseDateTime } from '@/utils';
