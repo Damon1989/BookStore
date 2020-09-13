@@ -60,6 +60,7 @@ export const lang = {
   manager: {
     manage: 'manage',
     list: 'manager list',
+    add: 'manager add',
     edit: 'manager edit',
     import: 'manager import',
   },

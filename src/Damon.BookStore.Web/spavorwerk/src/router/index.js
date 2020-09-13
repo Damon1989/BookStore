@@ -98,6 +98,13 @@ export const asyncRoutes = [
         meta: { title: 'manager.import', icon: 'dashboard' },
       },
       {
+        path: 'add',
+        component: () => import('@/views/manager/add'),
+        name: 'managerdata',
+        hidden: true,
+        meta: { title: 'manager.add', icon: 'dashboard' },
+      },
+      {
         path: 'edit/:id',
         component: () => import('@/views/manager/edit'),
         name: 'managerdata',

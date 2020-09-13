@@ -58,6 +58,7 @@ export const lang = {
   manager: {
     manage: '负责人管理',
     list: '负责人列表',
+    add: '负责人新增',
     edit: '负责人编辑',
     import: '负责人导入',
   },
