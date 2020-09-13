@@ -56,7 +56,7 @@
 
 <script>
 
-import { getGradeList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getGradeList, getProvinceList, getCityList, getDistrictList } from '@/api/basedata';
 
 export default {
   name: 'advisoredit',
@@ -64,7 +64,7 @@ export default {
     return {
       provinceList: [],
       cityList: [],
-      areaList: [],
+      districtList: [],
       gradeList: [],
       form: {
         num: '',
@@ -73,7 +73,7 @@ export default {
         enterprise: '',
         province: '',
         city: '',
-        area: '',
+        district: '',
         grade: '',
       },
     };
@@ -98,7 +98,7 @@ export default {
         enterprise: '美善品',
         provice: '',
         city: '',
-        area: '',
+        district: '',
         grade: '',
       };
     },
@@ -112,8 +112,8 @@ export default {
       getCityList().then((res) => {
         this.cityList = res;
       });
-      getAreaList().then((res) => {
-        this.areaList = res;
+      getDistrictList().then((res) => {
+        this.districtList = res;
       });
     },
   },

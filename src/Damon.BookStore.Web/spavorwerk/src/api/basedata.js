@@ -2,7 +2,7 @@
 
 import request from '@/utils/request';
 
-export function getEnterprises() {
+export function getDivisions() {
   var data = [
     { code: 'KS', name: '可宝' },
     { code: 'TM', name: '美善品' },
@@ -44,16 +44,56 @@ export function getProvinceList() {
 }
 
 
+const specialCities = [
+  {
+    id: '110000',
+    fullname: '北京市'
+  },
+  {
+    id: '120000',
+    fullname: '天津市'
+  },
+  {
+    id: '310000',
+    fullname: '上海市'
+  },
+  {
+    id: '500000',
+    fullname: '重庆市'
+  },
+]
+
+export function getSpecialCities() {
+  return Promise.resolve(specialCities);
+}
+
 export function getCityList(province) {
+  var specialCity = specialCities.filter(c => c.id == province);
+  if (specialCity.length == 1) {
+    return Promise.resolve({
+      status: 0,
+      result: [[specialCity[0]]]
+    })
+  } else {
+    return request({
+      url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${province}`,
+      method: 'get',
+    });
+  }
+}
+
+export function getDistrictList(city) {
+
   return request({
-    url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${province}`,
+    url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${city}`,
     method: 'get',
   });
 }
 
-export function getAreaList(city) {
+
+export function getAddressList() {
   return request({
-    url: `ws/district/v1/getchildren?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ&id=${city}`,
+    url: '/ws/district/v1/list?key=YGDBZ-WXNC4-FL3UW-D2P4G-6C35J-5OFXQ',
     method: 'get',
   });
 }

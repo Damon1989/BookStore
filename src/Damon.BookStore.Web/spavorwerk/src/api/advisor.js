@@ -88,3 +88,5 @@ export function getList(query) {
     type: 'get',
   });
 }
+
+

@@ -74,35 +74,35 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/leader',
+    path: '/manager',
     component: Layout,
-    redirect: '/leader/list',
+    redirect: '/manager/list',
     // alwaysShow: true, // will always show the root menu
-    name: 'leader',
+    name: 'manager',
     meta: {
-      title: 'leader.manage',
+      title: 'manager.manage',
       icon: 'lock',
       roles: ['admin', 'editor'], // you can set roles in root nav
     },
     children: [
       {
         path: 'list',
-        component: () => import('@/views/leader/list'),
-        name: 'leaderlist',
-        meta: { title: 'leader.list', icon: 'dashboard', affix: true },
+        component: () => import('@/views/manager/list'),
+        name: 'managerlist',
+        meta: { title: 'manager.list', icon: 'dashboard', affix: true },
       },
       {
         path: 'import',
-        component: () => import('@/views/leader/import'),
-        name: 'leaderimport',
-        meta: { title: 'leader.import', icon: 'dashboard' },
+        component: () => import('@/views/manager/import'),
+        name: 'managerimport',
+        meta: { title: 'manager.import', icon: 'dashboard' },
       },
       {
         path: 'edit/:id',
-        component: () => import('@/views/leader/edit'),
-        name: 'leaderdata',
+        component: () => import('@/views/manager/edit'),
+        name: 'managerdata',
         hidden: true,
-        meta: { title: 'leader.edit', icon: 'dashboard' },
+        meta: { title: 'manager.edit', icon: 'dashboard' },
       },
     ],
   },

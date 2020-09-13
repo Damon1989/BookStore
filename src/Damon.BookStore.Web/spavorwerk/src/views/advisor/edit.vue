@@ -37,8 +37,8 @@
           </el-select>
          </el-col>
             <el-col :span="6">
-          <el-select size="medium" v-model="form.area"  clearable  class="filter-item ">
-                <el-option v-for="item in areaList" :key="item.code" :label="item.name" :value="item.code" />
+          <el-select size="medium" v-model="form.district"  clearable  class="filter-item ">
+                <el-option v-for="item in districtList" :key="item.code" :label="item.name" :value="item.code" />
           </el-select>
          </el-col>
        </el-row>
@@ -73,7 +73,7 @@
 
 <script>
 
-import { getGradeList, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getGradeList, getProvinceList, getCityList, getDistrictList } from '@/api/basedata';
 
 export default {
   name: 'advisoredit',
@@ -81,7 +81,7 @@ export default {
     return {
       provinceList: [],
       cityList: [],
-      areaList: [],
+      districtList: [],
       gradeList: [],
       form: {
         num: '',
@@ -90,7 +90,7 @@ export default {
         enterprise: '',
         province: '',
         city: '',
-        area: '',
+        district: '',
         grade: '',
       },
     };
@@ -115,7 +115,7 @@ export default {
         enterprise: '美善品',
          province: '310000',
         city: '310115',
-        area: '310115139',
+        district: '310115139',
         grade: '2星',
       };
     },
@@ -141,19 +141,19 @@ export default {
           this.cityList = data;
         }
       });
-      getAreaList(this.form.city).then((res) => {
+      getDistrictList(this.form.city).then((res) => {
         var data=[];
         if(res.status=="0"){
           res.result[0].forEach(element => {
             data.push({code:element.id,name:element.fullname})
           });
-          this.areaList = data;
+          this.districtList = data;
         }
       });
     },
     provinceSelect(){
       this.form.city='';
-      this.form.area='';
+      this.form.district='';
       getCityList(this.form.province).then((res) => {
         var data=[];
         if(res.status=="0"){
@@ -165,14 +165,14 @@ export default {
       });
     },
     citySelect(){
-      this.form.area='';
-      getAreaList(this.form.city).then((res) => {
+      this.form.district='';
+      getDistrictList(this.form.city).then((res) => {
         var data=[];
         if(res.status=="0"){
           res.result[0].forEach(element => {
             data.push({code:element.id,name:element.fullname})
           });
-          this.areaList = data;
+          this.districtList = data;
         }
       });
     }

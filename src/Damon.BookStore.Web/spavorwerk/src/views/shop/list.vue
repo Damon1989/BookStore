@@ -22,8 +22,8 @@
             区：
         </el-col>
         <el-col :span="6" >
-        <el-select size="medium" v-model="listQuery.area"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in areaList" :key="item.code" :label="item.name" :value="item.code" />
+        <el-select size="medium" v-model="listQuery.district"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in districtList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
     </el-row>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { getEnterprises, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
+import { getEnterprises, getProvinceList, getCityList, getDistrictList } from '@/api/basedata';
 import { getList } from '@/api/advisor';
 
 export default {
@@ -125,14 +125,14 @@ export default {
     return {
       provinceList: [],
       cityList: [],
-      areaList: [],
+      districtList: [],
       enterpriseList: [],
       list: null,
       listLoading: false,
       listQuery: {
         province: '',
         city: '',
-        area: '',
+        district: '',
         name: '',
         jobnum: '',
         phoneNumber: '',
@@ -181,13 +181,13 @@ export default {
       });
     },
     citySelect(){
-      getAreaList(this.listQuery.city).then((res) => {
+      getDistrictList(this.listQuery.city).then((res) => {
         var data=[];
         if(res.status=="0"){
           res.result[0].forEach(element => {
             data.push({code:element.id,name:element.fullname})
           });
-          this.areaList = data;
+          this.districtList = data;
         }
       });
     }

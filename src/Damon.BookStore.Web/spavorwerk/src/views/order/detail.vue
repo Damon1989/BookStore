@@ -65,7 +65,7 @@
          城市 :  {{form.orderInfo.customer.city}}
        </el-col>
         <el-col :offset="2" :span="6">
-         区/县 :  {{form.orderInfo.customer.area}}
+         区/县 :  {{form.orderInfo.customer.district}}
        </el-col>
      </el-row>
      <el-row class="margintop">
@@ -92,7 +92,7 @@
          城市 :  {{form.orderInfo.attachment.city}}
        </el-col>
         <el-col :offset="2" :span="6">
-         区/县 :  {{form.orderInfo.attachment.area}}
+         区/县 :  {{form.orderInfo.attachment.district}}
        </el-col>
      </el-row>
    </div>
@@ -238,7 +238,7 @@ export default {
             shop:'',
             province:'',
             city:'',
-            area:''
+            district:''
           },
           attachment:{
             experiencedProduct:'',
@@ -246,7 +246,7 @@ export default {
             advisor:'',
             wheretolearn:'',
             city:'',
-            area:''
+            district:''
           }
         },
         advisorfeedback:{
@@ -317,7 +317,7 @@ export default {
             shop:'上海金虹桥点',
             province:'上海市',
             city:'上海',
-            area:'长宁区'
+            district:'长宁区'
           },
           attachment:{
             experiencedProduct:'否',
@@ -325,7 +325,7 @@ export default {
             advisor:'13988556633',
             wheretolearn:'官网',
             city:'上海',
-            area:'长宁区'
+            district:'长宁区'
           }
         },
         advisorfeedback:{

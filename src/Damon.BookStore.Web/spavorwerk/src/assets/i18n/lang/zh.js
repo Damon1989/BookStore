@@ -55,7 +55,7 @@ export const lang = {
     edit: '顾问编辑',
     import: '顾问星级导入',
   },
-  leader: {
+  manager: {
     manage: '负责人管理',
     list: '负责人列表',
     edit: '负责人编辑',

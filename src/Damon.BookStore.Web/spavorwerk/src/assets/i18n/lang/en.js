@@ -57,11 +57,11 @@ export const lang = {
     edit: 'advisor edit',
     import: 'advisor import',
   },
-  leader: {
+  manager: {
     manage: 'manage',
-    list: 'leader list',
-    edit: 'leader edit',
-    import: 'leader import',
+    list: 'manager list',
+    edit: 'manager edit',
+    import: 'manager import',
   },
   shop: {
     manage: 'manage',

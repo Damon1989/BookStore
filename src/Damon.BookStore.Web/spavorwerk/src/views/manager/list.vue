@@ -23,8 +23,8 @@
             区：
         </el-col>
         <el-col :span="6" >
-        <el-select size="medium" v-model="listQuery.area"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in areaList" :key="item.code" :label="item.name" :value="item.code" />
+        <el-select size="medium" v-model="listQuery.district"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in districtList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
         </el-col>
     </el-row>
@@ -34,10 +34,9 @@
             事业部：
       </el-col>
       <el-col :span="8" >
-        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
+        <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in divisionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
-        <i class="el-icon-warning icolor"></i> <span class="tipsstyle">事业部必选</span>
       </el-col>
       <el-col :span="3">
 
@@ -45,7 +44,13 @@
     </el-row>
     <el-row>
       <el-col :span="4" :offset="2" class="filtertext">
-        <el-button size="medium" type="success" icon="el-icon-plus">新  建</el-button>
+        <el-button size="medium" type="success" icon="el-icon-plus">
+           <router-link :to="'/manager/edit/0?operate=add&division='+listQuery.division">
+            <el-link type="primary" size="small" >
+              新  建
+            </el-link>
+          </router-link>
+          </el-button>
         <el-button size="medium" type="success" icon="el-icon-plus">导  入</el-button>
       </el-col>
       <el-col :span="4" :offset="12" class="filtertext">
@@ -64,42 +69,42 @@
     >
       <el-table-column label="省/直辖市/自治区"   align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.branchCompany }}</span>
+          <span>{{ row.province }}</span>
         </template>
       </el-table-column>
       <el-table-column label="城市"   align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.num }}</span>
+          <span>{{ row.city }}</span>
         </template>
       </el-table-column>
       <el-table-column label="区/县"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.jobNum }}</span>
+          <span>{{ row.area }}</span>
         </template>
       </el-table-column>
             <el-table-column label="负责人"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.manager.realName }}</span>
         </template>
       </el-table-column>
        <el-table-column label="工号"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.phoneNumber }}</span>
+          <span>{{ row.manager.userName }}</span>
         </template>
       </el-table-column>
-                  <el-table-column label="备注"  align="center"  >
+      <el-table-column label="备注"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.position }}</span>
+          <span>{{ row.remark }}</span>
         </template>
       </el-table-column>
-                 <el-table-column label="创建日期"  align="center" >
+      <el-table-column label="创建日期"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.grade }}</span>
+          <span>{{ row.createdTime }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
-          <router-link :to="'/leader/edit/'+scope.row.id">
+          <router-link :to="'/manager/edit/'+scope.row.id+'?operate=edit'">
             <el-link type="primary" size="small" >
               编辑
             </el-link>
@@ -122,8 +127,8 @@
 </template>
 
 <script>
-import { getEnterprises, getProvinceList, getCityList, getAreaList } from '@/api/basedata';
-import { getList } from '@/api/advisor';
+import { getDivisions, getProvinceList, getCityList, getDistrictList,getSpecialCities } from '@/api/basedata';
+import { getDistrictManagerList } from '@/api/manager';
 
 export default {
   name: 'list',
@@ -131,22 +136,22 @@ export default {
     return {
       provinceList: [],
       cityList: [],
-      areaList: [],
-      enterpriseList: [],
+      districtList: [],
+      divisionList: [],
       list: null,
       listLoading: false,
       listQuery: {
         province: '',
         city: '',
-        area: '',
+        district: '',
         name: '',
         jobnum: '',
         phoneNumber: '',
-        enterprise: '美善品',
-        page: 1,
+        division: 'TM',
+        page: 0,
         limit: 5,
       },
-      total: 20,
+      total: 0,
     };
   },
   created() {
@@ -155,8 +160,8 @@ export default {
   methods: {
 
     getList() {
-      getEnterprises().then((result) => {
-        this.enterpriseList = result;
+      getDivisions().then((result) => {
+        this.divisionList = result;
       });
       getProvinceList().then((res) => {
         var data=[];
@@ -168,15 +173,42 @@ export default {
         }
       });
 
-      getList().then((res) => {
-        this.total = 400;
-        this.list = res.slice(0, this.listQuery.limit);
+      var queryModel={
+        pageIndex:this.listQuery.page,
+        pageSize:this.listQuery.limit,
+        division:this.listQuery.division,
+      };
+      getDistrictManagerList(queryModel).then((res) => {
+        if(res.success){
+          var result=res.result.data;
+          result.forEach(item=>{
+            console.log(item.district.name);
+            var names= item.district.name.split(',');
+            console.log(names);
+            if(names.length==1){
+              item.province=names[0];
+            }
+            if(names.length==2){
+              item.province=names[0];
+              item.city=names[1];
+            }
+            if(names.length==3){
+              item.province=names[0];
+              item.city=names[1];
+              item.area=names[2];
+            }
+          })
+          this.list=res.result.data;
+          this.total=res.result.totalCount;
+        }
       });
     },
     deleteLeader() {
 
     },
     provinceSelect(){
+      this.listQuery.city='';
+      this.listQuery.district='';
       getCityList(this.listQuery.province).then((res) => {
         var data=[];
         if(res.status=="0"){
@@ -184,17 +216,24 @@ export default {
             data.push({code:element.id,name:element.fullname})
           });
           this.cityList = data;
+          getSpecialCities().then(res=>{
+            if(res.filter(c => c.id == this.listQuery.province).length==1){
+                this.listQuery.city=this.listQuery.province;
+                this.citySelect();
+              }
+          })
         }
       });
     },
     citySelect(){
-      getAreaList(this.listQuery.city).then((res) => {
+      this.listQuery.district='';
+      getDistrictList(this.listQuery.city).then((res) => {
         var data=[];
         if(res.status=="0"){
           res.result[0].forEach(element => {
             data.push({code:element.id,name:element.fullname})
           });
-          this.areaList = data;
+          this.districtList = data;
         }
       });
     }

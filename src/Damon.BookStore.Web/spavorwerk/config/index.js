@@ -44,9 +44,18 @@ module.exports = {
           '^/auth/token': ''
         }
       },
+      // '/api': {
+      //   // target: process.env.NODE_ENV === 'production' ? 'https://localhost:443/api' : 'https://localhost:44397/api',//请求域名
+      //   target: 'http://www.damon.com:8089/api',
+      //   secure: false, // 如果是https接口，需要配置这个参数
+      //   changeOrigin: true,//如果是跨域访问，需要配置这个参数
+      //   pathRewrite: {
+      //     '^/api': ''
+      //   }
+      // },
       '/api': {
         // target: process.env.NODE_ENV === 'production' ? 'https://localhost:443/api' : 'https://localhost:44397/api',//请求域名
-        target: 'http://www.damon.com:8089/api',
+        target: 'http://localhost:14641/api',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
         pathRewrite: {
