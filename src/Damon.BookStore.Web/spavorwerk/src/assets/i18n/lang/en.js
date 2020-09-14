@@ -75,5 +75,9 @@ export const lang = {
     detail: 'order detail',
     import: 'order import'
   },
+  excel: {
+    manage: 'manage',
+    upload: 'upload excel'
+  }
 };
 

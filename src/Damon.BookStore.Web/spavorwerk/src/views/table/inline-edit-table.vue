@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 <template>
   <div class="app-container">
+       <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
+        Export Excel
+      </el-button>
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width:100%">
       <el-table-column align="center" label="ID" width='80'>
         <template slot-scope='{row}'>
@@ -111,6 +114,10 @@ export default {
   },
   data() {
     return {
+      downloadLoading: false,
+      filename: '',
+      autoWidth: true,
+      bookType: 'xlsx',
       list: null,
       listLoading: true,
       total: 0,
@@ -157,6 +164,32 @@ export default {
         type: 'success',
       });
     },
+    handleDownload(){
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
+        const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
+        const list = this.list
+        const data = this.formatJson(filterVal, list)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: this.filename,
+          autoWidth: this.autoWidth,
+          bookType: this.bookType
+        })
+        this.downloadLoading = false
+      })
+    },
+     formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
+    }
   },
 
 };

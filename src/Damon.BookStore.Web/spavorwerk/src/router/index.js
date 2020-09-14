@@ -40,139 +40,139 @@ export const asyncRoutes = [
   //     },
   //   ],
   // },
-  {
-    path: '/advisor',
-    component: Layout,
-    redirect: '/advisor/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'system',
-    meta: {
-      title: 'advisor.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/advisor/list'),
-        name: 'advisorlist',
-        meta: { title: 'advisor.list', icon: 'dashboard' },
-      },
-      {
-        path: 'import',
-        component: () => import('@/views/advisor/import'),
-        name: 'advisorimport',
-        meta: { title: 'advisor.import', icon: 'dashboard' },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/advisor/edit'),
-        name: 'advisordata',
-        hidden: true,
-        meta: { title: 'advisor.edit', icon: 'dashboard' },
-      },
-    ],
-  },
-  {
-    path: '/manager',
-    component: Layout,
-    redirect: '/manager/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'manager',
-    meta: {
-      title: 'manager.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/manager/list'),
-        name: 'managerlist',
-        meta: { title: 'manager.list', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'import',
-        component: () => import('@/views/manager/import'),
-        name: 'managerimport',
-        meta: { title: 'manager.import', icon: 'dashboard' },
-      },
-      {
-        path: 'add',
-        component: () => import('@/views/manager/add'),
-        name: 'managerdata',
-        hidden: true,
-        meta: { title: 'manager.add', icon: 'dashboard' },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/manager/edit'),
-        name: 'managerdata',
-        hidden: true,
-        meta: { title: 'manager.edit', icon: 'dashboard' },
-      },
-    ],
-  },
-  {
-    path: '/shop',
-    component: Layout,
-    redirect: '/shop/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'shop',
-    meta: {
-      title: 'shop.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/shop/list'),
-        name: 'shoplist',
-        meta: { title: 'shop.list', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/shop/edit'),
-        name: 'shopdata',
-        hidden: true,
-        meta: { title: 'shop.edit', icon: 'dashboard' },
-      },
-    ],
-  },
-  {
-    path: '/order',
-    component: Layout,
-    redirect: '/order/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'order',
-    meta: {
-      title: 'order.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/order/list'),
-        name: 'orderlist',
-        meta: { title: 'order.list', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'detail/:id',
-        component: () => import('@/views/order/detail'),
-        name: 'orderdata',
-        hidden: true,
-        meta: { title: 'order.detail', icon: 'dashboard' },
-      },
-      {
-        path: 'import',
-        component: () => import('@/views/order/import'),
-        name: 'orderimport',
-        meta: { title: 'order.import', icon: 'dashboard' },
-      },
-    ],
-  },
+  // {
+  //   path: '/advisor',
+  //   component: Layout,
+  //   redirect: '/advisor/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'system',
+  //   meta: {
+  //     title: 'advisor.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/advisor/list'),
+  //       name: 'advisorlist',
+  //       meta: { title: 'advisor.list', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: () => import('@/views/advisor/import'),
+  //       name: 'advisorimport',
+  //       meta: { title: 'advisor.import', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/advisor/edit'),
+  //       name: 'advisordata',
+  //       hidden: true,
+  //       meta: { title: 'advisor.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/manager',
+  //   component: Layout,
+  //   redirect: '/manager/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'manager',
+  //   meta: {
+  //     title: 'manager.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/manager/list'),
+  //       name: 'managerlist',
+  //       meta: { title: 'manager.list', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: () => import('@/views/manager/import'),
+  //       name: 'managerimport',
+  //       meta: { title: 'manager.import', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'add',
+  //       component: () => import('@/views/manager/add'),
+  //       name: 'managerdata',
+  //       hidden: true,
+  //       meta: { title: 'manager.add', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/manager/edit'),
+  //       name: 'managerdata',
+  //       hidden: true,
+  //       meta: { title: 'manager.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/shop',
+  //   component: Layout,
+  //   redirect: '/shop/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'shop',
+  //   meta: {
+  //     title: 'shop.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/shop/list'),
+  //       name: 'shoplist',
+  //       meta: { title: 'shop.list', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/shop/edit'),
+  //       name: 'shopdata',
+  //       hidden: true,
+  //       meta: { title: 'shop.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/order',
+  //   component: Layout,
+  //   redirect: '/order/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'order',
+  //   meta: {
+  //     title: 'order.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/order/list'),
+  //       name: 'orderlist',
+  //       meta: { title: 'order.list', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'detail/:id',
+  //       component: () => import('@/views/order/detail'),
+  //       name: 'orderdata',
+  //       hidden: true,
+  //       meta: { title: 'order.detail', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: () => import('@/views/order/import'),
+  //       name: 'orderimport',
+  //       meta: { title: 'order.import', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
   tableRouter,
   // componentsRouter,
   // {
@@ -262,6 +262,42 @@ export const constantRoutes = [
         meta: { title: 'dashboard', icon: 'dashboard', affix: true },
       },
     ],
+  },
+  {
+    path: '/excel',
+    component: Layout,
+    redirect: '/excel/export-excel',
+    name: 'Excel',
+    meta: {
+      title: 'excel.manage',
+      icon: 'excel'
+    },
+    children: [
+      // {
+      //   path: 'export-excel',
+      //   component: () => import('@/views/excel/export-excel'),
+      //   name: 'ExportExcel',
+      //   meta: { title: 'Export Excel' }
+      // },
+      // {
+      //   path: 'export-selected-excel',
+      //   component: () => import('@/views/excel/select-excel'),
+      //   name: 'SelectExcel',
+      //   meta: { title: 'Export Selected' }
+      // },
+      // {
+      //   path: 'export-merge-header',
+      //   component: () => import('@/views/excel/merge-header'),
+      //   name: 'MergeHeader',
+      //   meta: { title: 'Merge Header' }
+      // },
+      {
+        path: 'upload-excel',
+        component: () => import('@/views/excel/upload-excel'),
+        name: 'UploadExcel',
+        meta: { title: 'excel.upload' }
+      }
+    ]
   },
 ];
 

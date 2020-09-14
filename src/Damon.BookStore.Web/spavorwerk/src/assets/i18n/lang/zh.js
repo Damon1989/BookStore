@@ -73,5 +73,9 @@ export const lang = {
     detail: '预约单详情',
     import: '预约单导入'
   },
+  excel: {
+    manage: 'excel 管理',
+    upload: '上传excel'
+  }
 };
 
