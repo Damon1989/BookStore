@@ -94,6 +94,7 @@ export default {
   },
   created() {
     changeLang('zh-Hans');
+    this.submit();
   },
   methods: {
     getOtherQuery(query) {
@@ -105,53 +106,18 @@ export default {
       }, {});
     },
     submit() {
-      // var that = this;
-      this.$refs[this.formName].validate((valid) => {
-        if (valid) {
-          this.$store.dispatch('user/getToken', this.form).then((res) => {
+      this.$store.dispatch('user/getToken', this.form).then((res) => {
             if (res !== undefined) {
               // 登录成功提示
               this.$message({
                 message: '登录成功',
                 type: 'success',
               });
-                    const urlObj = {
-                      path: this.redirect || '/',
-                      query: this.otherQuery,
-                    };
-
-                    this.$router.push(urlObj);
-
-              // this.$store.dispatch('user/getInfo').then(({ roles, id }) => {
-              //   this.$store
-              //     .dispatch('permission/generateRoutes', roles)
-              //     .then((accessRoutes) => {
-              //       router.addRoutes(accessRoutes);
-              //       const urlObj = {
-              //         path: this.redirect || '/',
-              //         query: this.otherQuery,
-              //       };
-
-              //       // getOauthUserInfo().then((result) => {
-              //       // });
-              //       this.$router.push(urlObj);
-              //     });
-
-              //   const permissions = [];
-              //   getUserPermission(id).then((userPermissionRes) => {
-              //     userPermissionRes.groups.forEach((group) => {
-              //       group.permissions.forEach((permission) => {
-              //         if (permission.isGranted) {
-              //           permissions.push(permission.name);
-              //         }
-              //       });
-              //     });
-              //     this.$store.dispatch(
-              //       'permission/generatePermissions',
-              //       permissions,
-              //     );
-              //   });
-              // });
+              const urlObj = {
+                path: this.redirect || '/',
+                query: this.otherQuery,
+              };
+              this.$router.push(urlObj);
             } else {
               // 登录成功提示
               this.$message({
@@ -160,8 +126,32 @@ export default {
               });
             }
           });
-        }
-      });
+
+      // // var that = this;
+      // this.$refs[this.formName].validate((valid) => {
+      //   if (valid) {
+      //     this.$store.dispatch('user/getToken', this.form).then((res) => {
+      //       if (res !== undefined) {
+      //         // 登录成功提示
+      //         this.$message({
+      //           message: '登录成功',
+      //           type: 'success',
+      //         });
+      //               const urlObj = {
+      //                 path: this.redirect || '/',
+      //                 query: this.otherQuery,
+      //               };
+      //               this.$router.push(urlObj);
+      //       } else {
+      //         // 登录成功提示
+      //         this.$message({
+      //           message: '账号或密码错误',
+      //           type: 'warning',
+      //         });
+      //       }
+      //     });
+      //   }
+      // });
     },
     toggleLang(lang) {
       changeLang(lang);

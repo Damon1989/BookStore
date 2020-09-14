@@ -259,7 +259,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true },
+        meta: { title: 'dashboard', icon: 'dashboard', affix: false },
       },
     ],
   },
@@ -325,44 +325,16 @@ router.beforeEach((to, from, next) => {
         });
       }
       next();
-
-
-      // const hasRoles = store.getters.roles && store.getters.roles.length > 0;
-      // if (hasRoles) {
-      //   next();
-      // } else {
-      //   store.dispatch('user/getInfo').then(({ roles, id }) => {
-      //     const permissions = [];
-      //     getUserPermission(id).then((res) => {
-      //       res.groups.forEach((group) => {
-      //         group.permissions.forEach((permission) => {
-      //           if (permission.isGranted) {
-      //             permissions.push(permission.name);
-      //           }
-      //         });
-      //       });
-      //       store.dispatch(
-      //         'permission/generatePermissions',
-      //         permissions,
-      //       );
-      //     });
-
-
-      //     store.dispatch('permission/generateRoutes', roles).then((accessRoutes) => {
-      //       router.addRoutes(accessRoutes);
-      //       next({ ...to, replace: true });
-      //     });
-      //   });
-      // }
     }
   } else if (whiteList.indexOf(to.path) !== -1) {
     next();
   } else {
-    store.dispatch('permission/generateRoutes', 'admin').then((accessRoutes) => {
-      router.addRoutes(accessRoutes);
-      next(`/login?redirect=${to.path}`);
+    store.dispatch('user/getToken', this.form).then((res) => {
+      store.dispatch('permission/generateRoutes', 'admin').then((accessRoutes) => {
+        router.addRoutes(accessRoutes);
+        next();
+      });
     });
-
   }
 });
 
