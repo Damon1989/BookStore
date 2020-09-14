@@ -180,7 +180,7 @@ export default {
       }
       var managerData=this.managerList.filter(c=>c.userId==this.form.manager)[0];
       var submitData={
-          "district":district,
+          "zone":district,
             "division": this.division,
             "manager": {
               "advisorId": managerData.advisorId,

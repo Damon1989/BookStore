@@ -104,13 +104,13 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
-          <router-link :to="'/manager/edit/'+scope.row.id+'?operate=edit'">
+          <router-link :to="'/manager/edit/'+scope.row.id">
             <el-link type="primary" size="small" >
               编辑
             </el-link>
           </router-link>
           <el-popconfirm
-            title="确定要删除负责人信息吗？" @onConfirm="deleteLeader">
+            title="确定要删除负责人信息吗？" @onConfirm="deleteManager(scope.row.id)">
             <el-link size="medium" slot="reference" type="primary" >删除</el-link>
           </el-popconfirm>
         </template>
@@ -128,7 +128,7 @@
 
 <script>
 import { getDivisions, getProvinceList, getCityList, getDistrictList,getSpecialCities } from '@/api/basedata';
-import { getDistrictManagerList } from '@/api/manager';
+import { getZoneManagerList,RemoveDistrictManager } from '@/api/manager';
 
 export default {
   name: 'list',
@@ -191,11 +191,11 @@ export default {
         pageSize:this.listQuery.limit,
         division:this.listQuery.division,
       };
-      getDistrictManagerList(queryModel).then((res) => {
+      getZoneManagerList(queryModel).then((res) => {
         if(res.success){
           var result=res.result.data;
           result.forEach(item=>{
-            var names= item.district.name.split(',');
+            var names= item.zone.name.split(',');
             if(names.length==1){
               item.province=names[0];
             }
@@ -215,8 +215,13 @@ export default {
         }
       });
     },
-    deleteLeader() {
-
+    deleteManager(id) {
+      RemoveDistrictManager(id).then(res=>{
+        if(res.success){
+          this.$message('删除区域负责人成功');
+          this.getList();
+        }
+      })
     },
     provinceSelect(){
       this.listQuery.city='';

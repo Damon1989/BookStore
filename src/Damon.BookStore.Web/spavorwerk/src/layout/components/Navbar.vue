@@ -79,8 +79,6 @@ export default {
     },
     async logout() {
       const that = this;
-      // await this.$store.dispatch('user/logout')
-      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
       this.$store.dispatch('user/logout').then(() => {
         this.$message({
           message: '退出成功',

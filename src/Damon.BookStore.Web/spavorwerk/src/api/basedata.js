@@ -61,6 +61,14 @@ const specialCities = [
     id: '500000',
     fullname: '重庆市'
   },
+  {
+    id: '810000',
+    fullname: '香港特别行政区'
+  },
+  {
+    id: '820000',
+    fullname: '澳门特别行政区'
+  },
 ]
 
 export function getSpecialCities() {

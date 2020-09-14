@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import { getDivisions, getProvinceList, getCityList, getDistrictList,getSourceList,getOrderStatusList } from '@/api/basedata';
+import { getDivisions, getProvinceList, getCityList, getDistrictList,getSourceList,getOrderStatusList,getSpecialCities } from '@/api/basedata';
 import { getList } from '@/api/advisor';
 
 export default {
@@ -239,7 +239,7 @@ export default {
         page: 1,
         limit: 5,
       },
-      total: 20,
+      total: 0,
     };
   },
   created() {
@@ -295,6 +295,12 @@ export default {
             data.push({code:element.id,name:element.fullname})
           });
           this.cityList = data;
+          getSpecialCities().then(res=>{
+            if(res.filter(c => c.id == this.listQuery.province).length==1){
+                this.listQuery.city=this.listQuery.province;
+                this.citySelect();
+              }
+          })
         }
       });
     },

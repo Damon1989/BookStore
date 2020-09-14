@@ -3,7 +3,7 @@
     <el-card class="box-card">
         <div slot="header" class="clearfix">
     <span>
-      事业部:<span class="spancolor">{{form.enterprise}}</span> &nbsp;&nbsp;
+      事业部:<span class="spancolor">{{divisionName}}</span> &nbsp;&nbsp;
     </span>
   </div>
      <div>
@@ -13,35 +13,26 @@
          </el-col>
            <el-col :span="6">
           城市
-           <!-- <i class="el-icon-warning icolor"></i> <span class="tipsstyle">可指定市，或选择全省</span> -->
          </el-col>
            <el-col :span="6">
           区/县
-          <!-- <i class="el-icon-warning icolor"></i> <span class="tipsstyle">可指定区，或选择全市</span> -->
          </el-col>
        </el-row>
 
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.province"  @change="provinceSelect"   clearable  class="filter-item filtercontrol">
-                <el-option v-for="item in provinceList" :key="item.code" :label="item.name" :value="item.code" />
-          </el-select>
+          {{form.province}}
          </el-col>
           <el-col :span="6">
-          <el-select size="medium" v-model="form.city"  clearable   @change="citySelect"  class="filter-item filtercontrol">
-                <el-option v-for="item in cityList" :key="item.code" :label="item.name" :value="item.code" />
-          </el-select>
+          {{form.city}}
          </el-col>
             <el-col :span="6">
-          <el-select size="medium" v-model="form.district"  clearable  class="filter-item filtercontrol">
-                <el-option v-for="item in districtList" :key="item.code" :label="item.name" :value="item.code" />
-          </el-select>
+          {{form.district}}
          </el-col>
        </el-row>
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
           区域负责人
-          <!-- <i class="el-icon-warning icolor"></i> <span class="tipsstyle">选择后显示姓名/Title</span> -->
          </el-col>
            <el-col :span="6">
           负责人姓名
@@ -52,8 +43,8 @@
        </el-row>
        <el-row class="margintop">
          <el-col :span="6" :offset="2">
-          <el-select size="medium" v-model="form.manager"  clearable placeholder="请输入工号（仅限BM/AM/RM）"  class="filter-item filtercontrol">
-                <el-option v-for="item in managerList" :key="item.userd" :label="item.realNameTitle" :value="item.userId" />
+          <el-select size="medium" v-model="form.manager" filterable  clearable placeholder="请输入工号（仅限BM/AM/RM）"  class="filter-item filtercontrol">
+                <el-option v-for="item in managerList" :key="item.userd" :label="item.realNameTitle" :value="item.advisorId" />
           </el-select>
          </el-col>
           <el-col :span="6">
@@ -68,7 +59,7 @@
 <el-row style="margin-top:30px">
   <el-col :span="10" :offset="9">
   <el-button type="success" plain @click="submitInfo()">提交</el-button>
-  <el-button plain>返回</el-button>
+  <el-button plain @click="back">返回</el-button>
   </el-col>
 
 </el-row>
@@ -87,95 +78,53 @@
 
 <script>
 
-import { getGradeList, getProvinceList, getCityList, getDistrictList,getSpecialCities } from '@/api/basedata';
-import {getManagerList,submitDistrictManager} from '@/api/manager';
+import {getDivisions } from '@/api/basedata';
+import {getManagerList,EditDistrictManager,getById} from '@/api/manager';
 
 export default {
-  name: 'manageredit',
+  name: 'manageradd',
   data() {
     return {
-      provinceList: null,
-      cityList: [],
-      districtList: [],
-      gradeList: [],
-      managerList:[],
+      managerList:null,
       form: {
-        num: '',
-        jobNum: '',
-        name: '',
-        enterprise: '',
         province: '',
         city: '',
         district: '',
+        code:'',
+        name:'',
         manager: '',
         remark:''
       },
-      operate:'',
+      id:'',
       division:'',
+      divisionName:''
     };
   },
   created() {
-    const id = this.$route.params && this.$route.params.id;
-    this.operate=this.$route.query && this.$route.query.operate;
-    this.division=this.$route.query && this.$route.query.division;
-    this.getDetail();
+    this.id=this.$route.params && this.$route.params.id;
     this.getBaseData();
   },
-  computed: {
-    message() {
-      return '123';
-    },
-  },
+
   methods: {
-    getDetail() {
-      if(this.operate==='add'){
-
-      }else{
-        this.form = {
-          num: '10402213',
-          jobNum: '2SH001.01',
-          name: '王小丽',
-          enterprise: '美善品',
-          province: '310000',
-          city: '310115',
-          district: '310115139',
-          manager: '',
-        };
-      }
-    },
     getBaseData() {
-      getGradeList().then((res) => {
-        this.gradeList = res;
-      });
-      getProvinceList().then((res) => {
-        var data=[];
-        if(res.status=="0"){
-          res.result[0].forEach(element => {
-            data.push({code:element.id,name:element.fullname})
-          });
-          this.provinceList = data;
+
+      getById(this.id).then(res=>{
+        console.log(res);
+        if(res.success){
+          var names=res.result.zone.name.split(',');
+          this.form.name=res.result.zone.name;
+          this.form.code=res.result.zone.code;
+          this.form.province=names.length>=1?names[0]:'';
+          this.form.city=names.length>=2?names[1]:'';
+          this.form.district=names.length>=3?names[2]:'';
+          this.form.manager=res.result.manager.advisorId;
+          this.form.remark=res.result.remark;
+          this.division=res.result.division;
+          getDivisions().then(item=>{
+          this.divisionName= item.filter(c=>c.code==res.result.division)[0].name;
+        })
         }
-      });
-
-      // getCityList(this.form.province).then((res) => {
-      //   var data=[];
-      //   if(res.status=="0"){
-      //     res.result[0].forEach(element => {
-      //       data.push({code:element.id,name:element.fullname})
-      //     });
-      //     this.cityList = data;
-      //   }
-      // });
-      // getDistrictList(this.form.city).then((res) => {
-      //   var data=[];
-      //   if(res.status=="0"){
-      //     res.result[0].forEach(element => {
-      //       data.push({code:element.id,name:element.fullname})
-      //     });
-      //     this.districtList = data;
-      //   }
-      // });
-
+      })
       getManagerList().then(res=>{
         if(res.success){
           var result=res.result.data;
@@ -187,97 +136,39 @@ export default {
       });
     },
     submitInfo(){
-      if(this.form.province===''&&this.form.city===''&&this.form.district===''){
-         this.$message('请选择省市区/县');
-         return false;
-      }
-      var district={
-        code:'',
-        name:''
-      }
-      debugger
-      if(this.form.province!=''){
-        var provinceData= this.provinceList.find(c=>c.code==this.form.province);
-        district={
-          code:this.form.province,
-          name:provinceData.name
-        }
-      }
-      if(this.form.city!=''){
-        var cityData= this.cityList.find(c=>c.code==this.form.city);
-        district={
-          code:this.form.city,
-          name:`${provinceData.name},${cityData.name}`
-        }
-      }
-      if(this.form.district!=''){
-        var distirtData= this.districtList.find(c=>c.code==this.form.district);
-        district={
-          code:this.form.district,
-          name:`${provinceData.name},${cityData.name},${distirtData.name}`
-        }
-      }
-
       if(this.form.manager===''){
          this.$message('请选择区域负责人');
          return false;
       }
-      var managerData=this.managerList.filter(c=>c.userId==this.form.manager)[0];
+      var managerData=this.managerList.filter(c=>c.advisorId==this.form.manager)[0];
       var submitData={
-          "district":district,
-            "division": this.division,
-            "manager": {
-              "advisorId": managerData.advisorId,
-              "userId": managerData.userId,
-              "userName": managerData.userName,
-              "phoneNumber": managerData.phoneNumber,
-              "realName": managerData.realName,
-              "title": managerData.title,
-              "division": this.division,
-            },
-            "remark":this.form.remark
-
+        "id":this.id,
+        "zone":{
+          code:this.form.code,
+          name:this.form.name
+        },
+        "manager": {
+          "advisorId": managerData.advisorId,
+          "userId": managerData.userId,
+          "userName": managerData.userName,
+          "phoneNumber": managerData.phoneNumber,
+          "realName": managerData.realName,
+          "title": managerData.title,
+          "division": this.division,
+        },
+        "remark":this.form.remark
       }
-      submitDistrictManager(submitData).then(res=>{
+      EditDistrictManager(submitData).then(res=>{
         if(res.success){
-          this.$message('新建区域负责人成功');
+          this.$message('编辑区域负责人成功');
           this.$router.push('/manager')
         }
       })
     },
-    provinceSelect(){
-      this.form.city='';
-      this.form.district='';
-      getCityList(this.form.province).then((res) => {
-        var data=[];
-        if(res.status=="0"){
-          res.result[0].forEach(element => {
-            data.push({code:element.id,name:element.fullname})
-          });
-          this.cityList = data;
-           getSpecialCities().then(res=>{
-            if(res.filter(c => c.id == this.form.province).length==1){
-                this.form.city=this.form.province;
-                this.citySelect();
-              }
-          })
-        }
-      });
-    },
-    citySelect(){
-      this.form.district='';
-      getDistrictList(this.form.city).then((res) => {
-        var data=[];
-        if(res.status=="0"){
-          res.result[0].forEach(element => {
-            data.push({code:element.id,name:element.fullname})
-          });
-          this.districtList = data;
-        }
-      });
+    back(){
+      this.$router.push('/manager')
     }
   },
-
 };
 </script>
 

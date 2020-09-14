@@ -324,7 +324,6 @@ router.beforeEach((to, from, next) => {
   } else {
     store.dispatch('permission/generateRoutes', 'admin').then((accessRoutes) => {
       router.addRoutes(accessRoutes);
-      // next({ ...to, replace: true });
       next(`/login?redirect=${to.path}`);
     });
 

@@ -116,7 +116,7 @@
       </el-table-column>
                  <el-table-column label="入职时间"  align="center" width="180" >
         <template slot-scope="{row}">
-          <span>{{ row.entryDate }}</span>
+          <span>{{ row.entryDate | parseDateTime('{y}-{m}-{d} ') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
@@ -192,7 +192,6 @@ export default {
       };
 
       getList(queryModel).then((res) => {
-        console.log(res);
         if(res.success){
           this.list=res.result.data;
           this.total=res.result.totalCount

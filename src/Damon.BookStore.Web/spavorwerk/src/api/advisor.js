@@ -83,7 +83,7 @@ export function getList(query) {
   const { pageIndex, pageSize, division, title, realName, phoneNumber } = query;
   return request({
     url: `/ids.svc/api/Organization/salesUser/getAll?v=1.0&pageindex=
-    ${pageIndex}&pagesize=${pageSize}&division=${division}&title=${title}
+    ${pageIndex - 1}&pagesize=${pageSize}&division=${division}&title=${title}
     &realName=${realName}&phoneNumber=${phoneNumber}`,
     type: 'get',
   });

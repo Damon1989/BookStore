@@ -33,8 +33,8 @@
             事业部：
       </el-col>
       <el-col :span="6" >
-        <el-select size="medium" v-model="listQuery.enterprise"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in enterpriseList" :key="item.code" :label="item.name" :value="item.code" />
+        <el-select size="medium" v-model="listQuery.division"  clearable  class="filter-item filtercontrol">
+              <el-option v-for="item in divisionList" :key="item.code" :label="item.name" :value="item.code" />
         </el-select>
       </el-col>
         <el-col :span="2" class="filtertext">
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { getEnterprises, getProvinceList, getCityList, getDistrictList } from '@/api/basedata';
+import { getDivisions, getProvinceList, getCityList, getDistrictList,getSpecialCities } from '@/api/basedata';
 import { getList } from '@/api/advisor';
 
 export default {
@@ -126,7 +126,7 @@ export default {
       provinceList: [],
       cityList: [],
       districtList: [],
-      enterpriseList: [],
+      divisionList: [],
       list: null,
       listLoading: false,
       listQuery: {
@@ -136,21 +136,23 @@ export default {
         name: '',
         jobnum: '',
         phoneNumber: '',
-        enterprise: '美善品',
+        division: '美善品',
         page: 1,
         limit: 5,
       },
-      total: 20,
+      total: 0,
     };
   },
   created() {
     this.getList();
   },
   methods: {
+    getInfo(){
 
+    },
     getList() {
-      getEnterprises().then((result) => {
-        this.enterpriseList = result;
+      getDivisions().then((result) => {
+        this.divisionList = result;
       });
       getProvinceList().then((res) => {
         var data=[];
@@ -177,6 +179,12 @@ export default {
             data.push({code:element.id,name:element.fullname})
           });
           this.cityList = data;
+          getSpecialCities().then(res=>{
+            if(res.filter(c => c.id == this.listQuery.province).length==1){
+                this.listQuery.city=this.listQuery.province;
+                this.citySelect();
+              }
+          })
         }
       });
     },
