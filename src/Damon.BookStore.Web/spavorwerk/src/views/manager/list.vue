@@ -46,9 +46,7 @@
       <el-col :span="4" :offset="2" class="filtertext">
         <el-button size="medium" type="success" icon="el-icon-plus">
            <router-link :to="'/manager/add?division='+listQuery.division">
-            <el-link type="primary" size="small" >
-              新  建
-            </el-link>
+            新  建
           </router-link>
           </el-button>
         <el-button size="medium" type="success" icon="el-icon-plus">导  入</el-button>

@@ -68,7 +68,7 @@
 <el-row style="margin-top:30px">
   <el-col :span="10" :offset="9">
   <el-button type="success" plain @click="submitInfo()">提交</el-button>
-  <el-button plain>返回</el-button>
+  <el-button plain @click="back">返回</el-button>
   </el-col>
 
 </el-row>
@@ -231,6 +231,9 @@ export default {
           this.districtList = data;
         }
       });
+    },
+    back(){
+      this.$router.push('/manager')
     }
   },
 
