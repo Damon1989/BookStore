@@ -40,99 +40,99 @@ export const asyncRoutes = [
       },
     ],
   },
-  {
-    path: '/adviser',
-    component: Layout,
-    redirect: '/adviser/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'system',
-    meta: {
-      title: 'adviser.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/adviser/list'),
-        name: 'adviserlist',
-        meta: { title: 'adviser.list', icon: 'dashboard' },
-      },
-      {
-        path: 'import',
-        component: () => import('@/views/adviser/import'),
-        name: 'adviserimport',
-        meta: { title: 'adviser.import', icon: 'dashboard' },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/adviser/edit'),
-        name: 'adviserdata',
-        hidden: true,
-        meta: { title: 'adviser.edit', icon: 'dashboard' },
-      },
-    ],
-  },
-  {
-    path: '/leader',
-    component: Layout,
-    redirect: '/leader/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'leader',
-    meta: {
-      title: 'leader.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/leader/list'),
-        name: 'leaderlist',
-        meta: { title: 'leader.list', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'import',
-        component: () => import('@/views/leader/import'),
-        name: 'leaderimport',
-        meta: { title: 'leader.import', icon: 'dashboard' },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/leader/edit'),
-        name: 'leaderdata',
-        hidden: true,
-        meta: { title: 'leader.edit', icon: 'dashboard' },
-      },
-    ],
-  },
-  {
-    path: '/shop',
-    component: Layout,
-    redirect: '/shop/list',
-    // alwaysShow: true, // will always show the root menu
-    name: 'shop',
-    meta: {
-      title: 'shop.manage',
-      icon: 'lock',
-      roles: ['admin', 'editor'], // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/shop/list'),
-        name: 'shoplist',
-        meta: { title: 'shop.list', icon: 'dashboard', affix: true },
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/views/shop/edit'),
-        name: 'shopdata',
-        hidden: true,
-        meta: { title: 'shop.edit', icon: 'dashboard' },
-      },
-    ],
-  },
+  // {
+  //   path: '/adviser',
+  //   component: Layout,
+  //   redirect: '/adviser/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'system',
+  //   meta: {
+  //     title: 'adviser.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/adviser/list'),
+  //       name: 'adviserlist',
+  //       meta: { title: 'adviser.list', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: () => import('@/views/adviser/import'),
+  //       name: 'adviserimport',
+  //       meta: { title: 'adviser.import', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/adviser/edit'),
+  //       name: 'adviserdata',
+  //       hidden: true,
+  //       meta: { title: 'adviser.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/leader',
+  //   component: Layout,
+  //   redirect: '/leader/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'leader',
+  //   meta: {
+  //     title: 'leader.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/leader/list'),
+  //       name: 'leaderlist',
+  //       meta: { title: 'leader.list', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'import',
+  //       component: () => import('@/views/leader/import'),
+  //       name: 'leaderimport',
+  //       meta: { title: 'leader.import', icon: 'dashboard' },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/leader/edit'),
+  //       name: 'leaderdata',
+  //       hidden: true,
+  //       meta: { title: 'leader.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/shop',
+  //   component: Layout,
+  //   redirect: '/shop/list',
+  //   // alwaysShow: true, // will always show the root menu
+  //   name: 'shop',
+  //   meta: {
+  //     title: 'shop.manage',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'], // you can set roles in root nav
+  //   },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/shop/list'),
+  //       name: 'shoplist',
+  //       meta: { title: 'shop.list', icon: 'dashboard', affix: true },
+  //     },
+  //     {
+  //       path: 'edit/:id',
+  //       component: () => import('@/views/shop/edit'),
+  //       name: 'shopdata',
+  //       hidden: true,
+  //       meta: { title: 'shop.edit', icon: 'dashboard' },
+  //     },
+  //   ],
+  // },
   tableRouter,
   componentsRouter,
   // {

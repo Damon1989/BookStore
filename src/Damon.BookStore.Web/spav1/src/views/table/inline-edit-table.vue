@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 <template>
   <div class="app-container">
+   <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
+        Export Excel
+   </el-button>
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width:100%">
       <el-table-column align="center" label="ID" width='80'>
         <template slot-scope='{row}'>
@@ -156,6 +159,9 @@ export default {
         message: 'The Title has been edited',
         type: 'success',
       });
+    },
+    handleDownload() {
+
     },
   },
 
