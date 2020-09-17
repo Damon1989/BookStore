@@ -114,29 +114,29 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/shop',
+    path: '/branch',
     component: Layout,
-    redirect: '/shop/list',
+    redirect: '/branch/list',
     // alwaysShow: true, // will always show the root menu
-    name: 'shop',
+    name: 'branch',
     meta: {
-      title: 'shop.manage',
+      title: 'branch.manage',
       icon: 'lock',
       roles: ['admin', 'editor'], // you can set roles in root nav
     },
     children: [
       {
         path: 'list',
-        component: () => import('@/views/shop/list'),
-        name: 'shoplist',
-        meta: { title: 'shop.list', icon: 'dashboard', affix: true },
+        component: () => import('@/views/branch/list'),
+        name: 'branchlist',
+        meta: { title: 'branch.list', icon: 'dashboard', affix: true },
       },
       {
         path: 'edit/:id',
-        component: () => import('@/views/shop/edit'),
-        name: 'shopdata',
+        component: () => import('@/views/branch/edit'),
+        name: 'branchdata',
         hidden: true,
-        meta: { title: 'shop.edit', icon: 'dashboard' },
+        meta: { title: 'branch.edit', icon: 'dashboard' },
       },
     ],
   },

@@ -64,10 +64,10 @@ export const lang = {
     edit: 'manager edit',
     import: 'manager import',
   },
-  shop: {
+  branch: {
     manage: 'manage',
-    list: 'shop list',
-    edit: 'shop edit',
+    list: 'branch list',
+    edit: 'branch edit',
   },
   order: {
     manage: 'order manage',

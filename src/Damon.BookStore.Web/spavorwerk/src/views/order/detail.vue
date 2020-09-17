@@ -54,7 +54,7 @@
          手机号 : {{form.orderInfo.customer.phoneNumber}}
        </el-col>
         <el-col :offset="2" :span="6">
-         门店 : {{form.orderInfo.customer.shop}}
+         门店 : {{form.orderInfo.customer.branch}}
        </el-col>
      </el-row>
        <el-row class="margintop">
@@ -235,7 +235,7 @@ export default {
           customer:{
             name:'',
             phoneNumber:'',
-            shop:'',
+            branch:'',
             province:'',
             city:'',
             district:''
@@ -314,7 +314,7 @@ export default {
           customer:{
             name:'张先生',
             phoneNumber:'13988882222',
-            shop:'上海金虹桥点',
+            branch:'上海金虹桥点',
             province:'上海市',
             city:'上海',
             district:'长宁区'

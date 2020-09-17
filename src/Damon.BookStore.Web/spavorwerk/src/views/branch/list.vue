@@ -41,7 +41,7 @@
             门店名称：
         </el-col>
         <el-col :span="6">
-          <el-input size="medium"  placeholder="请输入" class="filter-item filtercontrol"></el-input>
+          <el-input size="medium"  placeholder="请输入" v-model="listQuery.name" class="filter-item filtercontrol"></el-input>
         </el-col>
                 <el-col :span="2" class="filtertext">
             经理：
@@ -52,8 +52,8 @@
     </el-row>
     <el-row>
       <el-col :span="4" :offset="18" class="filtertext">
-        <el-button size="medium" type="success">查  询</el-button>
-        <el-button size="medium">重  置</el-button>
+        <el-button size="medium" type="success" @click="search()">查  询</el-button>
+        <el-button size="medium" @click="reset()">重  置</el-button>
       </el-col>
     </el-row>
 <el-table
@@ -67,17 +67,17 @@
     >
       <el-table-column label="编号"   align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.branchCompany }}</span>
+          <span>{{ row.code }}</span>
         </template>
       </el-table-column>
       <el-table-column label="名称"   align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.num }}</span>
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="所在地区"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.jobNum }}</span>
+          <span>{{ row.zoneName }}</span>
         </template>
       </el-table-column>
             <el-table-column label="经理"  align="center"  >
@@ -87,17 +87,17 @@
       </el-table-column>
        <el-table-column label="电话"  align="center" >
         <template slot-scope="{row}">
-          <span>{{ row.phoneNumber }}</span>
+          <span>{{ row.contactPhone }}</span>
         </template>
       </el-table-column>
                   <el-table-column label="详细地址"  align="center"  >
         <template slot-scope="{row}">
-          <span>{{ row.position }}</span>
+          <span>{{ row.contactAddress }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="60" class-name="small-padding fixed-width">
          <template slot-scope="scope">
-          <router-link :to="'/shop/edit/'+scope.row.id">
+          <router-link :to="'/branch/edit/'+scope.row.id">
             <el-link type="primary" size="small" >
               编辑
             </el-link>
@@ -116,8 +116,7 @@
 </template>
 
 <script>
-import { getDivisions, getProvinceList, getCityList, getDistrictList,getSpecialCities } from '@/api/basedata';
-import { getList } from '@/api/advisor';
+import { getDivisions, getProvinceList, getCityList, getDistrictList,getSpecialCities,getBranchCompanies } from '@/api/basedata';
 
 export default {
   name: 'list',
@@ -134,9 +133,7 @@ export default {
         city: '',
         district: '',
         name: '',
-        jobnum: '',
-        phoneNumber: '',
-        division: '美善品',
+        division: 'TM',
         page: 1,
         limit: 5,
       },
@@ -144,13 +141,10 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getInfo();
   },
   methods: {
     getInfo(){
-
-    },
-    getList() {
       getDivisions().then((result) => {
         this.divisionList = result;
       });
@@ -163,13 +157,54 @@ export default {
           this.provinceList = data;
         }
       });
-      getList().then((res) => {
-        this.total = 400;
-        this.list = res.slice(0, this.listQuery.limit);
-      });
+      this.getList();
+    },
+    getList() {
+      var zoneCode='';
+      if(this.listQuery.district!=''){
+        zoneCode=this.listQuery.district;
+      }else if(this.listQuery.city!=''){
+        zoneCode=this.listQuery.city;
+      }else if(this.listQuery.province!=''){
+        zoneCode=this.listQuery.province;
+      }
+      var queryModel={
+        pageIndex:this.listQuery.page,
+        pageSize:this.listQuery.limit,
+        division:this.listQuery.division,
+        name:this.listQuery.name,
+        zoneCode
+      }
+      getBranchCompanies(queryModel).then(res=>{
+        console.log(res);
+        if(res.success){
+          var result=res.result.data;
+          result.forEach(item => {
+            if(item.zone!=undefined){
+              item.zoneName=item.zone.districtName;
+            }else{
+              item.zoneName='';
+            }
+          });
+          this.list=res.result.data;
+          this.total=res.result.totalCount;
+        }
+      })
     },
     deleteLeader() {
 
+    },
+    search(){
+      this.getList();
+    },
+    reset(){
+      this.listQuery.page=1;
+      this.listQuery.limit=5;
+      this.listQuery.province='';
+      this.listQuery.city='';
+      this.listQuery.district='';
+      this.listQuery.division='TM';
+      this.listQuery.name='';
     },
     provinceSelect(){
       getCityList(this.listQuery.province).then((res) => {

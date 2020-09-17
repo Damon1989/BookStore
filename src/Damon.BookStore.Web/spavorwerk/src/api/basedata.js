@@ -11,8 +11,13 @@ export function getDivisions() {
   return Promise.resolve(data);
 }
 
-export function getBranchCompanies() {
-  return Promise.resolve(['分公司一', '分公司二', '分公司三']);
+export function getBranchCompanies(data) {
+  const { pageIndex, pageSize, division, name, zoneCode } = data;
+  var url = `ids.svc/api/Organization/branch/getAll?v=1.0&pageIndex=${pageIndex - 1}&pageSize=${pageSize}&division=${division}&codeorname=${name}&zoneCode=${zoneCode}`;
+  return request({
+    url: url,
+    method: 'get',
+  });
 }
 
 export function getPositionList() {

@@ -83,7 +83,7 @@ export function setAccessToken(token) {
   Storage.setItem({
     name: TokenKey,
     value: token,
-    expires: 10000
+    expires: 3600000
   })
 }
 
