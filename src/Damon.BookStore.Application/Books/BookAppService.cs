@@ -18,6 +18,7 @@
             this._currentUser = currentUser;
         }
 
+        
         public CurrentUser GetUser()
         {
             return _currentUser;

@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/connect': {
-        target: process.env.NODE_ENV === 'production' ? 'http://www.damon.com:8089/connect' : 'http://www.damon.com:8089/connect',//请求域名
+        target: process.env.NODE_ENV === 'production' ? 'https://localhost:44397/connect' : 'http://www.damon.com:8089/connect',//请求域名
         // target: 'http://www.damon.com:8089/',
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true,//如果是跨域访问，需要配置这个参数
