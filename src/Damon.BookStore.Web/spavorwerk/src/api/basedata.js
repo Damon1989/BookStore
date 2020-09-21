@@ -49,30 +49,57 @@ export function getProvinceList() {
 }
 
 
+// const specialCities = [
+//   {
+//     id: '110000',
+//     fullname: '北京市'
+//   },
+//   {
+//     id: '120000',
+//     fullname: '天津市'
+//   },
+//   {
+//     id: '310000',
+//     fullname: '上海市'
+//   },
+//   {
+//     id: '500000',
+//     fullname: '重庆市'
+//   },
+//   {
+//     id: '810000',
+//     fullname: '香港特别行政区'
+//   },
+//   {
+//     id: '820000',
+//     fullname: '澳门特别行政区'
+//   },
+// ]
+
 const specialCities = [
   {
     id: '110000',
-    fullname: '北京市'
+    fullname: '市辖区'
   },
   {
     id: '120000',
-    fullname: '天津市'
+    fullname: '市辖区'
   },
   {
     id: '310000',
-    fullname: '上海市'
+    fullname: '市辖区'
   },
   {
     id: '500000',
-    fullname: '重庆市'
+    fullname: '市辖区'
   },
   {
     id: '810000',
-    fullname: '香港特别行政区'
+    fullname: '市辖区'
   },
   {
     id: '820000',
-    fullname: '澳门特别行政区'
+    fullname: '市辖区'
   },
 ]
 

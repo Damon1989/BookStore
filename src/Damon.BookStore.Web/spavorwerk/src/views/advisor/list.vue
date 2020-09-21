@@ -15,7 +15,7 @@
         </el-col>
         <el-col :span="4">
         <el-select size="medium" v-model="listQuery.branchCompany"  clearable  class="filter-item filtercontrol">
-              <el-option v-for="item in branchCompanies" :key="item" :label="item" :value="item" />
+              <el-option v-for="item in branchCompanies" :key="item.code" :label="item.name" :value="item" />
         </el-select>
         </el-col>
         <el-col :span="2" class="filtertext">
@@ -168,20 +168,35 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getInfo();
   },
   methods: {
-    getList() {
-
+    getInfo(){
       getDivisions().then((result) => {
         this.divisionList = result;
       });
-      getBranchCompanies().then((res) => {
-        this.branchCompanies = res;
+
+      var queryModel={
+          pageIndex:1,
+          pageSize:1000,
+          division:this.listQuery.division,
+          name:'',
+          zoneCode:''
+      };
+
+
+      getBranchCompanies(queryModel).then((res) => {
+        console.log(res);
+        if(res.success){
+          this.branchCompanies =res.result.data;
+        }
       });
       getPositionList().then((res) => {
         this.positionList = res;
       });
+      this.getList();
+    },
+    getList() {
       var queryModel={
         pageIndex:this.listQuery.page,
         pageSize:this.listQuery.limit,
